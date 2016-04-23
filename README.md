@@ -9,9 +9,7 @@ I started chopping away at [Avit](https://github.com/robbyrussell/oh-my-zsh/blob
 What it does:
 
 - display current git branch
-- display time since last commit
+- display colored time since last commit
 - display state (clean/dirty) of the repo
 - display arrows indicating if you need to pull, push or if you are mid-rebase
 - set the terminal title to current command and directory
-
-
