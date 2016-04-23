@@ -32,3 +32,9 @@ Just add `antigen bundle frmendes/geometry` to your `.zshrc`.
 Move `geometry.zsh` to `$HOME/.oh-my-zsh/custom/themes/geometry.zsh-theme` and
 set `ZSH_THEME="geometry"` in your `.zshrc`.
 
+### Dependencies
+
+The symbol for rebasing comes from a [Powerline patched font](https://github.com/powerline/fonts). If you want to use it, you're going to need to install one from the font repo. The one used in the screenshots is Roboto Mono. You can also try to [patch it yourself](https://github.com/powerline/fontpatcher).
+
+Alternatively, change the symbol by setting the `GIT_REBASE` variable, in
+`geometry.zsh` to a different value.
