@@ -69,9 +69,9 @@ _git_rebase_check() {
 }
 
 _git_remote_check() {
-  local_commit=$(git rev-parse @)
-  remote_commit=$(git rev-parse @{u})
-  common_base=$(git merge-base @ @{u}) # last common commit
+  local_commit=$(git rev-parse @ 2>&1)
+  remote_commit=$(git rev-parse @{u} 2>&1)
+  common_base=$(git merge-base @ @{u} 2>&1) # last common commit
 
   if [ $local_commit == $remote_commit ]; then
     echo ""
