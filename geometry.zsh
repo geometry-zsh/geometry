@@ -73,12 +73,12 @@ _git_remote_check() {
   remote_commit=$(git rev-parse @{u} 2>&1)
   common_base=$(git merge-base @ @{u} 2>&1) # last common commit
 
-  if [ $local_commit == $remote_commit ]; then
+  if [[ $local_commit == $remote_commit ]]; then
     echo ""
   else
-    if [ $common_base == $remote_commit ]; then
+    if [[ $common_base == $remote_commit ]]; then
       echo "$GIT_UNPUSHED"
-    elif [ $common_base == $local_commit ]; then
+    elif [[ $common_base == $local_commit ]]; then
       echo "$GIT_UNPULLED"
     else
       echo "$GIT_UNPUSHED $GIT_UNPULLED"
