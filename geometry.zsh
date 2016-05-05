@@ -113,6 +113,8 @@ _set_title() {
 }
 
 geometry_prompt() {
+  autoload -U add-zsh-hook
+
   add-zsh-hook preexec  _set_cmd_title
   add-zsh-hook precmd   _set_title
 
