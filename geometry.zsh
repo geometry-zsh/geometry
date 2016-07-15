@@ -48,9 +48,9 @@ _git_time_since_commit() {
 }
 
 _git_branch() {
-  ref=$(git symbolic-ref HEAD 2> /dev/null) || \
+  ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "${ref#refs/heads/}"
+  echo $ref
 }
 
 _git_dirty() {
