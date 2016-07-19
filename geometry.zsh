@@ -112,17 +112,20 @@ prompt_geometry_set_title() {
   prompt_geometry_print_title '%~'
 }
 
-prompt_geometry_setup() {
-  autoload -U add-zsh-hook
-
-  add-zsh-hook preexec prompt_geometry_set_cmd_title
-  add-zsh-hook precmd prompt_geometry_set_title
-
+prompt_geometry_render() {
   PROMPT="
  %(?.$PROMPT_SYMBOL.$EXIT_VALUE_SYMBOL) %{$fg[blue]%}%3~%{$reset_color%} "
 
   PROMPT2=" $RPROMPT_SYMBOL "
   RPROMPT="$(prompt_geometry_git_info)"
+}
+
+prompt_geometry_setup() {
+  autoload -U add-zsh-hook
+
+  add-zsh-hook preexec prompt_geometry_set_cmd_title
+  add-zsh-hook precmd prompt_geometry_set_title
+  add-zsh-hook precmd prompt_geometry_render
 }
 
 prompt_geometry_setup
