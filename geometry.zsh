@@ -17,7 +17,7 @@ ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
 
-_git_time_since_commit() {
+prompt_geometry_git_time_since_commit() {
   if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
     # Get the last commit.
     last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
@@ -47,13 +47,13 @@ _git_time_since_commit() {
   fi
 }
 
-_git_branch() {
+prompt_geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
   echo $ref
 }
 
-_git_dirty() {
+prompt_geometry_git_dirty() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $GIT_CLEAN
   else
@@ -61,14 +61,14 @@ _git_dirty() {
   fi
 }
 
-_git_rebase_check() {
+prompt_geometry_git_rebase_check() {
   git_dir=$(git rev-parse --git-dir)
   if test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply"; then
     echo "$GIT_REBASE"
   fi
 }
 
-_git_remote_check() {
+prompt_geometry_git_remote_check() {
   local_commit=$(git rev-parse @ 2>&1)
   remote_commit=$(git rev-parse @{u} 2>&1)
   common_base=$(git merge-base @ @{u} 2>&1) # last common commit
@@ -86,43 +86,46 @@ _git_remote_check() {
   fi
 }
 
-_git_symbol() {
-  echo "$(_git_rebase_check) $(_git_remote_check) "
+prompt_geometry_git_symbol() {
+  echo "$(prompt_geometry_git_rebase_check) $(prompt_geometry_git_remote_check) "
 }
 
-_git_info() {
+prompt_geometry_git_info() {
   if git rev-parse --git-dir > /dev/null 2>&1; then
-    echo "$(_git_symbol)%F{242}$(_git_branch)%{$reset_color%} :: $(_git_time_since_commit) :: $(_git_dirty)"
+    echo "$(prompt_geometry_git_symbol)%F{242}$(prompt_geometry_git_branch)%{$reset_color%} :: $(prompt_geometry_git_time_since_commit) :: $(prompt_geometry_git_dirty)"
   fi
 }
 
-_print_title() {
+prompt_geometry_print_title() {
   print -n '\e]0;'
   print -Pn $1
   print -n '\a'
 }
 
 # Show current command in title
-_set_cmd_title() {
-  _print_title "${2} @ %m"
+prompt_geometry_set_cmd_title() {
+  prompt_geometry_print_title "${2} @ %m"
 }
 
 # Prevent command showing on title after ending
-_set_title() {
-  _print_title '%~'
+prompt_geometry_set_title() {
+  prompt_geometry_print_title '%~'
 }
 
-geometry_prompt() {
+prompt_geometry_render() {
+  PROMPT="
+ %(?.$PROMPT_SYMBOL.$EXIT_VALUE_SYMBOL) %{$fg[blue]%}%3~%{$reset_color%} "
+
+  PROMPT2=" $RPROMPT_SYMBOL "
+  RPROMPT="$(prompt_geometry_git_info)"
+}
+
+prompt_geometry_setup() {
   autoload -U add-zsh-hook
 
-  add-zsh-hook preexec  _set_cmd_title
-  add-zsh-hook precmd   _set_title
-
-  PROMPT='
- %(?.$PROMPT_SYMBOL.$EXIT_VALUE_SYMBOL) %{$fg[blue]%}%3~%{$reset_color%} '
-
-  PROMPT2=' $RPROMPT_SYMBOL '
-  RPROMPT='$(_git_info)'
+  add-zsh-hook preexec prompt_geometry_set_cmd_title
+  add-zsh-hook precmd prompt_geometry_set_title
+  add-zsh-hook precmd prompt_geometry_render
 }
 
-geometry_prompt
+prompt_geometry_setup
