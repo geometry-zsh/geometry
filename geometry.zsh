@@ -118,11 +118,11 @@ prompt_geometry_setup() {
   add-zsh-hook preexec prompt_geometry_set_cmd_title
   add-zsh-hook precmd prompt_geometry_set_title
 
-  PROMPT='
- %(?.$PROMPT_SYMBOL.$EXIT_VALUE_SYMBOL) %{$fg[blue]%}%3~%{$reset_color%} '
+  PROMPT="
+ %(?.$PROMPT_SYMBOL.$EXIT_VALUE_SYMBOL) %{$fg[blue]%}%3~%{$reset_color%} "
 
-  PROMPT2=' $RPROMPT_SYMBOL '
-  RPROMPT='$(prompt_geometry_git_info)'
+  PROMPT2=" $RPROMPT_SYMBOL "
+  RPROMPT="$(prompt_geometry_git_info)"
 }
 
 prompt_geometry_setup
