@@ -13,7 +13,8 @@ What it does:
 - display state (clean/dirty) of the repo
 - display arrows indicating if you need to pull, push or if you are mid-rebase
 - set the terminal title to current command and directory
-- makes you the coolest hacker in the whole Starbucks
+- display the number of git conflicts and total conflicts (optional)
+- make you the coolest hacker in the whole Starbucks
 
 Much like [Pure](https://github.com/sindresorhus/pure), geometry adds a different marker
 if the last command result is different from `0`. It also sets the title to
@@ -41,6 +42,8 @@ Alternatively, change the symbol by setting the `GIT_REBASE` variable, in
 
 ### Options
 
-You can optionally have the prompt display the number of files with conflicts by
-setting the `PROMPT_GEOMETRY_GIT_CONFLICTS_FILES` to `true`. It will be
-displayed after the branch info.
+You can optionally have the prompt display both the number of files with
+conflicts as well as the total number of conflicts by setting the
+`PROMPT_GEOMETRY_GIT_CONFLICTS` variable to true. This option uses `grep` and
+`ag` with the latter being a [much faster alternative](http://geoff.greer.fm/ag/).
+**If you don't have `ag` installed, this might slow your prompt down**.

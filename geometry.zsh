@@ -13,10 +13,13 @@ GIT_REBASE="\uE0A0"
 GIT_UNPULLED="⇣"
 GIT_UNPUSHED="⇡"
 
+GREP=$(which ag &> /dev/null && echo "ag" || echo "grep")
+
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
-PROMPT_GEOMETRY_GIT_CONFLICTS_FILES=${PROMPT_GEOMETRY_GIT_CONFLICTS_FILES:-false}
+
+PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 
 prompt_geometry_git_time_since_commit() {
   if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
@@ -92,9 +95,15 @@ prompt_geometry_git_symbol() {
 }
 
 prompt_geometry_git_conflicts() {
-  conflicts=$(git diff --name-only --diff-filter=U | wc -l | bc)
-  git_conflicts=$([ "$conflicts" -gt 0 ] && echo "%F{242}($conflicts)%{$reset_color%}" || echo "")
-  echo "$git_conflicts"
+  conflicts=$(git diff --name-only --diff-filter=U)
+  file_count=$(echo -n "$conflicts" | $GREP -c '^')
+
+  if [ "$file_count" -gt 0 ]; then
+    total=$($GREP -c '^=======$' $conflicts)
+    echo "%F{242}($file_count|$total)%{$reset_color%}"
+  else
+    echo ""
+  fi
 }
 
 prompt_geometry_git_info() {
