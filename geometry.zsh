@@ -16,6 +16,7 @@ GIT_UNPUSHED="⇡"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
 ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
+PROMPT_GEOMETRY_GIT_CONFLICTS_FILES=${PROMPT_GEOMETRY_GIT_CONFLICTS_FILES:-false}
 
 prompt_geometry_git_time_since_commit() {
   if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
@@ -90,9 +91,19 @@ prompt_geometry_git_symbol() {
   echo "$(prompt_geometry_git_rebase_check) $(prompt_geometry_git_remote_check) "
 }
 
+prompt_geometry_git_conflicts() {
+  conflicts=$(git diff --name-only --diff-filter=U | wc -l | bc)
+  git_conflicts=$([ "$conflicts" -gt 0 ] && echo "%F{242}($conflicts)%{$reset_color%}" || echo "")
+  echo "$git_conflicts"
+}
+
 prompt_geometry_git_info() {
   if git rev-parse --git-dir > /dev/null 2>&1; then
-    echo "$(prompt_geometry_git_symbol)%F{242}$(prompt_geometry_git_branch)%{$reset_color%} :: $(prompt_geometry_git_time_since_commit) :: $(prompt_geometry_git_dirty)"
+    if $PROMPT_GEOMETRY_GIT_CONFLICTS_FILES; then
+      conflicts=" $(prompt_geometry_git_conflicts)"
+    fi
+
+    echo "$(prompt_geometry_git_symbol)%F{242}$(prompt_geometry_git_branch)%{$reset_color%}$conflicts :: $(prompt_geometry_git_time_since_commit) :: $(prompt_geometry_git_dirty)"
   fi
 }
 

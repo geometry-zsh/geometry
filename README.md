@@ -38,3 +38,9 @@ The symbol for rebasing comes from a [Powerline patched font](https://github.com
 
 Alternatively, change the symbol by setting the `GIT_REBASE` variable, in
 `geometry.zsh` to a different value.
+
+### Options
+
+You can optionally have the prompt display the number of files with conflicts by
+setting the `PROMPT_GEOMETRY_GIT_CONFLICTS_FILES` to `true`. It will be
+displayed after the branch info.
