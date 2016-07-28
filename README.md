@@ -1,6 +1,6 @@
 # geometry
 
-geometry is a minimal zsh prompt theme.
+geometry is a minimal, customizable zsh prompt theme.
 
 ![geometry](screenshots/geometry.png)
 
@@ -42,8 +42,15 @@ Alternatively, change the symbol by setting the `GIT_REBASE` variable, in
 
 ### Options
 
+geometry has plenty of customization options available. Just set the variables in the
+beginning of the `geometry.zsh` file to whatever you like!
+
+#### git conflicts
+
 You can optionally have the prompt display both the number of files with
 conflicts as well as the total number of conflicts by setting the
-`PROMPT_GEOMETRY_GIT_CONFLICTS` variable to true. This option uses `grep` and
-`ag` with the latter being a [much faster alternative](http://geoff.greer.fm/ag/).
+`PROMPT_GEOMETRY_GIT_CONFLICTS` variable to true.
+
+This option uses `grep` and `ag` with the latter being a [much faster alternative](http://geoff.greer.fm/ag/).
+
 **If you don't have `ag` installed, this might slow your prompt down**.

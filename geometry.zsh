@@ -3,23 +3,48 @@
 # avit: https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/avit.zsh-theme
 # pure: https://github.com/sindresorhus/pure
 
-PROMPT_SYMBOL='▲'
-EXIT_VALUE_SYMBOL="%{$fg_bold[magenta]%}△%{$reset_color%}"
-RPROMPT_SYMBOL='◇'
+# Define how to colorize before the variables
+prompt_geometry_colorize() {
+  echo "%F{$1}$2%f"
+}
 
-GIT_DIRTY="%{$fg[red]%}⬡%{$reset_color%}"
-GIT_CLEAN="%{$fg[green]%}⬢%{$reset_color%}"
-GIT_REBASE="\uE0A0"
-GIT_UNPULLED="⇣"
-GIT_UNPUSHED="⇡"
+# Color definitions
+GEOMETRY_COLOR_GIT_DIRTY=red
+GEOMETRY_COLOR_GIT_CLEAN=green
+GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED=red
+GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED=green
+GEOMETRY_COLOR_GIT_BRANCH=242
+GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT=green
+GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL=white
+GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG=red
+GEOMETRY_COLOR_EXIT_VALUE=magenta
+GEOMETRY_COLOR_DIR=blue
 
+# Symbol definitions
+GEOMETRY_SYMBOL_PROMPT="▲"
+GEOMETRY_SYMBOL_RPROMPT="◇"
+GEOMETRY_SYMBOL_EXIT_VALUE="△"
+GEOMETRY_SYMBOL_GIT_DIRTY="⬡"
+GEOMETRY_SYMBOL_GIT_CLEAN="⬢"
+GEOMETRY_SYMBOL_GIT_REBASE="\uE0A0"
+GEOMETRY_SYMBOL_GIT_UNPULLED="⇣"
+GEOMETRY_SYMBOL_GIT_UNPUSHED="⇡"
+GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED="◆"
+GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED="◈"
+
+# Combine color and symbols
+GEOMETRY_GIT_DIRTY=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
+GEOMETRY_GIT_CLEAN=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_CLEAN $GEOMETRY_SYMBOL_GIT_CLEAN)
+GEOMETRY_GIT_REBASE=$GEOMETRY_SYMBOL_GIT_REBASE
+GEOMETRY_GIT_UNPULLED=$GEOMETRY_SYMBOL_GIT_UNPULLED
+GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
+GEOMETRY_EXIT_VALUE=$(prompt_geometry_colorize $GEOMETRY_COLOR_EXIT_VALUE $GEOMETRY_SYMBOL_EXIT_VALUE)
+
+# Flags
+PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-true}
+
+# Use ag if possible
 GREP=$(which ag &> /dev/null && echo "ag" || echo "grep")
-
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT="%{$fg[green]%}"
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL="%{$fg[white]%}"
-ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG="%{$fg[red]%}"
-
-PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 
 prompt_geometry_git_time_since_commit() {
   if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
@@ -39,36 +64,41 @@ prompt_geometry_git_time_since_commit() {
 
     if [ $hours -gt 24 ]; then
       commit_age="${days}d"
-      color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_LONG
+      color=$GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG
     elif [ $minutes -gt 60 ]; then
       commit_age="${sub_hours}h${sub_minutes}m"
-      color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_NEUTRAL
+      color=$GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL
     else
       commit_age="${minutes}m"
-      color=$ZSH_THEME_GIT_TIME_SINCE_COMMIT_SHORT
+      color=$GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT
     fi
-    echo "$color$commit_age%{$reset_color%}"
+
+    echo "$(prompt_geometry_colorize $color $commit_age)"
   fi
 }
 
 prompt_geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo $ref
+  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
 }
 
-prompt_geometry_git_dirty() {
+prompt_geometry_git_status() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
-    echo $GIT_CLEAN
+    echo $GEOMETRY_GIT_CLEAN
   else
-    echo $GIT_DIRTY
+    echo $GEOMETRY_GIT_DIRTY
   fi
 }
 
-prompt_geometry_git_rebase_check() {
+prompt_geometry_is_rebasing() {
   git_dir=$(git rev-parse --git-dir)
-  if test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply"; then
-    echo "$GIT_REBASE"
+  test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply"
+}
+
+prompt_geometry_git_rebase_check() {
+  if $(prompt_geometry_is_rebasing); then
+    echo "$GEOMETRY_GIT_REBASE"
   fi
 }
 
@@ -81,26 +111,43 @@ prompt_geometry_git_remote_check() {
     echo ""
   else
     if [[ $common_base == $remote_commit ]]; then
-      echo "$GIT_UNPUSHED"
+      echo $GEOMETRY_GIT_UNPUSHED
     elif [[ $common_base == $local_commit ]]; then
-      echo "$GIT_UNPULLED"
+      echo $GEOMETRY_GIT_UNPULLED
     else
-      echo "$GIT_UNPUSHED $GIT_UNPULLED"
+      echo "$GEOMETRY_GIT_UNPUSHED $GEOMETRY_GIT_UNPULLED"
     fi
   fi
 }
 
 prompt_geometry_git_symbol() {
-  echo "$(prompt_geometry_git_rebase_check) $(prompt_geometry_git_remote_check) "
+  echo "$(prompt_geometry_git_rebase_check) $(prompt_geometry_git_remote_check)"
 }
 
 prompt_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
+  # echo adds a newline which we want to avoid
+  # Using -n prevents from using wc, which searches for newlines
+  # and returns 0 when a single file has conflicts
+  # Use grep instead
   file_count=$(echo -n "$conflicts" | $GREP -c '^')
 
+  # $file_count contains the amount of files with conflicts
+  # in the **BEGINNING** of the merge/rebase.
   if [ "$file_count" -gt 0 ]; then
+    # If we have fixed every conflict, $total will be empty
+    # So we will check and mark it as good if every conflict is solved
     total=$($GREP -c '^=======$' $conflicts)
-    echo "%F{242}($file_count|$total)%{$reset_color%}"
+
+    if [[ -z $total ]]; then
+      text=$GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED
+      color=$GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED
+    else
+      text="$GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED ($file_count|$total)"
+      color=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
+    fi
+
+    echo "$(prompt_geometry_colorize $color $text)"
   else
     echo ""
   fi
@@ -108,11 +155,11 @@ prompt_geometry_git_conflicts() {
 
 prompt_geometry_git_info() {
   if git rev-parse --git-dir > /dev/null 2>&1; then
-    if $PROMPT_GEOMETRY_GIT_CONFLICTS_FILES; then
-      conflicts=" $(prompt_geometry_git_conflicts)"
+    if $PROMPT_GEOMETRY_GIT_CONFLICTS; then
+      conflicts="$(prompt_geometry_git_conflicts) "
     fi
 
-    echo "$(prompt_geometry_git_symbol)%F{242}$(prompt_geometry_git_branch)%{$reset_color%}$conflicts :: $(prompt_geometry_git_time_since_commit) :: $(prompt_geometry_git_dirty)"
+    echo "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts:: $(prompt_geometry_git_time_since_commit) :: $(prompt_geometry_git_status)"
   fi
 }
 
@@ -134,10 +181,10 @@ prompt_geometry_set_title() {
 
 prompt_geometry_render() {
   PROMPT="
- %(?.$PROMPT_SYMBOL.$EXIT_VALUE_SYMBOL) %{$fg[blue]%}%3~%{$reset_color%} "
+ %(?.$GEOMETRY_SYMBOL_PROMPT.$GEOMETRY_EXIT_VALUE) %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
-  PROMPT2=" $RPROMPT_SYMBOL "
-  RPROMPT="$(prompt_geometry_git_info)"
+  PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
+  RPROMPT="$(prompt_geometry_git_info)%{$reset_color%}"
 }
 
 prompt_geometry_setup() {
