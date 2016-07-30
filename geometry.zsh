@@ -18,6 +18,7 @@ GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT=green
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL=white
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG=red
 GEOMETRY_COLOR_EXIT_VALUE=magenta
+GEOMETRY_COLOR_PROMPT=white
 GEOMETRY_COLOR_DIR=blue
 
 # Symbol definitions
@@ -39,9 +40,11 @@ GEOMETRY_GIT_REBASE=$GEOMETRY_SYMBOL_GIT_REBASE
 GEOMETRY_GIT_UNPULLED=$GEOMETRY_SYMBOL_GIT_UNPULLED
 GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
 GEOMETRY_EXIT_VALUE=$(prompt_geometry_colorize $GEOMETRY_COLOR_EXIT_VALUE $GEOMETRY_SYMBOL_EXIT_VALUE)
+GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMBOL_PROMPT)
 
 # Flags
 PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
+PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 
 # Use ag if possible
 GREP=$(which ag &> /dev/null && echo "ag" || echo "grep")
@@ -163,6 +166,22 @@ prompt_geometry_git_info() {
   fi
 }
 
+prompt_geometry_hash_color() {
+  local colors=(2 3 4 6 9 12 14)
+
+  if (($(echotc Co) == 256)); then
+    colors+=(99 155 47 26)
+  fi
+
+  local sum=0
+  for for i in {0..${#1}}; do
+    ord=$(printf '%d' "'${1[$i]}")
+    sum=$(($sum + $ord))
+  done
+
+  echo ${colors[$(($sum % ${#colors}))]}
+}
+
 prompt_geometry_print_title() {
   print -n '\e]0;'
   print -Pn $1
@@ -181,7 +200,7 @@ prompt_geometry_set_title() {
 
 prompt_geometry_render() {
   PROMPT="
- %(?.$GEOMETRY_SYMBOL_PROMPT.$GEOMETRY_EXIT_VALUE) %F{$GEOMETRY_COLOR_DIR}%3~%f "
+ %(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE) %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
   RPROMPT="$(prompt_geometry_git_info)%{$reset_color%}"
@@ -189,6 +208,11 @@ prompt_geometry_render() {
 
 prompt_geometry_setup() {
   autoload -U add-zsh-hook
+
+  if [[ $PROMPT_GEOMETRY_COLORIZE_SYMBOL ]]; then
+    export GEOMETRY_COLOR_PROMPT=$(prompt_geometry_hash_color $HOST)
+    export GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMBOL_PROMPT)
+  fi
 
   add-zsh-hook preexec prompt_geometry_set_cmd_title
   add-zsh-hook precmd prompt_geometry_set_title

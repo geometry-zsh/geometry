@@ -14,6 +14,7 @@ What it does:
 - display arrows indicating if you need to pull, push or if you are mid-rebase
 - set the terminal title to current command and directory
 - display the number of git conflicts and total conflicts (optional)
+- colorize the ▲ based on the current hostname (optional)
 - make you the coolest hacker in the whole Starbucks
 
 Much like [Pure](https://github.com/sindresorhus/pure), geometry adds a different marker
@@ -32,6 +33,10 @@ Just add `antigen bundle frmendes/geometry` to your `.zshrc`.
 
 Move `geometry.zsh` to `$HOME/.oh-my-zsh/custom/themes/geometry.zsh-theme` and
 set `ZSH_THEME="geometry"` in your `.zshrc`.
+
+### zplug
+
+Add `zplug "frmendes/geometry"` to your `.zshrc`
 
 ### Dependencies
 
@@ -54,3 +59,11 @@ conflicts as well as the total number of conflicts by setting the
 This option uses `grep` and `ag` with the latter being a [much faster alternative](http://geoff.greer.fm/ag/).
 
 **If you don't have `ag` installed, this might slow your prompt down**.
+
+#### colorized symbol ▲
+
+You can optionally have the ▲ (or whatever `GEOMETRY_PROMPT_SYMBOL` you set)
+change colors based on a simple hash of your hostname by setting the
+`PROMPT_GEOMETRY_COLORIZE_SYMBOL` variable to true.
+
+![colorized_symbol](screenshots/colorized_symbol.png)
