@@ -15,6 +15,7 @@ What it does:
 - set the terminal title to current command and directory
 - display the number of git conflicts and total conflicts (optional)
 - colorize the ▲ based on the current hostname (optional)
+- colorize the ▲ when running under root user (optional)
 - make you the coolest hacker in the whole Starbucks
 
 Much like [Pure](https://github.com/sindresorhus/pure), geometry adds a different marker
@@ -67,3 +68,11 @@ change colors based on a simple hash of your hostname by setting the
 `PROMPT_GEOMETRY_COLORIZE_SYMBOL` variable to true.
 
 ![colorized_symbol](screenshots/colorized_symbol.png)
+
+#### colorize root
+
+You can have your prompt symbol change colors when running under the root user.
+
+To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to true. Symbol and color can be customized by changing the `GEOMETRY_SYMBOL_ROOT` and `GEOMETRY_COLOR_ROOT` variables.
+
+Note that this option overrides the color hashing of your prompt symbol.
