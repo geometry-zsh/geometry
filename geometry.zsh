@@ -209,7 +209,7 @@ prompt_geometry_render() {
 prompt_geometry_setup() {
   autoload -U add-zsh-hook
 
-  if [[ $PROMPT_GEOMETRY_COLORIZE_SYMBOL ]]; then
+  if $PROMPT_GEOMETRY_COLORIZE_SYMBOL; then
     export GEOMETRY_COLOR_PROMPT=$(prompt_geometry_hash_color $HOST)
     export GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMBOL_PROMPT)
   fi
