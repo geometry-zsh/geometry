@@ -43,16 +43,16 @@ Add `zplug "frmendes/geometry"` to your `.zshrc`
 
 The symbol for rebasing comes from a [Powerline patched font](https://github.com/powerline/fonts). If you want to use it, you're going to need to install one from the font repo. The one used in the screenshots is Roboto Mono. You can also try to [patch it yourself](https://github.com/powerline/fontpatcher).
 
-Alternatively, change the symbol by setting the `GIT_REBASE` variable, in
-`geometry.zsh` to a different value. You can also set the custom options in
-your `.zshrc` before loading the prompt. See my
-[dotfiles](https://github.com/frmendes/dotfiles) where I [set the options for
-geometry](https://github.com/frmendes/dotfiles/blob/master/system/prompt.zsh#L17-L22) before [loading antibody](https://github.com/frmendes/dotfiles/blob/master/zsh/zshrc.symlink#L10-L14)
+Alternatively, change the symbol by setting the `GEOMETRY_SYMBOL_GIT_REBASE` variable. [See options](#options)
 
 ### Options
 
 geometry has plenty of customization options available. Just set the variables in the
-beginning of the `geometry.zsh` file to whatever you like!
+beginning of the `geometry.zsh` file to whatever you like! You can also set the custom options in
+your `.zshrc` before loading the prompt. See my
+[dotfiles](https://github.com/frmendes/dotfiles) where I [set the options for
+geometry](https://github.com/frmendes/dotfiles/blob/master/system/prompt.zsh#L17-L22)
+before [loading antibody](https://github.com/frmendes/dotfiles/blob/master/zsh/zshrc.symlink#L10-L14).
 
 #### git conflicts
 
