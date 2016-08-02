@@ -9,7 +9,7 @@ I started chopping away at [Avit](https://github.com/robbyrussell/oh-my-zsh/blob
 What it does:
 
 - display current git branch
-- display colored time since last commit
+- display colored time since last commit (optional)
 - display state (clean/dirty) of the repo
 - display arrows indicating if you need to pull, push or if you are mid-rebase
 - set the terminal title to current command and directory
@@ -63,6 +63,12 @@ conflicts as well as the total number of conflicts by setting the
 This option uses `grep` and `ag` with the latter being a [much faster alternative](http://geoff.greer.fm/ag/).
 
 **If you don't have `ag` installed, this might slow your prompt down**.
+
+#### git time since last commit
+
+You can optionally hide the time since last commit by setting the
+`PROMPT_GEOMETRY_GIT_TIME` variable to false. You might want to
+do this if the prompt is too slow on large repositories.
 
 #### colorized symbol ▲
 
