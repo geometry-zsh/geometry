@@ -46,6 +46,7 @@ GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMB
 
 # Flags
 PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
+PROMPT_GEOMETRY_GIT_TIME=${PROMPT_GEOMETRY_GIT_TIME:-true}
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 
@@ -165,7 +166,11 @@ prompt_geometry_git_info() {
       conflicts="$(prompt_geometry_git_conflicts) "
     fi
 
-    echo "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts:: $(prompt_geometry_git_time_since_commit) :: $(prompt_geometry_git_status)"
+    if $PROMPT_GEOMETRY_GIT_TIME; then
+      time=" $(prompt_geometry_git_time_since_commit) ::"
+    fi
+
+    echo "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
   fi
 }
 
