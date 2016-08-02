@@ -54,7 +54,7 @@ PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 GREP=$(which ag &> /dev/null && echo "ag" || echo "grep")
 
 prompt_geometry_git_time_since_commit() {
-  if [[ $(git log 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
+  if [[ $(git log -1 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
     # Get the last commit.
     last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
     now=$(date +%s)
