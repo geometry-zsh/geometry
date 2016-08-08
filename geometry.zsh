@@ -175,7 +175,7 @@ prompt_geometry_git_info() {
 }
 
 prompt_geometry_hash_color() {
-  local colors=(2 3 4 6 9 12 14)
+  colors=(2 3 4 6 9 12 14)
 
   if (($(echotc Co) == 256)); then
     colors+=(99 155 47 26)
