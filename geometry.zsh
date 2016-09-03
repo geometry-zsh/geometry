@@ -51,7 +51,7 @@ PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 
 # Use ag if possible
-GREP=$(command -v >/dev/null 2>&1 && echo "ag" || echo "grep")
+GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
 
 prompt_geometry_git_time_since_commit() {
   if [[ $(git log -1 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
