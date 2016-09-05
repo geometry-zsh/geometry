@@ -162,7 +162,7 @@ prompt_geometry_git_conflicts() {
 
 prompt_geometry_git_info() {
   if git rev-parse --git-dir > /dev/null 2>&1; then
-    if $PROMPT_GEOMETRY_GIT_CONFLICTS; then
+    if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
       conflicts="$(prompt_geometry_git_conflicts) "
     fi
 
@@ -208,10 +208,10 @@ prompt_geometry_set_title() {
 
 prompt_geometry_render() {
   PROMPT="
- %(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE) %F{$GEOMETRY_COLOR_DIR}%3~%f "
+ %1{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
-  RPROMPT="$(prompt_geometry_git_info)%{$reset_color%}"
+  RPROMPT="$(prompt_geometry_git_info)%f"
 }
 
 prompt_geometry_setup() {
