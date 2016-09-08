@@ -207,14 +207,14 @@ prompt_geometry_set_title() {
 }
 
 prompt_geometry_render() {
-  if [ $? == 0 ] ; then
-    local symbol=$GEOMETRY_SYMBOL_PROMPT
+  if [ $? -eq 0 ] ; then
+    PROMPT_SYMBOL=$GEOMETRY_SYMBOL_PROMPT
   else
-    local symbol=$GEOMETRY_SYMBOL_EXIT_VALUE
+    PROMPT_SYMBOL=$GEOMETRY_SYMBOL_EXIT_VALUE
   fi
 
   PROMPT="
- %${#symbol}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
+ %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
   RPROMPT="$(prompt_geometry_git_info)%f"
