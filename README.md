@@ -85,3 +85,28 @@ You can have your prompt symbol change colors when running under the root user.
 To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to true. Symbol and color can be customized by changing the `GEOMETRY_SYMBOL_ROOT` and `GEOMETRY_COLOR_ROOT` variables.
 
 Note that this option overrides the color hashing of your prompt symbol.
+
+### FAQs
+
+**I have an idea for a feature, can I submit a PR?**
+
+Please do. geometry is a work in progress so anything you can do to improve it
+is very welcome.
+
+**This is slow on large repos. What can I do about it?**
+
+Unfortunately, this is a known issue and is being worked upon. Disabling some of
+the git features will help you, but [async render](https://github.com/frmendes/geometry/issues/6) is on the roadmap. If you
+have some input or want to help, please submit a PR or comment the issue.
+
+**My tab completion is weird.**
+
+[Relevant xkcd](http://xkcd.com/1726/)
+
+This is a [known problem](https://github.com/frmendes/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update geometry and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
+
+**There are too many/few spaces after the symbol or the prompt**
+
+You're probably using a different prompt character. zsh has a few issues
+determining the length of the prompt and while it should work for most cases, if
+you changed to a different character (an example would be:  `☁︎ `), some extra spaces show up after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no know fix for it except on a case-by-case basis. You can add or remove any extra space on the `prompt_geometry_render` function, on `geometry.zsh`. Feel free to make a PR if you can fix this.
