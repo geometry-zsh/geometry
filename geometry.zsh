@@ -154,7 +154,7 @@ prompt_geometry_git_conflicts() {
       color=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
     fi
 
-    echo "$(prompt_geometry_colorize $color $text)"
+    echo "$(prompt_geometry_colorize $color $text) "
   else
     echo ""
   fi
@@ -163,7 +163,7 @@ prompt_geometry_git_conflicts() {
 prompt_geometry_git_info() {
   if git rev-parse --git-dir > /dev/null 2>&1; then
     if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
-      conflicts="$(prompt_geometry_git_conflicts) "
+      conflicts="$(prompt_geometry_git_conflicts)"
     fi
 
     if $PROMPT_GEOMETRY_GIT_TIME; then
