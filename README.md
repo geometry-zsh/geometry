@@ -109,4 +109,4 @@ This is a [known problem](https://github.com/frmendes/geometry/issues/3#issuecom
 
 You're probably using a different prompt character. zsh has a few issues
 determining the length of the prompt and while it should work for most cases, if
-you changed to a different character (an example would be:  `☁︎ `), some extra spaces show up after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no know fix for it except on a case-by-case basis. You can add or remove any extra space on the `prompt_geometry_render` function, on `geometry.zsh`. Feel free to make a PR if you can fix this.
+you changed to a different character (an example would be:  ☁︎ ), some extra spaces show up after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no know fix for it except on a case-by-case basis. You can add or remove any extra space on the `prompt_geometry_render` function, on `geometry.zsh`. Feel free to make a PR if you can fix this.
