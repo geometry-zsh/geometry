@@ -182,7 +182,7 @@ prompt_geometry_hash_color() {
   fi
 
   local sum=0
-  for for i in {0..${#1}}; do
+  for i in {0..${#1}}; do
     ord=$(printf '%d' "'${1[$i]}")
     sum=$(($sum + $ord))
   done
