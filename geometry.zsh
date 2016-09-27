@@ -196,8 +196,9 @@ prompt_geometry_print_title() {
 # Show current command in title
 prompt_geometry_set_cmd_title() {
   local COMMAND="${2}"
+  local CURR_DIR="${PWD##*/}"
   print -n '\e]0;'
-  print -Pn '$COMMAND @ %m'
+  print -Pn '$COMMAND @ $CURR_DIR'
   print -n '\a'
 }
 
