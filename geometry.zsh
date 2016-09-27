@@ -18,9 +18,7 @@ GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMI
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL:-white}
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG:-red}
 GEOMETRY_COLOR_EXIT_VALUE=${GEOMETRY_COLOR_EXIT_VALUE:-magenta}
-GEOMETRY_COLOR_PROMPT=${GEOMETRY_COLOR_PROMPT:-white}
-GEOMETRY_COLOR_ROOT=${GEOMETRY_COLOR_ROOT:-red}
-GEOMETRY_COLOR_DIR=${GEOMETRY_COLOR_DIR:-blue}
+GEOMETRY_COLOR_PROMPT=${GEOMETRY_COLOR_PROMPT:-white} GEOMETRY_COLOR_ROOT=${GEOMETRY_COLOR_ROOT:-red} GEOMETRY_COLOR_DIR=${GEOMETRY_COLOR_DIR:-blue}
 
 # Symbol definitions
 GEOMETRY_SYMBOL_PROMPT=${GEOMETRY_SYMBOL_PROMPT:-"▲"}
@@ -191,19 +189,21 @@ prompt_geometry_hash_color() {
 }
 
 prompt_geometry_print_title() {
-  print -n '\e]0;'
-  print -Pn $1
-  print -n '\a'
 }
 
 # Show current command in title
 prompt_geometry_set_cmd_title() {
-  prompt_geometry_print_title "${2} @ %m"
+  print -n '\e]0;'
+  print -n "$2 @ "
+  print -nrD "$PWD"
+  print -n '\a'
 }
 
 # Prevent command showing on title after ending
 prompt_geometry_set_title() {
-  prompt_geometry_print_title '%~'
+  print -n '\e]0;'
+  print -Pn '%~'
+  print -n '\a'
 }
 
 prompt_geometry_render() {
