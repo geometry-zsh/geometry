@@ -18,6 +18,7 @@ GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMI
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL:-white}
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG:-red}
 GEOMETRY_COLOR_EXIT_VALUE=${GEOMETRY_COLOR_EXIT_VALUE:-magenta}
+GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-48}
 GEOMETRY_COLOR_PROMPT=${GEOMETRY_COLOR_PROMPT:-white}
 GEOMETRY_COLOR_ROOT=${GEOMETRY_COLOR_ROOT:-red}
 GEOMETRY_COLOR_DIR=${GEOMETRY_COLOR_DIR:-blue}
@@ -49,6 +50,7 @@ PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 PROMPT_GEOMETRY_GIT_TIME=${PROMPT_GEOMETRY_GIT_TIME:-true}
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
+PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
@@ -88,6 +90,13 @@ prompt_geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
   echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
+}
+
+prompt_geometry_virtualenv() {
+  if test ! -z $VIRTUAL_ENV && $PROMPT_VIRTUALENV_ENABLED; then
+    ref=$(basename $VIRTUAL_ENV) || return
+    echo " $(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "[${ref}]")"
+  fi
 }
 
 prompt_geometry_git_status() {
@@ -217,7 +226,7 @@ prompt_geometry_render() {
   fi
 
   PROMPT="
- %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
+%${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f$(prompt_geometry_virtualenv) "
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
   RPROMPT="$(prompt_geometry_git_info)%f"
