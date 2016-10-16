@@ -49,9 +49,34 @@ PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 PROMPT_GEOMETRY_GIT_TIME=${PROMPT_GEOMETRY_GIT_TIME:-true}
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
+PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
+
+# from https://github.com/sindresorhus/pretty-time-zsh
+prompt_geometry_seconds_to_human_time() {
+    local human=" " total_seconds=$1 var=$2
+    local days=$(( total_seconds / 60 / 60 / 24 ))
+    local hours=$(( total_seconds / 60 / 60 % 24 ))
+    local minutes=$(( total_seconds / 60 % 60 ))
+    local seconds=$(( total_seconds % 60 ))
+    (( days > 0 )) && human+="${days}d "
+    (( hours > 0 )) && human+="${hours}h "
+    (( minutes > 0 )) && human+="${minutes}m "
+    human+="${seconds}s"
+
+    echo $human
+}
+
+# stores (into prompt_geometry_command_exec_time) the exec time of the last command if set threshold was exceeded
+prompt_geometry_check_command_exec_time() {
+    integer elapsed
+    (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
+    if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
+        export prompt_geometry_command_exec_time="$(prompt_geometry_seconds_to_human_time $elapsed) ::"
+    fi
+}
 
 prompt_geometry_git_time_since_commit() {
   if [[ $(git log -1 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
@@ -219,8 +244,16 @@ prompt_geometry_render() {
   PROMPT="
  %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
-  PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
-  RPROMPT="$(prompt_geometry_git_info)%f"
+ PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT  "
+ RPROMPT="$prompt_geometry_command_exec_time$(prompt_geometry_git_info)%f"
+}
+
+prompt_geometry_set_command_timestamp() {
+  export prompt_geometry_command_timestamp=$EPOCHSECONDS
+}
+
+prompt_geometry_clear_timestamp() {
+  unset prompt_geometry_command_exec_time
 }
 
 prompt_geometry_setup() {
@@ -236,8 +269,11 @@ prompt_geometry_setup() {
   fi
 
   add-zsh-hook preexec prompt_geometry_set_cmd_title
+  add-zsh-hook preexec prompt_geometry_set_command_timestamp
+  add-zsh-hook precmd prompt_geometry_check_command_exec_time
   add-zsh-hook precmd prompt_geometry_set_title
   add-zsh-hook precmd prompt_geometry_render
+  add-zsh-hook precmd prompt_geometry_clear_timestamp
 }
 
 prompt_geometry_setup
