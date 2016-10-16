@@ -74,7 +74,7 @@ prompt_geometry_check_command_exec_time() {
     integer elapsed
     (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
     if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
-        export prompt_geometry_command_exec_time=$(prompt_geometry_seconds_to_human_time $elapsed)
+        export prompt_geometry_command_exec_time="$(prompt_geometry_seconds_to_human_time $elapsed) ::"
     fi
 }
 
@@ -245,7 +245,7 @@ prompt_geometry_render() {
  %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
  PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT  "
- RPROMPT="${prompt_geometry_command_exec_time}$(prompt_geometry_git_info)%f"
+ RPROMPT="$prompt_geometry_command_exec_time$(prompt_geometry_git_info)%f"
 }
 
 prompt_geometry_set_command_timestamp() {
