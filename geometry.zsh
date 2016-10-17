@@ -18,7 +18,7 @@ GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMI
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL:-white}
 GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG:-red}
 GEOMETRY_COLOR_EXIT_VALUE=${GEOMETRY_COLOR_EXIT_VALUE:-magenta}
-GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-48}
+GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-green}
 GEOMETRY_COLOR_PROMPT=${GEOMETRY_COLOR_PROMPT:-white}
 GEOMETRY_COLOR_ROOT=${GEOMETRY_COLOR_ROOT:-red}
 GEOMETRY_COLOR_DIR=${GEOMETRY_COLOR_DIR:-blue}
@@ -95,7 +95,7 @@ prompt_geometry_git_branch() {
 prompt_geometry_virtualenv() {
   if test ! -z $VIRTUAL_ENV && $PROMPT_VIRTUALENV_ENABLED; then
     ref=$(basename $VIRTUAL_ENV) || return
-    echo " $(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "[${ref}]")"
+    echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref})") "
   fi
 }
 
@@ -226,10 +226,10 @@ prompt_geometry_render() {
   fi
 
   PROMPT="
-%${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f$(prompt_geometry_virtualenv) "
+ %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
-  RPROMPT="$(prompt_geometry_git_info)%f"
+  RPROMPT="$(prompt_geometry_virtualenv)$(prompt_geometry_git_info)%f"
 }
 
 prompt_geometry_setup() {
