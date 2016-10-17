@@ -14,14 +14,14 @@ GEOMETRY_COLOR_GIT_CLEAN=${GEOMETRY_COLOR_GIT_CLEAN:-green}
 GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED=${GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED:-red}
 GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED=${GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED:-green}
 GEOMETRY_COLOR_GIT_BRANCH=${GEOMETRY_COLOR_GIT_BRANCH:-242}
-GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT:-green}
-GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL:-white}
-GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG=${GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG:-red}
 GEOMETRY_COLOR_EXIT_VALUE=${GEOMETRY_COLOR_EXIT_VALUE:-magenta}
 GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-green}
 GEOMETRY_COLOR_PROMPT=${GEOMETRY_COLOR_PROMPT:-white}
 GEOMETRY_COLOR_ROOT=${GEOMETRY_COLOR_ROOT:-red}
 GEOMETRY_COLOR_DIR=${GEOMETRY_COLOR_DIR:-blue}
+GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
+GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
+GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
 
 # Symbol definitions
 GEOMETRY_SYMBOL_PROMPT=${GEOMETRY_SYMBOL_PROMPT:-"▲"}
@@ -48,41 +48,48 @@ GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMB
 # Flags
 PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 PROMPT_GEOMETRY_GIT_TIME=${PROMPT_GEOMETRY_GIT_TIME:-true}
+PROMPT_GEOMETRY_EXEC_TIME=${PROMPT_GEOMETRY_EXEC_TIME:-false}
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
+PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
+
+# from https://github.com/sindresorhus/pretty-time-zsh
+prompt_geometry_seconds_to_human_time() {
+  local color=""
+  local human=" " total_seconds=$1
+  local days=$(( total_seconds / 60 / 60 / 24 ))
+  local hours=$(( total_seconds / 60 / 60 % 24 ))
+  local minutes=$(( total_seconds / 60 % 60 ))
+  local seconds=$(( total_seconds % 60 ))
+  (( days > 0 )) && human+="${days}d " && color=$GEOMETRY_COLOR_TIME_LONG
+  (( hours > 0 )) && human+="${hours}h " && color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+  (( minutes > 0 )) && human+="${minutes}m "
+  human+="${seconds}s" && color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+
+  echo "$(prompt_geometry_colorize $color $human)"
+}
+
+# stores (into prompt_geometry_command_exec_time) the exec time of the last command if set threshold was exceeded
+prompt_geometry_check_command_exec_time() {
+  integer elapsed
+  (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
+  if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
+    export prompt_geometry_command_exec_time="$(prompt_geometry_seconds_to_human_time $elapsed) "
+  fi
+}
 
 prompt_geometry_git_time_since_commit() {
   if [[ $(git log -1 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
     # Get the last commit.
     last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
     now=$(date +%s)
-    seconds_since_last_commit=$((now-last_commit))
+    seconds_since_last_commit=$((now - last_commit))
 
-    # Totals
-    minutes=$((seconds_since_last_commit / 60))
-    hours=$((seconds_since_last_commit/3600))
-
-    # Sub-hours and sub-minutes
-    days=$((seconds_since_last_commit / 86400))
-    sub_hours=$((hours % 24))
-    sub_minutes=$((minutes % 60))
-
-    if [ $hours -gt 24 ]; then
-      commit_age="${days}d"
-      color=$GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_LONG
-    elif [ $minutes -gt 60 ]; then
-      commit_age="${sub_hours}h${sub_minutes}m"
-      color=$GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_NEUTRAL
-    else
-      commit_age="${minutes}m"
-      color=$GEOMETRY_COLOR_GIT_TIME_SINCE_COMMIT_SHORT
-    fi
-
-    echo "$(prompt_geometry_colorize $color $commit_age)"
+    echo $(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
   fi
 }
 
@@ -229,7 +236,20 @@ prompt_geometry_render() {
  %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
-  RPROMPT="$(prompt_geometry_virtualenv)$(prompt_geometry_git_info)%f"
+
+  local exec_time=$prompt_geometry_command_exec_time
+  local git_info=$(prompt_geometry_git_info)
+  local virtualenv=$(prompt_geometry_virtualenv)
+  local right_prompt=($exec_time $virtualenv $git_info)
+  RPROMPT=${(j/::/)right_prompt}
+}
+
+prompt_geometry_set_command_timestamp() {
+  export prompt_geometry_command_timestamp=$EPOCHSECONDS
+}
+
+prompt_geometry_clear_timestamp() {
+  unset prompt_geometry_command_exec_time
 }
 
 prompt_geometry_setup() {
@@ -245,8 +265,18 @@ prompt_geometry_setup() {
   fi
 
   add-zsh-hook preexec prompt_geometry_set_cmd_title
+
+  if $PROMPT_GEOMETRY_EXEC_TIME; then
+    add-zsh-hook preexec prompt_geometry_set_command_timestamp
+    add-zsh-hook precmd prompt_geometry_check_command_exec_time
+  fi
+
   add-zsh-hook precmd prompt_geometry_set_title
   add-zsh-hook precmd prompt_geometry_render
+
+  if $PROMPT_GEOMETRY_EXEC_TIME; then
+    add-zsh-hook precmd prompt_geometry_clear_timestamp
+  fi
 }
 
 prompt_geometry_setup

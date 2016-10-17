@@ -10,6 +10,7 @@ What it does:
 
 - display current git branch
 - display colored time since last commit (optional)
+- display the running time of long running commands
 - display state (clean/dirty) of the repo
 - display arrows indicating if you need to pull, push or if you are mid-rebase
 - set the terminal title to current command and directory
@@ -85,6 +86,11 @@ You can have your prompt symbol change colors when running under the root user.
 To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to true. Symbol and color can be customized by changing the `GEOMETRY_SYMBOL_ROOT` and `GEOMETRY_COLOR_ROOT` variables.
 
 Note that this option overrides the color hashing of your prompt symbol.
+
+#### time elapsed for long-running commands
+
+You can optionally show a time display for long-running commands
+by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to true.
 
 ### FAQs
 
