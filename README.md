@@ -89,7 +89,8 @@ Note that this option overrides the color hashing of your prompt symbol.
 
 #### time elapsed for long-running commands
 
-You can override the time threshold for displaying long-running commands by setting `PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME` to an integer. The default is to show a human-readable running time after 5 seconds.
+You can optionally hide the time display for long-running commands
+by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to false.
 
 ### FAQs
 
