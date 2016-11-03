@@ -99,12 +99,6 @@ by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to true.
 Please do. geometry is a work in progress so anything you can do to improve it
 is very welcome.
 
-**This is slow on large repos. What can I do about it?**
-
-Unfortunately, this is a known issue and is being worked upon. Disabling some of
-the git features will help you, but [async render](https://github.com/frmendes/geometry/issues/6) is on the roadmap. If you
-have some input or want to help, please submit a PR or comment the issue.
-
 **My tab completion is weird.**
 
 [Relevant xkcd](http://xkcd.com/1726/)

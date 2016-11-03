@@ -48,12 +48,16 @@ GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMB
 # Flags
 PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 PROMPT_GEOMETRY_GIT_TIME=${PROMPT_GEOMETRY_GIT_TIME:-true}
+PROMPT_GEOMETRY_GIT_ASYNC=${PROMPT_GEOMETRY_GIT_ASYNC:-true}
 PROMPT_GEOMETRY_EXEC_TIME=${PROMPT_GEOMETRY_EXEC_TIME:-false}
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
 PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
 PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-true}
+
+# Misc configurations
+GEOMETRY_ASYNC_PROMPT_TMP_FILENAME=${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME:-/tmp/geometry-prompt-git-info-}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
@@ -243,6 +247,13 @@ prompt_geometry_set_title() {
   print -n '\a'
 }
 
+prompt_geometry_render_rprompt() {
+    local exec_time=$prompt_geometry_command_exec_time
+    local git_info=$(prompt_geometry_git_info)
+    local virtualenv=$(prompt_geometry_virtualenv)
+    echo $exec_time $virtualenv $git_info
+}
+
 prompt_geometry_render() {
   if [ $? -eq 0 ] ; then
     PROMPT_SYMBOL=$GEOMETRY_SYMBOL_PROMPT
@@ -255,9 +266,11 @@ prompt_geometry_render() {
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 
-  local exec_time=$prompt_geometry_command_exec_time
-  local right_prompt="$exec_time $(prompt_geometry_virtualenv) $(prompt_geometry_git_info)"
-  RPROMPT=${(j/::/)right_prompt}
+  if ! $PROMPT_GEOMETRY_GIT_ASYNC; then
+      RPROMPT="$(prompt_geometry_render_rprompt)"
+  else
+      RPROMPT=""
+  fi
 }
 
 prompt_geometry_set_command_timestamp() {
@@ -266,6 +279,37 @@ prompt_geometry_set_command_timestamp() {
 
 prompt_geometry_clear_timestamp() {
   unset prompt_geometry_command_exec_time
+}
+
+GEOMETRY_ASYNC_PROMPT_PROC=0
+prompt_geometry_setup_async_prompt() {
+
+    prompt_geometry_precmd() {
+        -prompt-geometry-async-function () {
+            echo "${(j/::/)$(prompt_geometry_render_rprompt)}" > ${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME}$$
+            kill -s USR1 $$
+        }
+
+        # kill child if necessary
+        if [[ "${GEOMETRY_ASYNC_PROMPT_PROC}" != 0 ]]; then
+            kill -s HUP $GEOMETRY_ASYNC_PROMPT_PROC &> /dev/null || :
+        fi
+
+        -prompt-geometry-async-function &!
+        GEOMETRY_ASYNC_PROMPT_PROC=$!
+    }
+    add-zsh-hook precmd prompt_geometry_precmd
+
+    TRAPUSR1() {
+        # read from temp file
+        RPROMPT="$(<${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME}$$)"
+
+        # reset proc number
+        GEOMETRY_ASYNC_PROMPT_PROC=0
+
+        # redisplay
+        zle && zle reset-prompt
+    }
 }
 
 prompt_geometry_setup() {
@@ -292,6 +336,10 @@ prompt_geometry_setup() {
 
   if $PROMPT_GEOMETRY_EXEC_TIME; then
     add-zsh-hook precmd prompt_geometry_clear_timestamp
+  fi
+
+  if $PROMPT_GEOMETRY_GIT_ASYNC; then
+     prompt_geometry_setup_async_prompt
   fi
 }
 
