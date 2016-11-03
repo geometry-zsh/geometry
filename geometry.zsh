@@ -53,6 +53,7 @@ PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
 PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
+PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-true}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
@@ -65,10 +66,26 @@ prompt_geometry_seconds_to_human_time() {
   local hours=$(( total_seconds / 60 / 60 % 24 ))
   local minutes=$(( total_seconds / 60 % 60 ))
   local seconds=$(( total_seconds % 60 ))
-  (( days > 0 )) && human+="${days}d " && color=$GEOMETRY_COLOR_TIME_LONG
-  (( hours > 0 )) && human+="${hours}h " && color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
-  (( minutes > 0 )) && human+="${minutes}m "
-  human+="${seconds}s" && color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+
+  if $PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT; then
+    if (( days > 0 )); then
+        human+="${days}d "
+        color=$GEOMETRY_COLOR_TIME_LONG
+    elif (( hours > 0 )); then
+        human+="${hours}h "
+        color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+    elif (( minutes > 0 )); then
+        human+="${minutes}m "
+    else
+        human+="${seconds}s"
+        color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+    fi
+  else
+    (( days > 0 )) && human+="${days}d " && color=$GEOMETRY_COLOR_TIME_LONG
+    (( hours > 0 )) && human+="${hours}h " && color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
+    (( minutes > 0 )) && human+="${minutes}m "
+    human+="${seconds}s" && color=${color:-$GEOMETRY_COLOR_TIME_SHORT}
+  fi
 
   echo "$(prompt_geometry_colorize $color $human)"
 }
