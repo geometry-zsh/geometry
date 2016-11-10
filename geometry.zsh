@@ -256,9 +256,7 @@ prompt_geometry_render() {
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 
   local exec_time=$prompt_geometry_command_exec_time
-  local git_info=$(prompt_geometry_git_info)
-  local virtualenv=$(prompt_geometry_virtualenv)
-  local right_prompt=($exec_time $virtualenv $git_info)
+  local right_prompt="$exec_time $(prompt_geometry_virtualenv) $(prompt_geometry_git_info)"
   RPROMPT=${(j/::/)right_prompt}
 }
 
