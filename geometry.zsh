@@ -249,9 +249,7 @@ prompt_geometry_set_title() {
 
 prompt_geometry_render_rprompt() {
     local exec_time=$prompt_geometry_command_exec_time
-    local git_info=$(prompt_geometry_git_info)
-    local virtualenv=$(prompt_geometry_virtualenv)
-    echo $exec_time $virtualenv $git_info
+    echo $exec_time $virtualenv $(prompt_geometry_git_info) $(prompt_geometry_virtualenv)
 }
 
 prompt_geometry_render() {
