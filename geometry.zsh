@@ -60,7 +60,7 @@ PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:-true}
 
 # Misc configurations
 GEOMETRY_ASYNC_PROMPT_TMP_FILENAME=${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME:-/tmp/geometry-prompt-git-info-}
-PROMPT_GEOMETRY_GIT_NO_COMMITS_MESSAGE=${PROMPT_GEOMETRY_GIT_NO_COMMITS_MESSAGE:-"no commits"}
+GEOMETRY_GIT_NO_COMMITS_MESSAGE=${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-"no commits"}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
@@ -110,16 +110,15 @@ prompt_geometry_check_command_exec_time() {
 prompt_geometry_git_time_since_commit() {
   # Defaults to "", which would hide the git_time_since_commit block
   local git_time_since_commit=""
-  if [[ $(git log -1 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
-    # Get the last commit.
-    local last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
-    if [[  $last_commit ]]; then
-        now=$(date +%s)
-        seconds_since_last_commit=$((now - last_commit))
-        git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
-    elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
-        git_time_since_commit=$(prompt_geometry_colorize $GEOMETRY_COLOR_NO_TIME $PROMPT_GEOMETRY_GIT_NO_COMMITS_MESSAGE)
-    fi
+
+  # Get the last commit.
+  local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
+  if [[ $last_commit ]]; then
+      now=$(date +%s)
+      seconds_since_last_commit=$((now - last_commit))
+      git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
+  elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
+      git_time_since_commit=$(prompt_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
 
   echo $git_time_since_commit
