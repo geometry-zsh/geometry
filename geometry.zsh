@@ -171,18 +171,15 @@ prompt_geometry_git_symbol() {
 
 prompt_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
-  # echo adds a newline which we want to avoid
-  # Using -n prevents from using wc, which searches for newlines
-  # and returns 0 when a single file has conflicts
-  # Use grep instead
-  file_count=$(echo -n "$conflicts" | $GREP -c '^')
 
-  # $file_count contains the amount of files with conflicts
-  # in the **BEGINNING** of the merge/rebase.
-  if [ "$file_count" -gt 0 ]; then
-    # If we have fixed every conflict, $total will be empty
-    # So we will check and mark it as good if every conflict is solved
-    total=$($GREP -c '^=======$' $conflicts)
+  if [[ ! -z $conflicts ]]; then
+    conflict_list=`$GREP -o '^=======$' $(echo $conflicts)`
+
+    raw_file_count=`echo $conflict_list | cut -d ':' -f1 | uniq | wc -l`
+    file_count=${raw_file_count##*( )}
+
+    raw_total=`echo $conflict_list | wc -l`
+    total=${raw_total##*(  )}
 
     if [[ -z $total ]]; then
       text=$GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED
