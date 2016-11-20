@@ -60,7 +60,7 @@ PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-t
 GEOMETRY_ASYNC_PROMPT_TMP_FILENAME=${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME:-/tmp/geometry-prompt-git-info-}
 
 # Use ag if possible
-GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
+GEOMETRY_GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
 
 # from https://github.com/sindresorhus/pretty-time-zsh
 prompt_geometry_seconds_to_human_time() {
@@ -173,12 +173,12 @@ prompt_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
   if [[ ! -z $conflicts ]]; then
-    conflict_list=`$GREP -o '^=======$' $(echo $conflicts)`
+    conflict_list=`$GEOMETRY_GREP -cH '^=======$' $(echo $conflicts)`
 
-    raw_file_count=`echo $conflict_list | cut -d ':' -f1 | uniq | wc -l`
+    raw_file_count=`echo $conflict_list | cut -d ':' -f1 | wc -l`
     file_count=${raw_file_count##*( )}
 
-    raw_total=`echo $conflict_list | wc -l`
+    raw_total=`echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc`
     total=${raw_total##*(  )}
 
     if [[ -z $total ]]; then
