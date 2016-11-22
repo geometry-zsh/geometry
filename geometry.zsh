@@ -22,6 +22,7 @@ GEOMETRY_COLOR_DIR=${GEOMETRY_COLOR_DIR:-blue}
 GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
 GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
 GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
+GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
 
 # Symbol definitions
 GEOMETRY_SYMBOL_PROMPT=${GEOMETRY_SYMBOL_PROMPT:-"▲"}
@@ -55,9 +56,11 @@ PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
 PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
 PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-true}
+PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:-true}
 
 # Misc configurations
 GEOMETRY_ASYNC_PROMPT_TMP_FILENAME=${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME:-/tmp/geometry-prompt-git-info-}
+GEOMETRY_GIT_NO_COMMITS_MESSAGE=${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-"no commits"}
 
 # Use ag if possible
 GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
@@ -105,14 +108,20 @@ prompt_geometry_check_command_exec_time() {
 }
 
 prompt_geometry_git_time_since_commit() {
-  if [[ $(git log -1 2>&1 > /dev/null | grep -c "^fatal: bad default revision") == 0 ]]; then
-    # Get the last commit.
-    last_commit=$(git log --pretty=format:'%at' -1 2> /dev/null)
-    now=$(date +%s)
-    seconds_since_last_commit=$((now - last_commit))
+  # Defaults to "", which would hide the git_time_since_commit block
+  local git_time_since_commit=""
 
-    echo $(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
+  # Get the last commit.
+  local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
+  if [[ $last_commit ]]; then
+      now=$(date +%s)
+      seconds_since_last_commit=$((now - last_commit))
+      git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
+  elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
+      git_time_since_commit=$(prompt_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
+
+  echo $git_time_since_commit
 }
 
 prompt_geometry_git_branch() {
@@ -205,7 +214,10 @@ prompt_geometry_git_info() {
     fi
 
     if $PROMPT_GEOMETRY_GIT_TIME; then
-      time=" $(prompt_geometry_git_time_since_commit) ::"
+      local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
+      if [[ $git_time_since_commit ]]; then
+          time=" $git_time_since_commit ::"
+      fi
     fi
 
     echo "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
