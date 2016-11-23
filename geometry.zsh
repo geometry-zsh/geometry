@@ -65,7 +65,7 @@ GEOMETRY_PROMPT_PREFIX=${GEOMETRY_PROMPT_PREFIX:-"
 "}
 
 # Use ag if possible
-GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
+GEOMETRY_GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
 
 # from https://github.com/sindresorhus/pretty-time-zsh
 prompt_geometry_seconds_to_human_time() {
@@ -182,18 +182,15 @@ prompt_geometry_git_symbol() {
 
 prompt_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
-  # echo adds a newline which we want to avoid
-  # Using -n prevents from using wc, which searches for newlines
-  # and returns 0 when a single file has conflicts
-  # Use grep instead
-  file_count=$(echo -n "$conflicts" | $GREP -c '^')
 
-  # $file_count contains the amount of files with conflicts
-  # in the **BEGINNING** of the merge/rebase.
-  if [ "$file_count" -gt 0 ]; then
-    # If we have fixed every conflict, $total will be empty
-    # So we will check and mark it as good if every conflict is solved
-    total=$($GREP -c '^=======$' $conflicts)
+  if [[ ! -z $conflicts ]]; then
+    conflict_list=$($GEOMETRY_GREP -cH '^=======$' $(echo $conflicts))
+
+    raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
+    file_count=${raw_file_count##*( )}
+
+    raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
+    total=${raw_total##*(  )}
 
     if [[ -z $total ]]; then
       text=$GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED
