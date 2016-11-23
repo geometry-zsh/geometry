@@ -306,7 +306,7 @@ prompt_geometry_setup_async_prompt() {
 
         # kill child if necessary
         if [[ "${GEOMETRY_ASYNC_PROMPT_PROC}" != 0 ]]; then
-            kill -s HUP $GEOMETRY_ASYNC_PROMPT_PROC &> /dev/null || :
+            kill -- -$(ps -o pgid= $GEOMETRY_ASYNC_PROMPT_PROC | grep -o '[0-9]*') &> /dev/null || :
         fi
 
         -prompt-geometry-async-function &!
