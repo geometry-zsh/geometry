@@ -64,8 +64,14 @@ GEOMETRY_GIT_NO_COMMITS_MESSAGE=${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-"no commits"}
 GEOMETRY_PROMPT_PREFIX=${GEOMETRY_PROMPT_PREFIX:-"
 "}
 
-# Use ag if possible
-GEOMETRY_GREP=$(command -v ag >/dev/null 2>&1 && echo "ag" || echo "grep")
+# Choose best version of grep
+prompt_geometry_set_grep() {
+  (command -v rg >/dev/null 2>&1 && echo "rg") \
+  || (command -v ag >/dev/null 2>&1 && echo "ag") \
+  || echo "grep"
+}
+
+GEOMETRY_GREP=${GREP:-$(prompt_geometry_set_grep)}
 
 # from https://github.com/sindresorhus/pretty-time-zsh
 prompt_geometry_seconds_to_human_time() {
