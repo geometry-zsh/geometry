@@ -293,7 +293,7 @@ prompt_geometry_render() {
 
   if $PROMPT_GEOMETRY_SHOW_RPROMPT; then
     if $PROMPT_GEOMETRY_GIT_ASYNC; then
-        # On render we resets rprompt until async process
+        # On render we reset rprompt until async process
         # comes with newer git info
         RPROMPT=""
     else
