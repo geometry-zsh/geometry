@@ -173,12 +173,12 @@ prompt_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
   if [[ ! -z $conflicts ]]; then
-    conflict_list=`$GEOMETRY_GREP -cH '^=======$' $(echo $conflicts)`
+    conflict_list=$($GEOMETRY_GREP -cH '^=======$' $(echo $conflicts))
 
-    raw_file_count=`echo $conflict_list | cut -d ':' -f1 | wc -l`
+    raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
     file_count=${raw_file_count##*( )}
 
-    raw_total=`echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc`
+    raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
     total=${raw_total##*(  )}
 
     if [[ -z $total ]]; then
