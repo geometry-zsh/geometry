@@ -60,6 +60,7 @@ PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5
 PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-true}
 PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:-true}
 PROMPT_DOCKER_MACHINE_ENABLED=${PROMPT_DOCKER_MACHINE_ENABLED:-false}
+PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
 
 # Misc configurations
 GEOMETRY_ASYNC_PROMPT_TMP_FILENAME=${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME:-/tmp/geometry-prompt-git-info-}
@@ -290,10 +291,14 @@ prompt_geometry_render() {
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 
-  if ! $PROMPT_GEOMETRY_GIT_ASYNC; then
-      RPROMPT="$(prompt_geometry_render_rprompt)"
-  else
-      RPROMPT=""
+  if $PROMPT_GEOMETRY_SHOW_RPROMPT; then
+    if $PROMPT_GEOMETRY_GIT_ASYNC; then
+        # On render we reset rprompt until async process
+        # comes with newer git info
+        RPROMPT=""
+    else
+        RPROMPT="$(prompt_geometry_render_rprompt)"
+    fi
   fi
 }
 
@@ -362,7 +367,7 @@ prompt_geometry_setup() {
     add-zsh-hook precmd prompt_geometry_clear_timestamp
   fi
 
-  if $PROMPT_GEOMETRY_GIT_ASYNC; then
+  if $PROMPT_GEOMETRY_SHOW_RPROMPT && $PROMPT_GEOMETRY_GIT_ASYNC; then
      prompt_geometry_setup_async_prompt
   fi
 }
