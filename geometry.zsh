@@ -23,6 +23,7 @@ GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
 GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
 GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
 GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
+GEOMETRY_COLOR_DOCKER_MACHINE=${GEOMETRY_COLOR_DOCKER_MACHINE:-blue}
 
 # Symbol definitions
 GEOMETRY_SYMBOL_PROMPT=${GEOMETRY_SYMBOL_PROMPT:-"▲"}
@@ -36,6 +37,7 @@ GEOMETRY_SYMBOL_GIT_UNPULLED=${GEOMETRY_SYMBOL_GIT_UNPULLED:-"⇣"}
 GEOMETRY_SYMBOL_GIT_UNPUSHED=${GEOMETRY_SYMBOL_GIT_UNPUSHED:-"⇡"}
 GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED=${GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED:-"◆"}
 GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED=${GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED:-"◈"}
+GEOMETRY_SYMBOL_DOCKER_MACHINE=${GEOMETRY_SYMBOL_DOCKER_MACHINE:-"⚓"}
 
 # Combine color and symbols
 GEOMETRY_GIT_DIRTY=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
@@ -57,6 +59,7 @@ PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
 PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
 PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-true}
 PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:-true}
+PROMPT_DOCKER_MACHINE_ENABLED=${PROMPT_DOCKER_MACHINE_ENABLED:-false}
 
 # Misc configurations
 GEOMETRY_ASYNC_PROMPT_TMP_FILENAME=${GEOMETRY_ASYNC_PROMPT_TMP_FILENAME:-/tmp/geometry-prompt-git-info-}
@@ -143,6 +146,13 @@ prompt_geometry_virtualenv() {
     ref=$(basename $VIRTUAL_ENV) || return
     echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref})") "
   fi
+}
+
+prompt_geometry_docker_machine() {
+    if test ! -z $DOCKER_MACHINE_NAME && $PROMPT_DOCKER_MACHINE_ENABLED; then
+        ref=$DOCKER_MACHINE_NAME || return
+        echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_DOCKER_MACHINE "(${GEOMETRY_SYMBOL_DOCKER_MACHINE} ${ref})") "
+    fi
 }
 
 prompt_geometry_git_status() {
@@ -266,7 +276,7 @@ prompt_geometry_set_title() {
 
 prompt_geometry_render_rprompt() {
     local exec_time=$prompt_geometry_command_exec_time
-    echo $exec_time $virtualenv $(prompt_geometry_git_info) $(prompt_geometry_virtualenv)
+    echo $exec_time $virtualenv $(prompt_geometry_git_info) $(prompt_geometry_virtualenv) $(prompt_geometry_docker_machine)
 }
 
 prompt_geometry_render() {
