@@ -144,6 +144,6 @@ geometry_prompt_git_render() {
       fi
     fi
 
-    echo "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
+    echo -n "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
   fi
 }

@@ -63,12 +63,8 @@ prompt_geometry_set_title() {
 }
 
 prompt_geometry_render_rprompt() {
-    local plugins
-    for plugin in $GEOMETRY_PROMPT_DEFAULT_PROMPTS; do
-        geometry_prompt_${plugin}_render
-    done
-
-    echo "$plugins"
+    # Renders all registered plugins
+    geometry_plugin_render
 }
 
 prompt_geometry_render() {
