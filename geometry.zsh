@@ -7,6 +7,7 @@ source "$GEOMETRY_ROOT/lib/async.zsh"
 source "$GEOMETRY_ROOT/lib/plugin.zsh"
 source "$GEOMETRY_ROOT/lib/time.zsh"
 source "$GEOMETRY_ROOT/lib/color.zsh"
+source "$GEOMETRY_ROOT/lib/grep.zsh"
 
 # Color definitions
 GEOMETRY_COLOR_EXIT_VALUE=${GEOMETRY_COLOR_EXIT_VALUE:-magenta}
@@ -34,18 +35,6 @@ PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
 # Misc configurations
 GEOMETRY_PROMPT_PREFIX=${GEOMETRY_PROMPT_PREFIX:-"
 "}
-
-# Choose best version of grep
-prompt_geometry_set_grep() {
-  (command -v rg >/dev/null 2>&1 && echo "rg") \
-  || (command -v ag >/dev/null 2>&1 && echo "ag") \
-  || echo "grep"
-}
-
-GEOMETRY_GREP=${GREP:-$(prompt_geometry_set_grep)}
-
-prompt_geometry_print_title() {
-}
 
 # Show current command in title
 prompt_geometry_set_cmd_title() {
@@ -101,12 +90,12 @@ prompt_geometry_setup() {
     export GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMBOL_PROMPT)
   fi
 
+  # TODO make plugin root.zsh
   if $PROMPT_GEOMETRY_COLORIZE_ROOT && [[ $UID == 0 || $EUID == 0 ]]; then
     export GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_ROOT $GEOMETRY_SYMBOL_ROOT)
   fi
 
   add-zsh-hook preexec prompt_geometry_set_cmd_title
-
   add-zsh-hook precmd prompt_geometry_set_title
   add-zsh-hook precmd prompt_geometry_render
 
