@@ -1,3 +1,5 @@
+zmodload zsh/datetime || return
+
 # Flags
 PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
 PROMPT_GEOMETRY_EXEC_TIME=${PROMPT_GEOMETRY_EXEC_TIME:-false}
@@ -22,16 +24,17 @@ prompt_geometry_clear_timestamp() {
 geometry_prompt_exec_time_setup() {
   if $PROMPT_GEOMETRY_EXEC_TIME; then
     add-zsh-hook precmd prompt_geometry_clear_timestamp
-  fi
-
-  if $PROMPT_GEOMETRY_EXEC_TIME; then
-    add-zsh-hook preexec prompt_geometry_set_command_timestamp
     add-zsh-hook precmd prompt_geometry_check_command_exec_time
+
+    add-zsh-hook preexec prompt_geometry_set_command_timestamp
   fi
 
   return $PROMPT_GEOMETRY_EXEC_TIME
 }
 
 geometry_prompt_exec_time_render() {
+  # TODO if the user hits enter key and the previous command caused
+  # a `prompt_geometry_command_exec_time` to be set this values will keep
+  # increasing and not reset until another command is run. See `geometry_prompt_exec_time_setup`.
   echo "$prompt_geometry_command_exec_time"
 }
