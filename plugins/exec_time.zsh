@@ -4,6 +4,11 @@ PROMPT_GEOMETRY_EXEC_TIME=${PROMPT_GEOMETRY_EXEC_TIME:-false}
 
 # stores (into prompt_geometry_command_exec_time) the exec time of the last command if set threshold was exceeded
 prompt_geometry_check_command_exec_time() {
+  integer elapsed
+  (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
+  if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
+    export prompt_geometry_command_exec_time="$(prompt_geometry_seconds_to_human_time $elapsed)"
+  fi
 }
 
 prompt_geometry_set_command_timestamp() {
@@ -28,9 +33,5 @@ geometry_prompt_exec_time_setup() {
 }
 
 geometry_prompt_exec_time_render() {
-  integer elapsed
-  (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
-  if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
-    export prompt_geometry_command_exec_time="$(prompt_geometry_seconds_to_human_time $elapsed)"
-  fi
+  echo "$prompt_geometry_command_exec_time"
 }
