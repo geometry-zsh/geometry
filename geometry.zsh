@@ -28,6 +28,7 @@ GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMB
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
+PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
 PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
 
 # Misc configurations
@@ -79,7 +80,7 @@ prompt_geometry_render() {
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 
   if $PROMPT_GEOMETRY_SHOW_RPROMPT; then
-    if $PROMPT_GEOMETRY_GIT_ASYNC; then
+    if $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
         # On render we reset rprompt until async process
         # comes with newer git info
         RPROMPT=""
@@ -95,7 +96,7 @@ prompt_geometry_setup() {
   if $PROMPT_GEOMETRY_ENABLE_PLUGINS; then
       geometry_plugin_setup
   fi
-  
+
   if $PROMPT_GEOMETRY_COLORIZE_SYMBOL; then
     export GEOMETRY_COLOR_PROMPT=$(prompt_geometry_hash_color $HOST)
     export GEOMETRY_PROMPT=$(prompt_geometry_colorize $GEOMETRY_COLOR_PROMPT $GEOMETRY_SYMBOL_PROMPT)
@@ -109,6 +110,10 @@ prompt_geometry_setup() {
 
   add-zsh-hook precmd prompt_geometry_set_title
   add-zsh-hook precmd prompt_geometry_render
+
+  if $PROMPT_GEOMETRY_SHOW_RPROMPT && $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
+     prompt_geometry_setup_async_prompt
+  fi
 }
 
 prompt_geometry_setup
