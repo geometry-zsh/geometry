@@ -8,11 +8,11 @@ GEOMETRY_SYMBOL_DOCKER_MACHINE=${GEOMETRY_SYMBOL_DOCKER_MACHINE:-"⚓"}
 PROMPT_DOCKER_MACHINE_ENABLED=${PROMPT_DOCKER_MACHINE_ENABLED:-false}
 
 geometry_prompt_docker_machine_setup() {
-    
+    return $PROMPT_DOCKER_MACHINE_ENABLED
 }
 
 geometry_prompt_docker_machine_render() {
-    if test ! -z $DOCKER_MACHINE_NAME && $PROMPT_DOCKER_MACHINE_ENABLED; then
+    if test ! -z $DOCKER_MACHINE_NAME; then
         ref=$DOCKER_MACHINE_NAME || return
         echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_DOCKER_MACHINE "(${GEOMETRY_SYMBOL_DOCKER_MACHINE} ${ref})")"
     fi

@@ -1,7 +1,7 @@
 # Define default plugins
 typeset -ga GEOMETRY_PROMPT_DEFAULT_PROMPTS
 if [[ $#GEOMETRY_PROMPT_DEFAULT_PROMPTS -eq 0 ]]; then
-    GEOMETRY_PROMPT_DEFAULT_PROMPTS=(git exec_time virtualenv)
+    GEOMETRY_PROMPT_DEFAULT_PROMPTS=(exec_time git)
 fi
 
 # List of active plugins
