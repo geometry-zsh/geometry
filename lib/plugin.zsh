@@ -1,3 +1,6 @@
+# Define default separator for plugins' output
+typeset -g GEOMETRY_PLUGIN_SEPARATOR=${GEOMETRY_PLUGIN_SEPARATOR:-" "}
+
 # Define default plugins
 typeset -ga GEOMETRY_PROMPT_DEFAULT_PROMPTS
 if [[ $#GEOMETRY_PROMPT_DEFAULT_PROMPTS -eq 0 ]]; then
@@ -41,7 +44,7 @@ geometry_plugin_render() {
     for plugin in $GEOMETRY_PROMPT_PLUGINS; do
         render=$(geometry_prompt_${plugin}_render)
         if [[ $render != "" ]]; then
-            rprompt+="$render "
+            rprompt+="$render$GEOMETRY_PLUGIN_SEPARATOR"
         fi
     done
 
