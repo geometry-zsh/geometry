@@ -10,10 +10,10 @@ typeset -g geometry_time_color
 -prompt_geometry_time_long_format() {
   local human=""
   local color=""
-  local days=$0
-  local hours=$1
-  local minutes=$2
-  local seconds=$3
+  local days=$1
+  local hours=$2
+  local minutes=$3
+  local seconds=$4
 
   if (( days > 0 )); then
     human="${days}d"
@@ -37,10 +37,10 @@ typeset -g geometry_time_color
 -prompt_geometry_time_short_format() {
   local human=""
   local color=""
-  local days=$0
-  local hours=$1
-  local minutes=$2
-  local seconds=$3
+  local days=$1
+  local hours=$2
+  local minutes=$3
+  local seconds=$4
 
   (( days > 0 )) && human+="${days}d " && color=$GEOMETRY_COLOR_TIME_LONG
   (( hours > 0 )) && human+="${hours}h " && color=${color:-$GEOMETRY_COLOR_TIME_NEUTRAL}
