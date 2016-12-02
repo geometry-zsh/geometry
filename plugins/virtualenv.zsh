@@ -15,3 +15,6 @@ geometry_prompt_virtualenv_render() {
     echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref})")"
   fi
 }
+
+# Self-register plugin
+geometry_plugin_register virtualenv

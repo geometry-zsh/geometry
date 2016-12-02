@@ -11,11 +11,10 @@ typeset -ga GEOMETRY_PROMPT_PLUGINS
 geometry_plugin_setup() {
   for plugin in $GEOMETRY_PROMPT_DEFAULT_PROMPTS; do
       source "$GEOMETRY_ROOT/plugins/$plugin.zsh"
-      geometry_plugin_register $plugin
   done
 }
 
-# Register a plugin
+# Registers a plugin
 geometry_plugin_register() {
   local plugin=$1
   if [[ $plugin == "" ]]; then
@@ -27,6 +26,11 @@ geometry_plugin_register() {
   if geometry_prompt_${plugin}_setup; then
       GEOMETRY_PROMPT_PLUGINS+=$plugin
   fi
+}
+
+# List registered plugins
+geometry_plugin_list() {
+    echo ${(j:\n:)GEOMETRY_PROMPT_PLUGINS}
 }
 
 # Renders the registered plugins
