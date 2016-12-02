@@ -1,3 +1,8 @@
+GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
+GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
+GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
+GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
+
 typeset -g geometry_time_human
 typeset -g geometry_time_color
 
@@ -55,7 +60,7 @@ prompt_geometry_seconds_to_human_time() {
   local seconds=$(( total_seconds % 60 ))
 
   if $PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT; then
-  -prompt_geometry_time_long_format $days $hours $minutes $seconds
+    -prompt_geometry_time_long_format $days $hours $minutes $seconds
   else
     -prompt_geometry_time_short_format $days $hours $minutes $seconds
   fi
