@@ -6,8 +6,8 @@ GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
 typeset -g geometry_time_human
 typeset -g geometry_time_color
 
-# Format time in long format: 1d4h33m51s, 33m51s
--prompt_geometry_time_long_format() {
+# Format time in short format: 4s, 4h, 1d
+-prompt_geometry_time_short_format() {
   local human=""
   local color=""
   local days=$1
@@ -33,8 +33,8 @@ typeset -g geometry_time_color
   geometry_time_human=$human
 }
 
-# Format time in short format: 4s, 4h, 1d
--prompt_geometry_time_short_format() {
+# Format time in long format: 1d4h33m51s, 33m51s
+-prompt_geometry_time_long_format() {
   local human=""
   local color=""
   local days=$1
@@ -54,12 +54,15 @@ typeset -g geometry_time_color
 # from https://github.com/sindresorhus/pretty-time-zsh
 prompt_geometry_seconds_to_human_time() {
   local total_seconds=$1
+  local long_format=$2
+
   local days=$(( total_seconds / 60 / 60 / 24 ))
   local hours=$(( total_seconds / 60 / 60 % 24 ))
   local minutes=$(( total_seconds / 60 % 60 ))
   local seconds=$(( total_seconds % 60 ))
 
-  if $PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT; then
+  # It looks redundant but it seems it's not
+  if [[ $long_format == true ]]; then
     -prompt_geometry_time_long_format $days $hours $minutes $seconds
   else
     -prompt_geometry_time_short_format $days $hours $minutes $seconds
