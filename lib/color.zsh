@@ -18,3 +18,8 @@ prompt_geometry_hash_color() {
 
   echo ${colors[$(($sum % ${#colors}))]}
 }
+
+# alias prompt_geometry_colorize as -g-color
+-g-color() {
+  prompt_geometry_colorize "$@"
+}
