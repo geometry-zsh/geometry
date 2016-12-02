@@ -26,10 +26,10 @@ geometry_plugin_register() {
   
   local plugin=$1
   # Check plugin wasn't registered before
-   if [[ ! ${(MS)GEOMETRY_PROMPT_PLUGINS##$plugin} == "" ]]; then
-       echo "Error: Plugin already registered."
-       return 1
-   fi
+  if [[ ! ${(MS)GEOMETRY_PROMPT_PLUGINS##$plugin} == "" ]]; then
+    echo "Error: Plugin already registered."
+    return 1
+  fi
 
   # Check plugin has been sourced
   local plugin_setup_function="geometry_prompt_${plugin}_setup"
@@ -42,6 +42,22 @@ geometry_plugin_register() {
   if geometry_prompt_${plugin}_setup; then
       GEOMETRY_PROMPT_PLUGINS+=$plugin
   fi
+}
+
+# Unregisters a given plugin
+geometry_plugin_unregister() {
+    local plugin=$1
+    # Check plugin is registered
+    if [[ ${(MS)GEOMETRY_PROMPT_PLUGINS##$plugin} == "" ]]; then
+      echo "Error: Plugin not registered."
+      return 1
+    fi
+    
+    if [[ $+functions["geometry_prompt_${plugin}_shutdown"] != 0 ]]; then
+        geometry_prompt_${plugin}_shutdown
+    fi
+
+    GEOMETRY_PROMPT_PLUGINS[$GEOMETRY_PROMPT_PLUGINS[(i)$plugin]]=()
 }
 
 # List registered plugins
