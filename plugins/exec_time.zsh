@@ -1,3 +1,4 @@
+# Load zsh/datetime module to be able to access `$EPOCHSECONDS`
 zmodload zsh/datetime || return
 
 # Flags
@@ -37,3 +38,6 @@ geometry_prompt_exec_time_setup() {
 geometry_prompt_exec_time_render() {
   echo "$prompt_geometry_command_exec_time"
 }
+
+# Self-register plugin
+geometry_plugin_register exec_time
