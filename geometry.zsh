@@ -101,7 +101,7 @@ prompt_geometry_setup() {
   add-zsh-hook precmd prompt_geometry_render
 
   if $PROMPT_GEOMETRY_SHOW_RPROMPT && $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
-     prompt_geometry_setup_async_prompt
+     geometry_async_setup
   fi
 }
 
