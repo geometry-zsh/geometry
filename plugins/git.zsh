@@ -24,7 +24,7 @@ GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
 # Flags
 PROMPT_GEOMETRY_GIT_CONFLICTS=${PROMPT_GEOMETRY_GIT_CONFLICTS:-false}
 PROMPT_GEOMETRY_GIT_TIME=${PROMPT_GEOMETRY_GIT_TIME:-true}
-PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_SHORT_FORMAT:-true}
+PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT=${PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT:-false}
 PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:-true}
 
 # Misc configurations
@@ -39,7 +39,7 @@ prompt_geometry_git_time_since_commit() {
   if [[ $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
-      git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
+      git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT)
   elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
       git_time_since_commit=$(prompt_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
