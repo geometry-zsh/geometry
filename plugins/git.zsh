@@ -143,3 +143,6 @@ geometry_prompt_git_render() {
     echo -n "$(prompt_geometry_git_symbol) $(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
   fi
 }
+
+# Self-register plugin
+geometry_plugin_register git
