@@ -125,7 +125,7 @@ prompt_geometry_git_time_since_commit() {
 
   # Get the last commit.
   local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
-  if [[ $last_commit ]]; then
+  if [[ -n $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
       git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit)
@@ -231,7 +231,7 @@ prompt_geometry_git_info() {
 
     if $PROMPT_GEOMETRY_GIT_TIME; then
       local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
-      if [[ $git_time_since_commit ]]; then
+      if [[ -n $git_time_since_commit ]]; then
           time=" $git_time_since_commit ::"
       fi
     fi
