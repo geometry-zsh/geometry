@@ -342,6 +342,7 @@ prompt_geometry_setup_async_prompt() {
 }
 
 prompt_geometry_setup() {
+  zmodload zsh/datetime
   autoload -U add-zsh-hook
 
   if $PROMPT_GEOMETRY_COLORIZE_SYMBOL; then
