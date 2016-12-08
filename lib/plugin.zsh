@@ -13,7 +13,7 @@ typeset -ga GEOMETRY_PROMPT_PLUGINS
 # Set up default plugins
 geometry_plugin_setup() {
   for plugin in $GEOMETRY_PROMPT_DEFAULT_PROMPTS; do
-    source "$GEOMETRY_ROOT/plugins/$plugin.zsh"
+    source "$GEOMETRY_ROOT/plugins/$plugin/plugin.zsh"
   done
 }
 
@@ -23,7 +23,7 @@ geometry_plugin_register() {
     echo "Error: Missing argument."
     return 1
   fi
-  
+
   local plugin=$1
   # Check plugin wasn't registered before
   if [[ ! $GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
@@ -51,7 +51,7 @@ geometry_plugin_unregister() {
     echo "Error: Plugin $plugin not registered."
     return 1
   fi
-  
+
   if [[ $+functions["geometry_prompt_${plugin}_shutdown"] != 0 ]]; then
     geometry_prompt_${plugin}_shutdown
   fi
