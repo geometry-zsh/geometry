@@ -2,7 +2,7 @@
 
 geometry is a minimalistic, fully customizable zsh prompt theme.
 
-![geometry](screenshots/geometry.gif)
+![geometry](screenshots/geometry.png)
 
 geometry starts small, with good defaults, and allows you to customize it at your own will. It can be as simple or complex as you like.
 
@@ -40,10 +40,6 @@ You can also change the rebase symbol by setting the `GEOMETRY_SYMBOL_GIT_REBASE
 ## What it does
 
 To allow a pleasant configuration and customization, geometry works with the concept of plugins.
-
-By default, here's what it looks like:
-
-![geometry](screenshots/geometry.png)
 
 In a nutshell, it can:
 
@@ -125,7 +121,7 @@ geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. T
 
 Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `PROMPT_GEOMETRY_COLORIZE_SYMBOL` to `true`.
 
-![colorized_symbol](screenshots/colorized_symbol.png)
+![colorize](screenshots/colorize.png)
 
 #### Colorize prompt symbol when root
 
@@ -142,7 +138,7 @@ by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to `true`.
 
 If enabled, this shows the elapsed time for commands running longer than 5 seconds. You can change this threshold by changing `PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME` to the number of desired seconds.
 
-![long_running](long_running.png)
+![long_running](screenshots/long_running.png)
 
 ## FAQs
 
