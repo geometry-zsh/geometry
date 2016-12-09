@@ -21,7 +21,7 @@ This option chooses between `rg`, `ag` or `grep`, depending on which is availabl
 
 **If you don't have `rg` or `ag` installed, this might slow down your prompt. Proceed with caution.**
 
-![git_conflicts](screenshots/git_conflicts.png)
+![git_conflicts](/screenshots/git_conflicts.png)
 
 ### Use long or short time format
 
