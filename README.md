@@ -164,6 +164,11 @@ As for PRs, we are currently looking to improve performance.
 
 If you want to help with plugins, we are looking to add Ruby and Node version displays.
 
+**Where do I put my geometry configuration files?**
+
+Well, anywhere in your `.zshrc` file should be fine, **as long as you define
+variables before geometry is loaded**.
+
 **My tab completion is weird.**
 
 [Relevant xkcd](http://xkcd.com/1726/)
@@ -182,10 +187,10 @@ This is also a known issue. Make sure you have `PROMPT_GEOMETRY_GIT_ASYNC` set t
 
 **That's a neat font you have there. Can I have it?**
 
-Sure. It's [Roboto Mono](). Don't forget to use the [powerline patched version]() if you want to use the default rebase symbol.
+Sure. It's [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono). Don't forget to use the [powerline patched version](https://github.com/powerline/fonts/tree/master/RobotoMono) if you want to use the default rebase symbol.
 
 ## Maintainers
 
-geometry is currently maintained by [frmendes]() and [desyncr]().
+geometry is currently maintained by [frmendes](https://github.com/frmendes) and [desyncr](https://github.com/desyncr).
 
-A big thank you to those who have previously [contributed](), [jedahan]() in particular.
+A big thank you to those who have previously [contributed](https://github.com/frmendes/geometry/graphs/contributors), [jedahan](https://github.com/jedahan) in particular.
