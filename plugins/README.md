@@ -6,10 +6,10 @@ PR).
 
 Available plugins:
 
-* [Docker Machine](/docker_machine)
-* [Exec Time](/exec_time)
-* [Git](/git)
-* [Virtualenv](virtualenv)
+* [Docker Machine](/plugins/docker_machine)
+* [Exec Time](/plugins/exec_time)
+* [Git](/plugins/git)
+* [Virtualenv](/plugins/virtualenv)
 
 ## Default plugins
 
