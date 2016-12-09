@@ -4,7 +4,12 @@ geometry works with its own plugin architecture. It's very easy to enable and
 disable plugins. You can also create your own plugins (and even submit them in a
 PR).
 
-# TODO: Plugin index
+Available plugins:
+
+* [Docker Machine](/docker_machine)
+* [Exec Time](/exec_time)
+* [Git](/git)
+* [Virtualenv](virtualenv)
 
 ## Default plugins
 

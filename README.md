@@ -6,7 +6,13 @@ geometry is a minimalistic, fully customizable zsh prompt theme.
 
 geometry starts small, with good defaults, and allows you to customize it at your own will. It can be as simple or complex as you like.
 
-TODO: INDEX
+* [Installing](#installing)
+* [Dependencies](#dependencies)
+* [What it Does](#what-it-does)
+* [Plugins][#plugins]
+* [Configuration](#configuration)
+* [FAQs](#faqs)
+* [Maintainers](#maintainers)
 
 ## Installing
 
@@ -54,7 +60,7 @@ In a nutshell, it can:
 The right side prompt is print asynchronously, so you know it's going to be
 fast™.
 
-### Plugins
+## Plugins
 
 geometry has an internal plugin architecture. The default plugins are `exec_time` and `git`. But you can also enable a number of them just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
 
@@ -71,7 +77,7 @@ documentation and configuration for each specific plugin in the
 geometry also supports your own custom plugins. See the plugin documentation for
 instructions and examples.
 
-### Prompt Configuration
+## Configuration
 
 geometry was built with easy configuration in mind. The best way to do so is by
 [using environment variables](https://github.com/frmendes/dotfiles/blob/7f448626e1c6e9c0ab7b474c5ff2c1939b64b7d2/system/prompt.zsh#L18-L24).
@@ -81,7 +87,7 @@ you load the theme**.
 
 The default options try to balance the theme in order to be both lightweight and contain useful features.
 
-#### Symbols
+### Symbols
 
 There are a set of symbols available which you can override with environment variables.
 
@@ -109,19 +115,19 @@ GEOMETRY_COLOR_DIR="blue" # current directory color
 You can find color configuration for specific plugins under the
 [plugins](/plugins) directory.
 
-#### Features
+### Features
 
-##### Async `RPROMPT`
+#### Async `RPROMPT`
 
 geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_GIT_ASYNC` to `false`
 
-##### Randomly colorize prompt symbol
+#### Randomly colorize prompt symbol
 
 Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `PROMPT_GEOMETRY_COLORIZE_SYMBOL` to `true`.
 
 ![colorized_symbol](screenshots/colorized_symbol.png)
 
-##### Colorize prompt symbol when root
+#### Colorize prompt symbol when root
 
 You can have your prompt symbol change color when running under the `root` user.
 
@@ -129,7 +135,7 @@ To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to `true`. Bot
 
 Note that this option overrides the color hashing of your prompt symbol.
 
-##### Display elapsed time for long-running commands
+#### Display elapsed time for long-running commands
 
 You can optionally show a time display for long-running commands
 by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to `true`.
@@ -137,7 +143,6 @@ by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to `true`.
 If enabled, this shows the elapsed time for commands running longer than 5 seconds. You can change this threshold by changing `PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME` to the number of desired seconds.
 
 ![long_running](long_running.png)
-
 
 ## FAQs
 
