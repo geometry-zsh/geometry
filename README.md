@@ -9,7 +9,7 @@ geometry starts small, with good defaults, and allows you to customize it at you
 * [Installing](#installing)
 * [Dependencies](#dependencies)
 * [What it Does](#what-it-does)
-* [Plugins][#plugins]
+* [Plugins](#plugins)
 * [Configuration](#configuration)
 * [FAQs](#faqs)
 * [Maintainers](#maintainers)
