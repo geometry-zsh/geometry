@@ -71,7 +71,7 @@ These plugins will load and display on the right prompt. You can check the
 documentation and configuration for each specific plugin in the
 [plugins](/plugins) directory.
 
-geometry also supports your own custom plugins. See the plugin [documentation](/plugins) for
+geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
 
 ## Configuration

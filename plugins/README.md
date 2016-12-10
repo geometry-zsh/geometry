@@ -14,8 +14,8 @@ Available plugins:
 ## Default plugins
 
 By default, geometry uses `git` and `exec_time`. You can configure a different
-setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration
-files.
+setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own
+configuration files.
 
 
 ```sh
@@ -33,7 +33,24 @@ them.
 Let's assume you want to add a plugin that prints `(☞ﾟ∀ﾟ)☞` when the git branch
 is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Let's call it `pretty_git`.
 
-First up, the `setup` function. It's the first thing that gets called when the
+By convention we set up configuration variables at the top:
+
+```sh
+GEOMETRY_PRETTY_GIT_CLEAN=${GEOMETRY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
+GEOMETRY_PRETTY_GIT_DIRTY=${GEOMETRY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
+
+```
+
+As a best practice, you should allow settings through environment variables.
+Now, the user is able to change the output simply by setting an environment
+variable in their `.zshrc` file:
+
+```sh
+# Overwrite default GEOMETRY_PRETTY_GIT_CLEAN
+GEOMETRY_PRETTY_GIT_CLEAN="(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
+```
+
+Next up, the `setup` function. It's the first thing that gets called when the
 plugin is loaded, so you might want to use for configuration. We won't need it
 for now, so let's leave it blank.
 
@@ -48,9 +65,6 @@ Now, rendering. The `render` function is the one that gets called to print to
 the `RPROMPT`. Let's simply check the branch status and print accordingly:
 
 ```sh
-$GEOMETRY_PRETTY_GIT_CLEAN=${PROMPT_GEOMETRY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
-$GEOMETRY_PRETTY_GIT_DIRTY=${PROMPT_GEOMETRY_PRETTY_GIT_DIRETY:-"(ノಠ益ಠ)ノ彡┻━┻"}
-
 geometry_prompt_pretty_git_render() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $GEOMETRY_PRETTY_GIT_CLEAN
@@ -60,10 +74,40 @@ geometry_prompt_pretty_git_render() {
 }
 ```
 
-As a best practice, you should allow settings through environment variables.
-Now, the user is able to change the output simply by setting an environment
-variable in their `.zshrc` file:
+Finally you'll need to "register" the plugin with geometry in order to set it up
+and render it on each render cycle.
 
 ```sh
-$GEOMETRY_PRETTY_GIT_CLEAN="(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
+geometry_plugin_register pretty_git
+```
+
+### Full working example
+
+Save the following example as `pretty_git.zsh` somewhere in your `.dotfiles` 
+directory and source it _after_ sourcing geometry, ex.:
+
+```sh
+# .zshrc
+source /path/to/geometry.zsh
+source /path/to/pretty_git.zsh
+
+```
+
+```sh
+# pretty_git.zsh
+GEOMETRY_PRETTY_GIT_CLEAN=${GEOMETRY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
+GEOMETRY_PRETTY_GIT_DIRTY=${GEOMETRY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
+
+geometry_prompt_pretty_git_setup() {}
+
+geometry_prompt_pretty_git_render() {
+  if test -z "$(git status --porcelain --ignore-submodules)"; then
+    echo $GEOMETRY_PRETTY_GIT_CLEAN
+  else
+    echo $GEOMETRY_PRETTY_GIT_DIRTY
+  fi
+}
+
+geometry_plugin_register pretty_git
+
 ```
