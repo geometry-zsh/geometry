@@ -12,4 +12,4 @@ environment variable. Defaults to `blue`.
 ### Symbols
 
 You can change the symbol by setting the `GEOMETRY_SYMBOL_DOCKER_MACHINE`
-environment variable. Defaults to `⚓.
+environment variable. Defaults to `⚓`.

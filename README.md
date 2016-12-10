@@ -58,10 +58,11 @@ fast™.
 
 ## Plugins
 
-geometry has an internal plugin architecture. The default plugins are `exec_time` and `git`. But you can also enable a number of them just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
+geometry has an internal plugin architecture. The default plugins are `exec_time`
+and `git`. But you can enable a variety of built-in plugins just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv dockermachine)
+GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
@@ -70,7 +71,7 @@ These plugins will load and display on the right prompt. You can check the
 documentation and configuration for each specific plugin in the
 [plugins](/plugins) directory.
 
-geometry also supports your own custom plugins. See the plugin documentation for
+geometry also supports your own custom plugins. See the plugin [documentation](/plugins) for
 instructions and examples.
 
 ## Configuration

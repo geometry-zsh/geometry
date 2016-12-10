@@ -13,12 +13,13 @@ Available plugins:
 
 ## Default plugins
 
-By default, geometry uses `git` and `exec_time`. You can add more by changing
-the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files.
+By default, geometry uses `git` and `exec_time`. You can configure a different
+setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration
+files.
 
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv dockermachine)
+GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
@@ -30,17 +31,14 @@ so. All you need is a `setup` and a `render` function, with the plugin name on
 them.
 
 Let's assume you want to add a plugin that prints `(☞ﾟ∀ﾟ)☞` when the git branch
-is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Well call it `pretty_git`.
+is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Let's call it `pretty_git`.
 
 First up, the `setup` function. It's the first thing that gets called when the
 plugin is loaded, so you might want to use for configuration. We won't need it
 for now, so let's leave it blank.
 
 ```sh
-geometry_prompt_pretty_git_setup() {
-
-}
-
+geometry_prompt_pretty_git_setup() {}
 ```
 
 Note that the `setup` and `render` functions must obey the naming convention of
