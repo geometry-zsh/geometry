@@ -2,17 +2,17 @@
 typeset -g GEOMETRY_PLUGIN_SEPARATOR=${GEOMETRY_PLUGIN_SEPARATOR:-" "}
 
 # Define default plugins
-typeset -ga GEOMETRY_PROMPT_DEFAULT_PROMPTS
-if [[ $#GEOMETRY_PROMPT_DEFAULT_PROMPTS -eq 0 ]]; then
-  GEOMETRY_PROMPT_DEFAULT_PROMPTS=(exec_time git)
+typeset -ga GEOMETRY_PROMPT_PLUGINS
+if [[ $#GEOMETRY_PROMPT_PLUGINS -eq 0 ]]; then
+  GEOMETRY_PROMPT_PLUGINS=(exec_time git)
 fi
 
 # List of active plugins
-typeset -ga GEOMETRY_PROMPT_PLUGINS
+typeset -ga _GEOMETRY_PROMPT_PLUGINS
 
 # Set up default plugins
 geometry_plugin_setup() {
-  for plugin in $GEOMETRY_PROMPT_DEFAULT_PROMPTS; do
+  for plugin in $GEOMETRY_PROMPT_PLUGINS; do
     source "$GEOMETRY_ROOT/plugins/$plugin/plugin.zsh"
   done
 }
@@ -26,7 +26,7 @@ geometry_plugin_register() {
 
   local plugin=$1
   # Check plugin wasn't registered before
-  if [[ ! $GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
+  if [[ ! $_GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
     echo "Error: Plugin $plugin already registered."
     return 1
   fi
@@ -39,7 +39,7 @@ geometry_plugin_register() {
   fi
 
   if geometry_prompt_${plugin}_setup; then
-    GEOMETRY_PROMPT_PLUGINS+=$plugin
+    _GEOMETRY_PROMPT_PLUGINS+=$plugin
   fi
 }
 
@@ -47,7 +47,7 @@ geometry_plugin_register() {
 geometry_plugin_unregister() {
   local plugin=$1
   # Check plugin is registered
-  if [[ $GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
+  if [[ $_GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
     echo "Error: Plugin $plugin not registered."
     return 1
   fi
@@ -56,12 +56,12 @@ geometry_plugin_unregister() {
     geometry_prompt_${plugin}_shutdown
   fi
 
-  GEOMETRY_PROMPT_PLUGINS[$GEOMETRY_PROMPT_PLUGINS[(i)$plugin]]=()
+  _GEOMETRY_PROMPT_PLUGINS[$_GEOMETRY_PROMPT_PLUGINS[(i)$plugin]]=()
 }
 
 # List registered plugins
 geometry_plugin_list() {
-  echo ${(j:\n:)GEOMETRY_PROMPT_PLUGINS}
+  echo ${(j:\n:)_GEOMETRY_PROMPT_PLUGINS}
 }
 
 # Renders the registered plugins
@@ -69,7 +69,7 @@ geometry_plugin_render() {
   local rprompt=""
   local render=""
 
-  for plugin in $GEOMETRY_PROMPT_PLUGINS; do
+  for plugin in $_GEOMETRY_PROMPT_PLUGINS; do
     render=$(geometry_prompt_${plugin}_render)
     if [[ $render != "" ]]; then
       rprompt+="$render$GEOMETRY_PLUGIN_SEPARATOR"
