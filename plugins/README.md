@@ -66,6 +66,9 @@ the `RPROMPT`. Let's simply check the branch status and print accordingly:
 
 ```sh
 geometry_prompt_pretty_git_render() {
+  # Do nothing if we're not in a repository
+  [ ! -d $PWD/.git ] && return
+
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $GEOMETRY_PRETTY_GIT_CLEAN
   else
