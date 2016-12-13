@@ -185,7 +185,7 @@ you changed the symbol to a different character (an example would be:  ☁︎ ),
 
 **The prompt is slow on large repos**
 
-This is also a known issue. Make sure you have `PROMPT_GEOMETRY_GIT_ASYNC` set to `true` to avoid long waiting times. If the problem persists, our recommendation would be to disable the git time checks by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
+This is also a known issue. Make sure you have `PROMPT_GEOMETRY_RPROMPT_ASYNC` set to `true` to avoid long waiting times. If the problem persists, our recommendation would be to disable the git time checks by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
 
 **That's a neat font you have there. Can I have it?**
 
