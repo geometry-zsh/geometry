@@ -2,10 +2,10 @@
 GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-green}
 
 # Flags
-PROMPT_VIRTUALENV_ENABLED=${PROMPT_VIRTUALENV_ENABLED:-false}
+PROMPT_VIRTUALENV=${PROMPT_VIRTUALENV:-false}
 
 geometry_prompt_virtualenv_setup() {
-    return $PROMPT_VIRTUALENV_ENABLED
+    return $PROMPT_VIRTUALENV
 }
 
 geometry_prompt_virtualenv_render() {
