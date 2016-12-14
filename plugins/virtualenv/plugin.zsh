@@ -1,8 +1,7 @@
 # Color definitions
 GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-green}
 
-geometry_prompt_virtualenv_setup() {
-}
+geometry_prompt_virtualenv_setup() {}
 
 geometry_prompt_virtualenv_render() {
   local ref
