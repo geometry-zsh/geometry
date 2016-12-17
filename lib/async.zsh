@@ -1,11 +1,13 @@
 # Misc configurations
-typeset -g GEOMETRY_ASYNC_TMP_FILENAME=${GEOMETRY_ASYNC_TMP_FILENAME:-/tmp/geometry-rprompt-info-}
+typeset -g GEOMETRY_ASYNC_TMP_PATH=${GEOMETRY_ASYNC_TMP_PATH:-/tmp}
+typeset -g GEOMETRY_ASYNC_TMP_FILENAME_PREFIX='.geometry-rprompt-info-'
+typeset -g GEOMETRY_ASYNC_TMP_FULL_PATH="$GEOMETRY_ASYNC_TMP_PATH/$GEOMETRY_ASYNC_TMP_FILENAME_PREFIX"
 typeset -g GEOMETRY_ASYNC_PROC_ID=0
 
-# Renders rprompt and puts result into `${GEOMETRY_ASYNC_TMP_FILENAME}$$`
+# Renders rprompt and puts result into `${GEOMETRY_ASYNC_TMP_FULL_PATH}$$`
 # then signals `USR1`
 -geometry_async_function() {
-    echo "${(j/::/)$(prompt_geometry_render_rprompt)}" > ${GEOMETRY_ASYNC_TMP_FILENAME}$$
+    echo "${(j/::/)$(prompt_geometry_render_rprompt)}" > ${GEOMETRY_ASYNC_TMP_FULL_PATH}$$
     kill -s USR1 $$
 }
 
@@ -26,13 +28,14 @@ typeset -g GEOMETRY_ASYNC_PROC_ID=0
 geometry_async_setup() {
     add-zsh-hook precmd '-geometry_async_precmd'
 
+    (\rm ${GEOMETRY_ASYNC_TMP_FULL_PATH}*) &> /dev/null
+
     TRAPUSR1() {
         # read from temp file
-        RPROMPT="$(<${GEOMETRY_ASYNC_TMP_FILENAME}$$)"
+        RPROMPT="$(<${GEOMETRY_ASYNC_TMP_FULL_PATH}$$)"
 
         # reset proc number
         GEOMETRY_ASYNC_PROC_ID=0
-        rm ${GEOMETRY_ASYNC_TMP_FILENAME}$$
 
         # redisplay
         zle && zle reset-prompt
