@@ -3,7 +3,6 @@ zmodload zsh/datetime || return
 
 # Flags
 PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME=${PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME:-5}
-PROMPT_GEOMETRY_EXEC_TIME=${PROMPT_GEOMETRY_EXEC_TIME:-false}
 
 typeset -g prompt_geometry_command_timestamp
 typeset -g prompt_geometry_command_exec_time
@@ -26,13 +25,11 @@ prompt_geometry_clear_timestamp() {
 }
 
 geometry_prompt_exec_time_setup() {
-  if $PROMPT_GEOMETRY_EXEC_TIME; then
-    add-zsh-hook precmd prompt_geometry_clear_timestamp
-    add-zsh-hook precmd prompt_geometry_check_command_exec_time
-    add-zsh-hook precmd prompt_geometry_set_command_timestamp
-  fi
+  add-zsh-hook precmd prompt_geometry_clear_timestamp
+  add-zsh-hook precmd prompt_geometry_check_command_exec_time
+  add-zsh-hook precmd prompt_geometry_set_command_timestamp
 
-  return $PROMPT_GEOMETRY_EXEC_TIME
+  return true
 }
 
 geometry_prompt_exec_time_render() {
