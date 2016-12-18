@@ -54,8 +54,12 @@ prompt_geometry_git_branch() {
 }
 
 prompt_geometry_git_status() {
-  if test -z "$(git status --porcelain --ignore-submodules)"; then
-    echo $GEOMETRY_GIT_CLEAN
+  if test -z "$(git status --porcelain --ignore-submodules HEAD)"; then
+    if test -z "$(git ls-files --others --modified --exclude-standard)"; then
+      echo $GEOMETRY_GIT_CLEAN
+    else
+      echo $GEOMETRY_GIT_DIRTY
+    fi
   else
     echo $GEOMETRY_GIT_DIRTY
   fi
