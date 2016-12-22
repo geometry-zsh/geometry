@@ -95,20 +95,19 @@ prompt_geometry_git_remote_check() {
 }
 
 prompt_geometry_git_symbol() {
+  local render=""
   local git_rebase="$(prompt_geometry_git_rebase_check)"
   local git_remote="$(prompt_geometry_git_remote_check)"
-  local render=""
 
-  if [[ $git_rebase != "" ]]; then
+  if [[ -n $git_rebase ]]; then
     render+="$git_rebase"
-    
-    if [[ $git_remote != "" ]]; then
-      render+=" $git_remote"
-    fi
-
   fi
 
-  if [[ $git_remote != "" ]]; then
+  if [[ -n $git_rebase && -n $git_remote ]]; then
+    render+=" "
+  fi
+
+  if [[ -n $git_remote ]]; then
     render+="$git_remote"
   fi
 
@@ -159,14 +158,13 @@ geometry_prompt_git_render() {
 
     local render="$(prompt_geometry_git_symbol)"
 
-    if [[ $render != "" ]]; then
+    if [[ -n $render ]]; then
       render+=" "
     fi
 
     render+="$(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
 
     echo -n $render
-
   fi
 }
 
