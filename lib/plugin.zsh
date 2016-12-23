@@ -71,7 +71,7 @@ geometry_plugin_render() {
 
   for plugin in $_GEOMETRY_PROMPT_PLUGINS; do
     render=$(geometry_prompt_${plugin}_render)
-    if [[ $render != "" ]]; then
+    if [[ -n $render ]]; then
       rprompt+="$render$GEOMETRY_PLUGIN_SEPARATOR"
     fi
   done
