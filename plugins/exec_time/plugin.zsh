@@ -32,8 +32,20 @@ geometry_prompt_exec_time_setup() {
   return true
 }
 
+check_empty_buffer() {
+  if [[ $#BUFFER == 0 ]]; then
+    current_command_is_empty=true
+  else
+    current_command_is_empty=false
+  fi
+}
+
+zle -N zle-line-finish check_empty_buffer
+
 geometry_prompt_exec_time_render() {
-  echo "$prompt_geometry_command_exec_time"
+  if [ "$current_command_is_empty" = false ]; then
+    echo "$prompt_geometry_command_exec_time"
+  fi
 }
 
 # Self-register plugin
