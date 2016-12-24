@@ -80,6 +80,7 @@ prompt_geometry_render() {
 }
 
 prompt_geometry_setup() {
+  setopt PROMPT_SUBST
   zmodload zsh/datetime
   autoload -U add-zsh-hook
   if $PROMPT_GEOMETRY_ENABLE_PLUGINS; then
