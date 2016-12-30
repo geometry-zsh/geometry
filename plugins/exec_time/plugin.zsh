@@ -14,11 +14,6 @@ prompt_geometry_check_command_exec_time() {
   # if we don't clear this up it may be rendered each time
   prompt_geometry_command_exec_time=
 
-  # Return immediatly if there is no timestamp set
-  if [[ -n $prompt_geometry_command_timestamp ]]; then
-    return
-  fi
-
   # Check if elapsed time is above the configured threshold
   (( elapsed = EPOCHSECONDS - ${prompt_geometry_command_timestamp:-$EPOCHSECONDS} ))
   if (( elapsed > $PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME )); then
