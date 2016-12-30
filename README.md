@@ -103,20 +103,28 @@ You can find symbol configuration for specific plugins under the
 The following color definitions are available for configuration:
 
 ```shell
-GEOMETRY_COLOR_EXIT_VALUE="magenta" # prompt symbol color when exit value is != 0
-GEOMETRY_COLOR_PROMPT="white" # prompt symbol color
-GEOMETRY_COLOR_ROOT="red" # root prompt symbol color
-GEOMETRY_COLOR_DIR="blue" # current directory color
+GEOMETRY_COLOR_EXIT_VALUE="magenta"         # prompt symbol color when exit value is != 0
+GEOMETRY_COLOR_PROMPT="white"               # prompt symbol color
+GEOMETRY_COLOR_ROOT="red"                   # root prompt symbol color
+GEOMETRY_COLOR_DIR="blue"                   # current directory color
 ```
 
 You can find color configuration for specific plugins under the
 [plugins](/plugins) directory.
 
+
+### Misc
+
+```shell
+GEOMETRY_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
+GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
+```
+
 ### Features
 
 #### Async `RPROMPT`
 
-geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_GIT_ASYNC` to `false`
+geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_RPROMPT_ASYNC` to `false`
 
 #### Randomly colorize prompt symbol
 
