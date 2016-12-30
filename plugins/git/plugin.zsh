@@ -29,6 +29,7 @@ PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:-true}
 
 # Misc configurations
 GEOMETRY_GIT_NO_COMMITS_MESSAGE=${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-"no commits"}
+GEOMETRY_GIT_SEPARATOR=${GEOMETRY_GIT_SEPARATOR:-"::"}
 
 prompt_geometry_git_time_since_commit() {
   # Defaults to "", which would hide the git_time_since_commit block
@@ -152,7 +153,7 @@ geometry_prompt_git_render() {
     if $PROMPT_GEOMETRY_GIT_TIME; then
       local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
       if [[ -n $git_time_since_commit ]]; then
-          time=" $git_time_since_commit ::"
+          time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
       fi
     fi
 
@@ -162,7 +163,7 @@ geometry_prompt_git_render() {
       render+=" "
     fi
 
-    render+="$(prompt_geometry_git_branch) $conflicts::$time $(prompt_geometry_git_status)"
+    render+="$(prompt_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time} $(prompt_geometry_git_status)"
 
     echo -n $render
   fi

@@ -48,10 +48,8 @@ GEOMETRY_SYMBOL_GIT_CLEAN="⬢"                 # when reapo has "clean" state
 GEOMETRY_SYMBOL_GIT_REBASE="\uE0A0"           # when in middle of rebase
 GEOMETRY_SYMBOL_GIT_UNPULLED="⇣"              # when there are unpulled changes
 GEOMETRY_SYMBOL_GIT_UNPUSHED="⇡"              # when there are unpushed changes
-GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED="◆"      # when all conflicts have been
-solved
-GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED="◈"    # when there are still unsolved
-conflicts
+GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED="◆"      # when all conflicts have been solved
+GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED="◈"    # when there are still unsolved conflicts
 ```
 
 ## Colors
@@ -60,7 +58,22 @@ conflicts
 GEOMETRY_COLOR_GIT_DIRTY=red                # when repo has "dirty" state
 GEOMETRY_COLOR_GIT_CLEAN=green              # when repo has "clean" state
 GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED=red   # when there are unsolved conflicts
-GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED=green   # when all conflicts have been
-solved
+GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED=green   # when all conflicts have been solved
 GEOMETRY_COLOR_GIT_BRANCH=242               # branch name color
+```
+
+## Flags
+
+```sh
+PROMPT_GEOMETRY_GIT_CONFLICTS=false         # show info if there is a merge conflict
+PROMPT_GEOMETRY_GIT_TIME=true               # display time since last commit
+PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT=false  # use long format for time since last commit
+PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=true    # whether to show time if there is no commits
+```
+
+## Misc
+
+```sh
+GEOMETRY_GIT_NO_COMMITS_MESSAGE="no commits"# message where repository has no commits
+GEOMETRY_GIT_SEPARATOR="::"                 # customize git character separator
 ```
