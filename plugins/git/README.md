@@ -77,4 +77,3 @@ PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY=true    # whether to show time if there is n
 GEOMETRY_GIT_NO_COMMITS_MESSAGE="no commits"# message where repository has no commits
 GEOMETRY_GIT_SEPARATOR="::"                 # customize git character separator
 ```
-
