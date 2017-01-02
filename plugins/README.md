@@ -9,17 +9,18 @@ Available plugins:
 * [Docker Machine](/plugins/docker_machine)
 * [Exec Time](/plugins/exec_time)
 * [Git](/plugins/git)
+* [Hg](/plugins/hg)
 * [Virtualenv](/plugins/virtualenv)
 
 ## Default plugins
 
-By default, geometry uses `git` and `exec_time`. You can configure a different
+By default, geometry uses `exec_time`, `git` and `hg`. You can configure a different
 setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own
 configuration files.
 
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git)
+GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*

@@ -4,7 +4,7 @@ typeset -g GEOMETRY_PLUGIN_SEPARATOR=${GEOMETRY_PLUGIN_SEPARATOR:-" "}
 # Define default plugins
 typeset -ga GEOMETRY_PROMPT_PLUGINS
 if [[ $#GEOMETRY_PROMPT_PLUGINS -eq 0 ]]; then
-  GEOMETRY_PROMPT_PLUGINS=(exec_time git)
+  GEOMETRY_PROMPT_PLUGINS=(exec_time git hg)
 fi
 
 # List of active plugins
