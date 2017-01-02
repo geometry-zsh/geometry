@@ -1,5 +1,6 @@
 GEOMETRY_COLOR_HG_DIRTY=${GEOMETRY_COLOR_HG_DIRTY:-red}
 GEOMETRY_COLOR_HG_CLEAN=${GEOMETRY_COLOR_HG_CLEAN:-green}
+GEOMETRY_COLOR_HG_BRANCH=${GEOMETRY_COLOR_HG_BRANCH:-242}
 
 GEOMETRY_SYMBOL_HG_DIRTY=${GEOMETRY_SYMBOL_HG_DIRTY:-"⬡"}
 GEOMETRY_SYMBOL_HG_CLEAN=${GEOMETRY_SYMBOL_HG_CLEAN:-"⬢"}
@@ -9,7 +10,8 @@ GEOMETRY_HG_DIRTY=$(prompt_geometry_colorize $GEOMETRY_COLOR_HG_DIRTY $GEOMETRY_
 GEOMETRY_HG_CLEAN=$(prompt_geometry_colorize $GEOMETRY_COLOR_HG_CLEAN $GEOMETRY_SYMBOL_HG_CLEAN) 
 
 geometry_prompt_hg_branch() {
-  echo $(hg branch 2> /dev/null) || ""
+  local ref=$(hg branch 2> /dev/null) || return
+  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_HG_BRANCH $ref)"
 }
 
 # Checks if working tree is dirty
