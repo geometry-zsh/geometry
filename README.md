@@ -22,7 +22,7 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 ### antigen
 
-Just add `antigen bundle frmendes/geometry` to your `.zshrc`.
+Just add `antigen theme frmendes/geometry` to your `.zshrc`.
 
 ### oh-my-zsh
 
