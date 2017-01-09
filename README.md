@@ -26,8 +26,7 @@ Just add `antigen bundle frmendes/geometry` to your `.zshrc`.
 
 ### oh-my-zsh
 
-Move `geometry.zsh` to `$HOME/.oh-my-zsh/custom/themes/geometry.zsh-theme` and
-set `ZSH_THEME="geometry"` in your `.zshrc`.
+Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`. Rename `geometry.zsh` to `geometry.zsh-theme` and set `ZSH_THEME="geometry/geometry"` in your `.zshrc`.
 
 ### zplug
 
