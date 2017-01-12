@@ -4,6 +4,13 @@ Node plugin. Displays node and npm version.
 
 ## Configuration
 
+### Colors
+
+```sh
+GEOMETRY_COLOR_NODE_NPM_VERISON="black"
+```
+
+
 ### Symbols
 
 ```sh
