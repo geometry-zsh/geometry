@@ -7,25 +7,25 @@ GEOMETRY_RUBY_RVM_SHOW_GEMSET=${GEOMETRY_RUBY_RVM_SHOW_GEMSET:-true}
 GEOMETRY_SYMBOL_RUBY_RVM_VERSION=${GEOMETRY_SYMBOL_RUBY_RVM_VERSION:-"◆"}
 GEOMETRY_RUBY_RVM_VERSION=$(prompt_geometry_colorize $GEOMETRY_COLOR_RUBY_RVM_VERSION $GEOMETRY_SYMBOL_RUBY_RVM_VERSION) 
 
-get_full_ruby_version() {
+geometry_prompt_get_full_ruby_version() {
   if (( $+commands[ruby] )) && [[ -z $GEOMETRY_RUBY_VERSION_FULL ]]; then
       GEOMETRY_RUBY_VERSION_FULL="$(ruby -v)"
   fi
 }
 
-get_full_rvm_version() {
+geometry_prompt_get_full_rvm_version() {
   if (( $+commands[rvm] )) && [[ -z $GEOMETRY_RVM_VERSION_FULL ]]; then
       GEOMETRY_RVM_VERSION_FULL="$(rvm -v)"
   fi
 }
 
-prompt_geometry_ruby_setup() {
-  get_full_ruby_version
+geometry_prompt_ruby_setup() {
+  geometry_prompt_get_full_ruby_version
 
-  get_full_rvm_version
+  geometry_prompt_get_full_rvm_version
 }
 
-current_rvm_gemset_name() {
+geometry_prompt_current_rvm_gemset_name() {
   if $GEOMETRY_RUBY_RVM_SHOW_GEMSET; then
       local cur_dir=$(pwd)
       local gemset_name=$(cd "$(pwd)" && rvm current)
@@ -42,7 +42,7 @@ current_rvm_gemset_name() {
   fi
 }
 
-prompt_geometry_ruby_render() {
+geometry_prompt_ruby_render() {
   if (( ! $+commands[ruby] )); then
       return "";
   fi
@@ -58,7 +58,7 @@ prompt_geometry_ruby_render() {
       result=$result" ($GEOMETRY_RVM_VERSION"
 
       # Add current gemset name
-      local rvm_gemset_name=$current_rvm_gemset_name
+      local rvm_gemset_name=$geometry_prompt_current_rvm_gemset_name
       if [[ ! -z $rvm_gemset_name ]]; then
           result=$result" $rvm_gemset_name"
       fi
