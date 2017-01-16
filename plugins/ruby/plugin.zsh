@@ -20,9 +20,26 @@ get_full_rvm_version() {
 }
 
 geometry_prompt_ruby_setup() {
-  GEOMETRY_RUBY_VERSION_FULL="$(ruby -v)"
+  get_full_ruby_version
 
-  GEOMETRY_RVM_VERSION_FULL="$(rvm -v)"
+  get_full_rvm_version
+}
+
+current_rvm_gemset_name() {
+  if $GEOMETRY_RUBY_RVM_SHOW_GEMSET; then
+      local cur_dir=$(pwd)
+      local gemset_name=$(cd "$(pwd)" && rvm current)
+      [[ $gemset_name =~ 'ruby-[0-9.]+@?(.*)' ]]
+
+      # If no name present, then it's the default gemset
+      if [[ -z $match[1] ]]; then
+          return "default"
+      else
+          return $match[1]
+      fi
+  else
+    return ""
+  fi
 }
 
 geometry_prompt_ruby_render() {
@@ -30,30 +47,20 @@ geometry_prompt_ruby_render() {
   if (( ! $+commands[ruby] )); then
       return "";
   fi
-  get_full_ruby_version
   [[ $GEOMETRY_RUBY_VERSION_FULL =~ 'ruby ([0-9a-zA-Z.]+)' ]]
   GEOMETRY_RUBY_VERSION=$match[1]
 
-  result="$GEOMETRY_RUBY_RVM_VERSION $GEOMETRY_RUBY_VERSION"
+  local result="$GEOMETRY_RUBY_RVM_VERSION $GEOMETRY_RUBY_VERSION"
 
   if (( $+commands[rvm] )); then
-      get_full_rvm_version
       [[ $GEOMETRY_RVM_VERSION_FULL =~ 'rvm ([0-9a-zA-Z.]+)'  ]]
       GEOMETRY_RVM_VERSION=$match[1]
       result=$result" ($GEOMETRY_RVM_VERSION"
 
       # Add current gemset name
-      if $GEOMETRY_RUBY_RVM_SHOW_GEMSET; then
-          cur_dir=$(pwd)
-          gemset_name=$(cd "$(pwd)" && rvm current)
-          [[ $gemset_name =~ 'ruby-[0-9.]+@?(.*)' ]]
-
-          # If no name present, then it's the default gemset
-          if [[ -z $match[1] ]]; then
-              result=$result" default"
-          else
-              result=$result" $match[1]"
-          fi
+      local rvm_gemset_name=$current_rvm_gemset_name
+      if [[ ! -z $rvm_gemset_name ]]; then
+          result=$result" $rvm_gemset_name"
       fi
 
       result=$result")"
