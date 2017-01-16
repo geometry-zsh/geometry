@@ -19,7 +19,7 @@ get_full_rvm_version() {
   fi
 }
 
-geometry_prompt_ruby_setup() {
+prompt_geometry_ruby_setup() {
   get_full_ruby_version
 
   get_full_rvm_version
@@ -42,11 +42,11 @@ current_rvm_gemset_name() {
   fi
 }
 
-geometry_prompt_ruby_render() {
-
+prompt_geometry_ruby_render() {
   if (( ! $+commands[ruby] )); then
       return "";
   fi
+
   [[ $GEOMETRY_RUBY_VERSION_FULL =~ 'ruby ([0-9a-zA-Z.]+)' ]]
   GEOMETRY_RUBY_VERSION=$match[1]
 
