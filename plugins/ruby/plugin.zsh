@@ -13,10 +13,20 @@ prompt_geometry_get_full_ruby_version() {
   fi
 }
 
+prompt_geometry_ruby_version() {
+  [[ $GEOMETRY_RUBY_VERSION_FULL =~ 'ruby ([0-9a-zA-Z.]+)' ]]
+  GEOMETRY_RUBY_VERSION=$match[1]
+}
+
 prompt_geometry_get_full_rvm_version() {
   if (( $+commands[rvm] )); then
       GEOMETRY_RVM_VERSION_FULL="$(rvm -v)"
   fi
+}
+
+prompt_geometry_rvm_version() {
+  [[ $GEOMETRY_RVM_VERSION_FULL =~ 'rvm ([0-9a-zA-Z.]+)'  ]]
+  GEOMETRY_RVM_VERSION=$match[1]
 }
 
 geometry_prompt_ruby_setup() {}
@@ -42,15 +52,14 @@ geometry_prompt_ruby_render() {
   fi
 
   prompt_geometry_get_full_ruby_version
-  [[ $GEOMETRY_RUBY_VERSION_FULL =~ 'ruby ([0-9a-zA-Z.]+)' ]]
-  GEOMETRY_RUBY_VERSION=$match[1]
+  prompt_geometry_ruby_version
 
   local result="$GEOMETRY_RUBY_RVM_VERSION $GEOMETRY_RUBY_VERSION"
 
   if (( $+commands[rvm] )); then
       prompt_geometry_get_full_rvm_version
-      [[ $GEOMETRY_RVM_VERSION_FULL =~ 'rvm ([0-9a-zA-Z.]+)'  ]]
-      GEOMETRY_RVM_VERSION=$match[1]
+      prompt_geometry_rvm_version
+
       result=$result" ($GEOMETRY_RVM_VERSION"
 
       # Add current gemset name
