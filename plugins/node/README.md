@@ -7,7 +7,7 @@ Node plugin. Displays node and npm version.
 ### Colors
 
 ```sh
-GEOMETRY_COLOR_NODE_NPM_VERISON="black"
+GEOMETRY_COLOR_NODE_NPM_VERSION="black"
 ```
 
 
