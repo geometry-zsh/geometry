@@ -1,6 +1,6 @@
 # Node
 
-Node plugin. Displays node and npm version.
+Node plugin. Displays node and npm version only.
 
 ## Configuration
 
