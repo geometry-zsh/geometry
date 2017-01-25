@@ -10,6 +10,8 @@ Available plugins:
 * [Exec Time](/plugins/exec_time)
 * [Git](/plugins/git)
 * [Hg](/plugins/hg)
+* [Node](/plugins/node)
+* [Ruby](/plugins/ruby)
 * [Virtualenv](/plugins/virtualenv)
 
 ## Default plugins
