@@ -174,6 +174,12 @@ As for PRs, we are currently looking to improve performance.
 
 If you want to help with plugins, we are looking to add Ruby and Node version displays.
 
+**Why doesn't my prompt look like the screenshots?**
+
+Well, I use [`z`](https://github.com/rupa/z) for jumping around and
+[`zsh-syntax-highlighting`](https://github.com/zsh-users/zsh-syntax-highlighting/)
+for those pretty command colors. You might also want to look into [base16](https://github.com/chriskempson/base16) to get similar colors.
+
 **Where do I put my geometry configuration files?**
 
 Well, anywhere in your `.zshrc` file should be fine, **as long as you define
