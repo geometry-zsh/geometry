@@ -74,6 +74,8 @@ documentation and configuration for each specific plugin in the
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
 
+Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/frmendes/geometry/wiki/Plugins)
+
 ## Configuration
 
 geometry was built with easy configuration in mind. The best way to do so is by
