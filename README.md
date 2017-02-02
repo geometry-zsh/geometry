@@ -119,6 +119,7 @@ You can find color configuration for specific plugins under the
 
 ```shell
 GEOMETRY_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
+GEOMETRY_PROMPT_SUFFIX=""                   # suffix prompt
 GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
 ```
 
