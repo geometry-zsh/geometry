@@ -1,0 +1,20 @@
+#!/usr/bin/env zsh
+GEOMETRY_ROOT="${0:A:h}/.."
+
+echo Compiling into a single file...
+rm $GEOMETRY_ROOT/bin/geometry.zsh
+cat $GEOMETRY_ROOT/lib/*.zsh        > $GEOMETRY_ROOT/bin/geometry.zsh
+cat $GEOMETRY_ROOT/plugins/*/*.zsh  >> $GEOMETRY_ROOT/bin/geometry.zsh
+cat $GEOMETRY_ROOT/geometry.zsh     >> $GEOMETRY_ROOT/bin/geometry.zsh
+
+# Disable sourcing
+sed -i "s/source /#source /" $GEOMETRY_ROOT/bin/geometry.zsh
+
+# Disable self-register
+sed -i "s/source /#source /" $GEOMETRY_ROOT/bin/geometry.zsh
+
+echo Replacing geometry with compiled version...
+rm $GEOMETRY_ROOT/geometry.zsh
+ln -s $GEOMETRY_ROOT/bin/geometry.zsh $GEOMETRY_ROOT/geometry.zsh
+
+echo Done!
