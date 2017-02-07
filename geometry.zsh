@@ -57,6 +57,10 @@ prompt_geometry_render_rprompt() {
     geometry_plugin_render
 }
 
+prompt_geometry_render_lprompt() {
+  echo "$GEOMETRY_PROMPT_PREFIX %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f $GEOMETRY_PROMPT_SUFFIX"
+}
+
 prompt_geometry_render() {
   if [ $? -eq 0 ] ; then
     PROMPT_SYMBOL=$GEOMETRY_SYMBOL_PROMPT
@@ -64,7 +68,7 @@ prompt_geometry_render() {
     PROMPT_SYMBOL=$GEOMETRY_SYMBOL_EXIT_VALUE
   fi
 
-  PROMPT="$GEOMETRY_PROMPT_PREFIX %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f $GEOMETRY_PROMPT_SUFFIX"
+  PROMPT="$(prompt_geometry_render_lprompt)"
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 
