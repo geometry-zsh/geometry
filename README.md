@@ -20,15 +20,15 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 *K, I'm sold. Beam me up, Scotty.*
 
-### antigen
+### Install using antigen
 
 Just add `antigen theme frmendes/geometry` to your `.zshrc`.
 
-### oh-my-zsh
+### Install using oh-my-zsh
 
 Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `ZSH_THEME="geometry/geometry"` in your `.zshrc`.
 
-### zplug
+### Install using zplug
 
 Add `zplug "frmendes/geometry"` to your `.zshrc`
 
