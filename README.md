@@ -20,7 +20,6 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 *K, I'm sold. Beam me up, Scotty.*
 
-<<<<<<< HEAD
 ### Install using antigen
 
 Just add `antigen theme frmendes/geometry` to your `.zshrc`.
