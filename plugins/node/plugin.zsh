@@ -8,10 +8,15 @@ GEOMETRY_NODE_NPM_VERSION=$(prompt_geometry_colorize $GEOMETRY_COLOR_NODE_NPM_VE
 geometry_prompt_node_setup() {}
 
 geometry_prompt_node_render() {
-    if (( $+commands[node] )); then
-        GEOMETRY_NODE_VERSION="$(node -v 2> /dev/null)"
-        GEOMETRY_NPM_VERSION="$(npm --version 2> /dev/null)" 
-        echo "$GEOMETRY_NODE_NPM_VERSION $GEOMETRY_NODE_VERSION ($GEOMETRY_NPM_VERSION)"
+    local -a files
+    files=($(ls -a ${PWD} | egrep -e ".nvmrc|yarn.lock"))
+
+    if [[ ${#files[@]} -gt 0 ]]; then
+        if (( $+commands[node] )); then
+            GEOMETRY_NODE_VERSION="$(node -v 2> /dev/null)"
+            GEOMETRY_NPM_VERSION="$(npm --version 2> /dev/null)" 
+            echo "$GEOMETRY_NODE_NPM_VERSION $GEOMETRY_NODE_VERSION ($GEOMETRY_NPM_VERSION)"
+        fi
     fi
 }
 
