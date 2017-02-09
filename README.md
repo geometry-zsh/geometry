@@ -20,17 +20,21 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 *K, I'm sold. Beam me up, Scotty.*
 
-### antigen
+
+### Install using antigen
 
 Just add `antigen theme frmendes/geometry` to your `.zshrc`.
 
-### oh-my-zsh
+
+### Install using oh-my-zsh
 
 Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `ZSH_THEME="geometry/geometry"` in your `.zshrc`.
 
-### zplug
+
+### Install using zplug
 
 Add `zplug "frmendes/geometry"` to your `.zshrc`
+
 
 ## Dependencies
 
@@ -73,6 +77,8 @@ documentation and configuration for each specific plugin in the
 
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
+
+Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/frmendes/geometry/wiki/Plugins)
 
 ## Configuration
 
@@ -117,6 +123,7 @@ You can find color configuration for specific plugins under the
 
 ```shell
 GEOMETRY_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
+GEOMETRY_PROMPT_SUFFIX=""                   # suffix prompt
 GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
 ```
 
@@ -173,6 +180,12 @@ There are always things we would like to improve. Feel free to jump in on any is
 As for PRs, we are currently looking to improve performance.
 
 If you want to help with plugins, we are looking to add Ruby and Node version displays.
+
+**Why doesn't my prompt look like the screenshots?**
+
+Well, I use [`z`](https://github.com/rupa/z) for jumping around and
+[`zsh-syntax-highlighting`](https://github.com/zsh-users/zsh-syntax-highlighting/)
+for those pretty command colors. You might also want to look into [base16](https://github.com/chriskempson/base16) to get similar colors.
 
 **Where do I put my geometry configuration files?**
 

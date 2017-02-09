@@ -33,8 +33,8 @@ PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
 PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
 
 # Misc configurations
-GEOMETRY_PROMPT_PREFIX=${GEOMETRY_PROMPT_PREFIX:-"
-"}
+GEOMETRY_PROMPT_PREFIX=${GEOMETRY_PROMPT_PREFIX:-$'\n'}
+GEOMETRY_PROMPT_SUFFIX=${GEOMETRY_PROMPT_SUFFIX:-''}
 
 # Show current command in title
 prompt_geometry_set_cmd_title() {
@@ -57,6 +57,10 @@ prompt_geometry_render_rprompt() {
     geometry_plugin_render
 }
 
+prompt_geometry_render_lprompt() {
+  echo "$GEOMETRY_PROMPT_PREFIX %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f $GEOMETRY_PROMPT_SUFFIX"
+}
+
 prompt_geometry_render() {
   if [ $? -eq 0 ] ; then
     PROMPT_SYMBOL=$GEOMETRY_SYMBOL_PROMPT
@@ -64,7 +68,7 @@ prompt_geometry_render() {
     PROMPT_SYMBOL=$GEOMETRY_SYMBOL_EXIT_VALUE
   fi
 
-  PROMPT="$GEOMETRY_PROMPT_PREFIX %${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%} %F{$GEOMETRY_COLOR_DIR}%3~%f "
+  PROMPT="$(prompt_geometry_render_lprompt)"
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 

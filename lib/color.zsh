@@ -4,10 +4,10 @@ prompt_geometry_colorize() {
 }
 
 prompt_geometry_hash_color() {
-  colors=(2 3 4 6 9 12 14)
+  colors=(`seq 1 9`)
 
   if (($(echotc Co) == 256)); then
-    colors+=(99 155 47 26)
+    colors+=(`seq 17 230`)
   fi
 
   local sum=0
