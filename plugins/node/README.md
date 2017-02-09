@@ -1,6 +1,6 @@
 # Node
 
-Node plugin. Displays node and npm version only.
+Node plugin. Displays node and npm/yarn version only.
 
 ## Configuration
 
@@ -16,3 +16,4 @@ GEOMETRY_COLOR_NODE_NPM_VERSION="black"
 ```sh
 GEOMETRY_SYMBOL_NODE_NPM_VERSION="⬡"
 ```
+
