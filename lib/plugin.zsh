@@ -10,9 +10,16 @@ fi
 # List of active plugins
 typeset -ga _GEOMETRY_PROMPT_PLUGINS
 
+# List of pinned plugins
+typeset -ga _GEOMETRY_PROMPT_PLUGINS_PINNED
+
 # Set up default plugins
 geometry_plugin_setup() {
   for plugin in $GEOMETRY_PROMPT_PLUGINS; do
+    if [[ $plugin[-1] == '*' ]]; then
+      plugin=${plugin%?}
+      _GEOMETRY_PROMPT_PLUGINS_PINNED+=$plugin
+    fi
     source "$GEOMETRY_ROOT/plugins/$plugin/plugin.zsh"
   done
 }
@@ -56,6 +63,10 @@ geometry_plugin_unregister() {
     geometry_prompt_${plugin}_shutdown
   fi
 
+  if [[ $_GEOMETRY_PROMPT_PLUGINS_PINNED[(r)$plugin] != "" ]]; then
+    _GEOMETRY_PROMPT_PLUGINS_PINNED[$_GEOMETRY_PROMPT_PLUGINS_PINNED[(i)$plugin]]=()
+  fi
+
   _GEOMETRY_PROMPT_PLUGINS[$_GEOMETRY_PROMPT_PLUGINS[(i)$plugin]]=()
 }
 
@@ -70,6 +81,10 @@ geometry_plugin_render() {
   local render=""
 
   for plugin in $_GEOMETRY_PROMPT_PLUGINS; do
+
+    pinned=$_GEOMETRY_PROMPT_PLUGINS_PINNED[(r)$plugin]
+    [ $pinned ] || geometry_prompt_${plugin}_check || continue
+
     render=$(geometry_prompt_${plugin}_render)
     if [[ -n $render ]]; then
       rprompt+="$render$GEOMETRY_PLUGIN_SEPARATOR"

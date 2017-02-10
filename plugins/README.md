@@ -23,7 +23,7 @@ configuration files.
 
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
+GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg 'rustup*')
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
@@ -31,7 +31,7 @@ GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
 ## Custom plugins
 
 If you want to set up your own custom plugin, it's pretty straightforward to do
-so. All you need is a `setup` and a `render` function, with the plugin name on
+so. All you need is a `setup`, `check`, and a `render` function, with the plugin name on
 them.
 
 Let's assume you want to add a plugin that prints `(☞ﾟ∀ﾟ)☞` when the git branch
@@ -62,19 +62,25 @@ for now, so let's leave it blank.
 geometry_prompt_pretty_git_setup() {}
 ```
 
-Note that the `setup` and `render` functions must obey the naming convention of
+Note that the `setup`, `check` and `render` functions must obey the naming convention of
 `geometry_prompt_<plugin_name>_setup/render`.
+
+Now, checking. The `check` function is called before `render`, and should check if
+it makes sense to display the plugin in the current context, returning non-zero if
+we should skip rendering.
+
+```sh
+geometry_prompt_pretty_git_check() {
+  # Do nothing if we're not in a repository
+  [ -d $PWD/.git ] || return 1
+}
+```
 
 Now, rendering. The `render` function is the one that gets called to print to
 the `RPROMPT`. Let's simply check the branch status and print accordingly:
 
 ```sh
 geometry_prompt_pretty_git_render() {
-  # Do nothing if we're not in a repository
-  if [ ! -d $PWD/.git ]; then
-    return
-  fi
-
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $GEOMETRY_PRETTY_GIT_CLEAN
   else
@@ -109,12 +115,13 @@ GEOMETRY_PRETTY_GIT_DIRTY=${GEOMETRY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻�
 
 geometry_prompt_pretty_git_setup() {}
 
-geometry_prompt_pretty_git_render() {
+geometry_prompt_pretty_git_check() {
   # Do nothing if we're not in a repository
-  if [ ! -d $PWD/.git ]; then
-    return
-  fi
+  [ -d $PWD/.git ] || return 1
+}
 
+
+geometry_prompt_pretty_git_render() {
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $GEOMETRY_PRETTY_GIT_CLEAN
   else
@@ -125,3 +132,8 @@ geometry_prompt_pretty_git_render() {
 geometry_plugin_register pretty_git
 
 ```
+
+## Pinning
+
+A user may decide to pin a plugin by appending a `*` after the plugin name.
+This means geometry will skip the `geometry_prompt_${plugin}_check()` function, and always render.

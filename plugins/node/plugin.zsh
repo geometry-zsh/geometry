@@ -5,22 +5,20 @@ GEOMETRY_COLOR_PACKAGER_VERSION=${GEOMETRY_COLOR_PACKAGER_VERSION:-black}
 GEOMETRY_SYMBOL_PACKAGER_VERSION=${GEOMETRY_SYMBOL_PACKAGER_VERSION:-"⬡"}
 GEOMETRY_NODE_PACKAGER_VERSION=$(prompt_geometry_colorize $GEOMETRY_COLOR_PACKAGER_VERSION $GEOMETRY_SYMBOL_PACKAGER_VERSION) 
 
-geometry_prompt_node_setup() {}
+geometry_prompt_node_setup() {
+    (( $+commands[node] )) || (( $+commands[yarn] )) || return 1
+}
+
+geometry_prompt_node_check() {
+    test -f package.json || test -f yarn.lock || return 1
+}
 
 geometry_prompt_node_render() {
-    if [[ ! $+commands[node] ]]; then 
-        return
-    fi
-
-    if [[ ! -f "$PWD/package.json" ]]; then
-        return
-    fi
-
     local GEOMETRY_NODE_DEFAULT_PACKAGE_MANAGER=npm
 
-    if [[ $+commands[yarn] && -f "$PWD/yarn.lock" ]]; then
+    if [[ $+commands[yarn] && -f yarn.lock ]]; then
         GEOMETRY_NODE_DEFAULT_PACKAGE_MANAGER=yarn
-    fi 
+    fi
 
     GEOMETRY_PACKAGER_VERSION="$($GEOMETRY_NODE_DEFAULT_PACKAGE_MANAGER --version 2> /dev/null)" 
     GEOMETRY_NODE_VERSION="$(node -v 2> /dev/null)"

@@ -8,9 +8,7 @@ GEOMETRY_SYMBOL_RUBY_RVM_VERSION=${GEOMETRY_SYMBOL_RUBY_RVM_VERSION:-"◆"}
 GEOMETRY_RUBY_RVM_VERSION=$(prompt_geometry_colorize $GEOMETRY_COLOR_RUBY_RVM_VERSION $GEOMETRY_SYMBOL_RUBY_RVM_VERSION) 
 
 prompt_geometry_get_full_ruby_version() {
-  if (( $+commands[ruby] )); then
-      GEOMETRY_RUBY_VERSION_FULL="$(ruby -v)"
-  fi
+  (( $+commands[ruby] )) && GEOMETRY_RUBY_VERSION_FULL="$(ruby -v)"
 }
 
 prompt_geometry_ruby_version() {
@@ -19,9 +17,7 @@ prompt_geometry_ruby_version() {
 }
 
 prompt_geometry_get_full_rvm_version() {
-  if (( $+commands[rvm] )); then
-      GEOMETRY_RVM_VERSION_FULL="$(rvm -v)"
-  fi
+  (( $+commands[rvm] )) && GEOMETRY_RVM_VERSION_FULL="$(rvm -v)"
 }
 
 prompt_geometry_rvm_version() {
@@ -29,7 +25,11 @@ prompt_geometry_rvm_version() {
   GEOMETRY_RVM_VERSION=$match[1]
 }
 
-geometry_prompt_ruby_setup() {}
+geometry_prompt_ruby_setup() {
+  (( $+commands[ruby] )) || return 1
+}
+
+geometry_prompt_ruby_check() {}
 
 prompt_geometry_current_rvm_gemset_name() {
   if $GEOMETRY_RUBY_RVM_SHOW_GEMSET; then
@@ -47,10 +47,6 @@ prompt_geometry_current_rvm_gemset_name() {
 }
 
 geometry_prompt_ruby_render() {
-  if (( ! $+commands[ruby] )); then
-      return "";
-  fi
-
   prompt_geometry_get_full_ruby_version
   prompt_geometry_ruby_version
 

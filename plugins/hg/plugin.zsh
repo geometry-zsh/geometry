@@ -24,13 +24,15 @@ geometry_prompt_hg_status() {
 }
 
 geometry_prompt_hg_setup() {
-  return $+commands['hg'];
+  (( $+commands['hg'] )) || return 1
+}
+
+geometry_prompt_hg_check() {
+  test -d .hg || return 1
 }
 
 geometry_prompt_hg_render() {
-  if [[ -d $PWD/.hg ]]; then
-    echo "$(geometry_prompt_hg_branch) ${GEOMETRY_SYMBOL_HG_SEPARATOR} $(geometry_prompt_hg_status)"
-  fi
+  echo "$(geometry_prompt_hg_branch) ${GEOMETRY_SYMBOL_HG_SEPARATOR} $(geometry_prompt_hg_status)"
 }
 
 geometry_plugin_register hg
