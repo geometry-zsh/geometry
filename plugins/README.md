@@ -85,7 +85,8 @@ geometry_prompt_pretty_git_render() {
 
 As a convention plugins should only be rendered when sitting on a valid context,
 for example the `node` built-in plugin will only be displayed when sitting on a
-npm/yarn-based project. This is done in order to have a uncluttered prompt.
+npm/yarn-based project. This is done in order to have a uncluttered prompt, we
+encourage you to have this in mind.
 
 Finally you'll need to "register" the plugin with geometry in order to set it up
 and render it on each render cycle.
