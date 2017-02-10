@@ -23,7 +23,7 @@ configuration files.
 
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
+GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg 'rustup*')
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
@@ -124,4 +124,18 @@ geometry_prompt_pretty_git_render() {
 
 geometry_plugin_register pretty_git
 
+```
+
+## Starring
+
+A user may decide to '*' a plugin. It is up the the plugin developer to figure out what that means, though
+usually it means 'always display this plugin'. A plugin will know if it is starred in the `setup()` function as argument 1.
+Maybe in the above example, it means to make a worse looking dirty git face:
+
+```sh
+
+geometry_prompt_pretty_git_setup() {
+  _GEOMETRY_PRETTY_GIT_STARRY_EYED=$1
+  [[ $_GEOMETRY_PRETTY_GIT_STARRY_EYED ]] && GEOMETRY_PRETTY_GIT_DIRTY="(>*.*)>"
+}
 ```

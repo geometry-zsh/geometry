@@ -10,9 +10,16 @@ fi
 # List of active plugins
 typeset -ga _GEOMETRY_PROMPT_PLUGINS
 
+# List of starred plugins
+typeset -ga _GEOMETRY_PROMPT_PLUGINS_STARRED
+
 # Set up default plugins
 geometry_plugin_setup() {
   for plugin in $GEOMETRY_PROMPT_PLUGINS; do
+    if [[ $plugin[-1] == '*' ]]; then
+      plugin=${plugin%?}
+      _GEOMETRY_PROMPT_PLUGINS_STARRED+=$plugin
+    fi
     source "$GEOMETRY_ROOT/plugins/$plugin/plugin.zsh"
   done
 }
@@ -38,7 +45,7 @@ geometry_plugin_register() {
     return 1
   fi
 
-  if geometry_prompt_${plugin}_setup; then
+  if geometry_prompt_${plugin}_setup $_GEOMETRY_PROMPT_PLUGINS_STARRED[(r)$plugin]; then
     _GEOMETRY_PROMPT_PLUGINS+=$plugin
   fi
 }
@@ -54,6 +61,10 @@ geometry_plugin_unregister() {
 
   if [[ $+functions["geometry_prompt_${plugin}_shutdown"] != 0 ]]; then
     geometry_prompt_${plugin}_shutdown
+  fi
+
+  if [[ $_GEOMETRY_PROMPT_PLUGINS_STARRED[(r)$plugin] != "" ]]; then
+    _GEOMETRY_PROMPT_PLUGINS_STARRED[$_GEOMETRY_PROMPT_PLUGINS_STARRED[(i)$plugin]]=()
   fi
 
   _GEOMETRY_PROMPT_PLUGINS[$_GEOMETRY_PROMPT_PLUGINS[(i)$plugin]]=()
