@@ -76,5 +76,5 @@ geometry_plugin_render() {
     fi
   done
 
-  echo "$rprompt"
+  echo "${rprompt:0:-${#GEOMETRY_PLUGIN_SEPARATOR}}"
 }
