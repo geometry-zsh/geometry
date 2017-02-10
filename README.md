@@ -63,7 +63,8 @@ fast™.
 
 ## Plugins
 
-geometry has an internal plugin architecture. The default plugins are `exec_time`, `git` and `hg`. But you can enable a variety of built-in plugins just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
+geometry has an internal plugin architecture. The default plugins are `exec_time`, `git` and `hg`.
+But you can enable a variety of built-in plugins just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
 
 ```sh
 GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
@@ -74,6 +75,12 @@ GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
 These plugins will load and display on the right prompt. You can check the
 documentation and configuration for each specific plugin in the
 [plugins](/plugins) directory.
+
+Some plugins support starring*, for example, if you * rustup, it will always display in the prompt, even in non-rust folders.
+
+```sh
+GEOMETRY_PROMPT_PLUGINS+=('rustup*')
+```
 
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
