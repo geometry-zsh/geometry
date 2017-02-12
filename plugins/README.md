@@ -23,10 +23,12 @@ configuration files.
 
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg 'rustup*')
+GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg +rustup)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
+
+*Note: the `+` before rustup means the plugin is pinned, and will always render, regardless of context*
 
 ## Custom plugins
 
@@ -135,5 +137,5 @@ geometry_plugin_register pretty_git
 
 ## Pinning
 
-A user may decide to pin a plugin by appending a `*` after the plugin name.
-This means geometry will skip the `geometry_prompt_${plugin}_check()` function, and always render.
+A user may decide to pin a plugin by prepending a `+` before the plugin name.
+This means geometry will skip the `geometry_prompt_${plugin}_check()` function, and always run the `render` function.

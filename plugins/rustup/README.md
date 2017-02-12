@@ -10,7 +10,7 @@ It requires [rustup_prompt_helper][].
 ## Configuration
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS+=('rustup*')
+GEOMETRY_PROMPT_PLUGINS+=(rustup)
 ```
 
 ### Colors

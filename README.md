@@ -76,10 +76,11 @@ These plugins will load and display on the right prompt. You can check the
 documentation and configuration for each specific plugin in the
 [plugins](/plugins) directory.
 
-You can pin* a plugin by appending `*` to the end of the name. Geometry will always render the plugin.
+Some plugins only render when you are in a given directory or in the presence of a given file.
+You can have those plugins always render by pinning a `+` before the name
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS+=('rustup*')
+export GEOMETRY_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always render
 ```
 
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
