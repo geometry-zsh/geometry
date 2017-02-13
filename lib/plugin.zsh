@@ -27,7 +27,7 @@ geometry_plugin_register() {
   local plugin=$1
   # Check plugin wasn't registered before
   if [[ ! $_GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
-    echo "Error: Plugin $plugin already registered."
+    echo "Warning: Plugin $plugin already registered."
     return 1
   fi
 
