@@ -72,10 +72,12 @@ geometry_plugin_render() {
   for plugin in $_GEOMETRY_PROMPT_PLUGINS; do
     render=$(geometry_prompt_${plugin}_render)
     if [[ -n $render ]]; then
-      rprompt+="$render$GEOMETRY_PLUGIN_SEPARATOR"
+      rprompt+="$render"
+      if [[ $_GEOMETRY_PROMPT_PLUGINS[(i)$plugin] < $#_GEOMETRY_PROMPT_PLUGINS ]]; then
+        rprompt+="$GEOMETRY_PLUGIN_SEPARATOR"
+      fi
     fi
   done
 
-  [[ -z ${rprompt} ]] && return
-  echo "${rprompt:0:-${#GEOMETRY_PLUGIN_SEPARATOR}}"
+  echo "$rprompt"
 }
