@@ -28,7 +28,7 @@ GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg +rustup)
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
 
-*Note: the `+` before rustup means the plugin is pinned, and will always render, regardless of context*
+*Note: the `+` before rustup means the plugin is [pinned](#Pinning), and will always render, regardless of context*
 
 ## Custom plugins
 

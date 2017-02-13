@@ -77,7 +77,7 @@ documentation and configuration for each specific plugin in the
 [plugins](/plugins) directory.
 
 Some plugins only render when you are in a given directory or in the presence of a given file.
-You can have those plugins always render by pinning a `+` before the name
+You can have those plugins always render by pinning a `+` before the name.
 
 ```sh
 export GEOMETRY_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always render
