@@ -3,12 +3,13 @@ GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-green}
 
 geometry_prompt_virtualenv_setup() {}
 
+geometry_prompt_virtualenv_check() {
+  test -z $VIRTUAL_ENV || return 1
+}
+
 geometry_prompt_virtualenv_render() {
-  local ref
-  if test ! -z $VIRTUAL_ENV; then
-    ref=$(basename $VIRTUAL_ENV) || return
-    echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref})")"
-  fi
+  local ref=$(basename $VIRTUAL_ENV)
+  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref})")"
 }
 
 # Self-register plugin

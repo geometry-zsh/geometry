@@ -37,6 +37,8 @@ geometry_prompt_exec_time_setup() {
   return true
 }
 
+geometry_prompt_exec_time_check() {}
+
 geometry_prompt_exec_time_render() {
   echo "$prompt_geometry_command_exec_time"
 }

@@ -142,31 +142,34 @@ prompt_geometry_git_conflicts() {
 }
 
 geometry_prompt_git_setup() {
+  (( $+commands[git] )) || return 1
+}
+
+geometry_prompt_git_check() {
+  git rev-parse --git-dir > /dev/null 2>&1 || return 1
 }
 
 geometry_prompt_git_render() {
-  if git rev-parse --git-dir > /dev/null 2>&1; then
-    if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
-      conflicts="$(prompt_geometry_git_conflicts)"
-    fi
-
-    if $PROMPT_GEOMETRY_GIT_TIME; then
-      local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
-      if [[ -n $git_time_since_commit ]]; then
-          time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
-      fi
-    fi
-
-    local render="$(prompt_geometry_git_symbol)"
-
-    if [[ -n $render ]]; then
-      render+=" "
-    fi
-
-    render+="$(prompt_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time} $(prompt_geometry_git_status)"
-
-    echo -n $render
+  if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
+    conflicts="$(prompt_geometry_git_conflicts)"
   fi
+
+  if $PROMPT_GEOMETRY_GIT_TIME; then
+    local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
+    if [[ -n $git_time_since_commit ]]; then
+        time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
+    fi
+  fi
+
+  local render="$(prompt_geometry_git_symbol)"
+
+  if [[ -n $render ]]; then
+    render+=" "
+  fi
+
+  render+="$(prompt_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time} $(prompt_geometry_git_status)"
+
+  echo -n $render
 }
 
 # Self-register plugin
