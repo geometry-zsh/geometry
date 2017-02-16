@@ -206,9 +206,8 @@ This is a [known problem](https://github.com/frmendes/geometry/issues/3#issuecom
 
 **There are too many/few spaces after the symbol or the prompt.**
 
-You're probably using a different prompt character. zsh has a few issues
-determining the length of the prompt and while it should work for most cases, if
-you changed the symbol to a different character (an example would be:  ☁︎ ), some extra spaces show up after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space on the `prompt_geometry_render` function, on `geometry.zsh`. If you find a universal solution, feel free to make a PR for it.
+You're probably using a different prompt character. zsh has a few issues determining the length of the prompt and while it should work for most cases, changing the symbol to a different character (an example would be:  ☁︎ )
+will result in a few extra spaces after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space on the `prompt_geometry_render` function in `geometry.zsh`. If you find a universal solution, feel free to make a PR for it.
 
 **The prompt is slow on large repos.**
 
