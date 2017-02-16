@@ -33,7 +33,7 @@ Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `
 
 ### Install using zplug
 
-Add `zplug "frmendes/geometry"` to your `.zshrc`
+Add `zplug "frmendes/geometry"` to your `.zshrc`.
 
 
 ## Dependencies
@@ -58,7 +58,7 @@ In a nutshell, it can:
 - set the terminal title to current command and directory
 - make you the coolest hacker in the whole Starbucks
 
-The right side prompt is print asynchronously, so you know it's going to be
+The right side prompt is printed asynchronously, so you know it's going to be
 fast™.
 
 ## Plugins
@@ -70,7 +70,7 @@ But you can enable a variety of built-in plugins just by setting the `GEOMETRY_P
 GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
 ```
 
-*Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
+*Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*.
 
 These plugins will load and display on the right prompt. You can check the
 documentation and configuration for each specific plugin in the
@@ -86,7 +86,7 @@ export GEOMETRY_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always rend
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
 
-Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/frmendes/geometry/wiki/Plugins)
+Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/frmendes/geometry/wiki/Plugins).
 
 ## Configuration
 
@@ -139,7 +139,7 @@ GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt p
 
 #### Async `RPROMPT`
 
-geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_RPROMPT_ASYNC` to `false`
+geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_RPROMPT_ASYNC` to `false`.
 
 #### Randomly colorize prompt symbol
 
@@ -174,7 +174,7 @@ If you can provide info about your terminal, OS and zsh version it would be a gr
 
 **I have an idea for a feature, can I submit a PR?**
 
-Please do. geometry is a work in progress, if you want to help improve it, your
+Please do. geometry is a work in progress, so if you want to help improve it, your
 idea is welcome. We're not looking to add a lot of default features to not
 overload the theme. However, plugins are a great way of extending geometry
 without overloading it. If you have an idea for a plugin, feel free to
@@ -186,8 +186,6 @@ help you improve.
 There are always things we would like to improve. Feel free to jump in on any issue to tackle it or just to provide your feedback.
 
 As for PRs, we are currently looking to improve performance.
-
-If you want to help with plugins, we are looking to add Ruby and Node version displays.
 
 **Why doesn't my prompt look like the screenshots?**
 
@@ -206,13 +204,13 @@ variables before geometry is loaded**.
 
 This is a [known problem](https://github.com/frmendes/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update geometry and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
 
-**There are too many/few spaces after the symbol or the prompt**
+**There are too many/few spaces after the symbol or the prompt.**
 
 You're probably using a different prompt character. zsh has a few issues
 determining the length of the prompt and while it should work for most cases, if
 you changed the symbol to a different character (an example would be:  ☁︎ ), some extra spaces show up after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space on the `prompt_geometry_render` function, on `geometry.zsh`. If you find a universal solution, feel free to make a PR for it.
 
-**The prompt is slow on large repos**
+**The prompt is slow on large repos.**
 
 This is also a known issue. Make sure you have `PROMPT_GEOMETRY_RPROMPT_ASYNC` set to `true` to avoid long waiting times. If the problem persists, our recommendation would be to disable the git time checks by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
 
