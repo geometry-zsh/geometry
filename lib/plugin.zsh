@@ -97,10 +97,8 @@ geometry_plugin_render() {
 
     render=$(geometry_prompt_${plugin}_render)
     if [[ -n $render ]]; then
+      [[ -n $rprompt ]] && rprompt+="$GEOMETRY_PLUGIN_SEPARATOR"
       rprompt+="$render"
-      if [[ $_GEOMETRY_PROMPT_PLUGINS[(i)$plugin] < $#_GEOMETRY_PROMPT_PLUGINS ]]; then
-        rprompt+="$GEOMETRY_PLUGIN_SEPARATOR"
-      fi
     fi
   done
 
