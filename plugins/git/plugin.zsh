@@ -150,6 +150,11 @@ geometry_prompt_git_check() {
 }
 
 geometry_prompt_git_render() {
+  # Check if we are in a bare repo
+  if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == "false" ]] ; then
+    return
+  fi
+
   if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
     conflicts="$(prompt_geometry_git_conflicts)"
   fi
