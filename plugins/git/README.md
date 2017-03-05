@@ -44,7 +44,8 @@ The following symbols can be overriden:
 
 ```sh
 GEOMETRY_SYMBOL_GIT_DIRTY="⬡"                 # when repo has "dirty" state
-GEOMETRY_SYMBOL_GIT_CLEAN="⬢"                 # when reapo has "clean" state
+GEOMETRY_SYMBOL_GIT_CLEAN="⬢"                 # when repo has "clean" state
+GEOMETRY_SYMBOL_GIT_BARE="⬢"                  # when repo is bare (no working tree)
 GEOMETRY_SYMBOL_GIT_REBASE="\uE0A0"           # when in middle of rebase
 GEOMETRY_SYMBOL_GIT_UNPULLED="⇣"              # when there are unpulled changes
 GEOMETRY_SYMBOL_GIT_UNPUSHED="⇡"              # when there are unpushed changes
@@ -57,6 +58,7 @@ GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED="◈"    # when there are still unsolved 
 ```sh
 GEOMETRY_COLOR_GIT_DIRTY=red                # when repo has "dirty" state
 GEOMETRY_COLOR_GIT_CLEAN=green              # when repo has "clean" state
+GEOMETRY_COLOR_GIT_BARE=blue               # when repo is bare (no working tree)
 GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED=red   # when there are unsolved conflicts
 GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED=green   # when all conflicts have been solved
 GEOMETRY_COLOR_GIT_BRANCH=242               # branch name color
