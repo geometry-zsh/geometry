@@ -16,11 +16,6 @@ typeset -ga _GEOMETRY_PROMPT_PLUGINS_PINNED
 # Set up default plugins
 geometry_plugin_setup() {
   for plugin in $GEOMETRY_PROMPT_PLUGINS; do
-    if [[ $plugin[1] == '+' ]]; then
-      plugin=${plugin#?}
-      _GEOMETRY_PROMPT_PLUGINS_PINNED+=$plugin
-    fi
-
     source "$GEOMETRY_ROOT/plugins/$plugin/plugin.zsh"
   done
 }
@@ -37,6 +32,11 @@ geometry_plugin_register() {
   if [[ ! $_GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
     echo "Warning: Plugin $plugin already registered."
     return 1
+  fi
+
+  if [[ $plugin[1] == '+' ]]; then
+    plugin=${plugin#?}
+    _GEOMETRY_PROMPT_PLUGINS_PINNED+=$plugin
   fi
 
   # Check plugin has been sourced
