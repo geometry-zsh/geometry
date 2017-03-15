@@ -23,12 +23,17 @@ typeset -g GEOMETRY_ASYNC_PROC_ID=0
     GEOMETRY_ASYNC_PROC_ID=$!
 }
 
-# Hooks precmd to run `-geometry_async_function` and hooks
-# `USR1` signal to comunicate with it
+# Removes the async temp file when zsh exits
+-geometry_async_zshexit() {
+    rm -f "${GEOMETRY_ASYNC_TMP_FULL_PATH}$$"
+}
+
+# geometry_async_setup adds zsh-hooks into precmd and zshexit, as well as a
+# signal trap on SIGUSR1, to support communication of asynchronous updates to
+# the running terminal.
 geometry_async_setup() {
     add-zsh-hook precmd '-geometry_async_precmd'
-
-    (\rm ${GEOMETRY_ASYNC_TMP_FULL_PATH}*) &> /dev/null
+    add-zsh-hook zshexit '-geometry_async_zshexit'
 
     TRAPUSR1() {
         # read from temp file
