@@ -6,11 +6,11 @@ GEOMETRY_SYMBOL_PACKAGER_VERSION=${GEOMETRY_SYMBOL_PACKAGER_VERSION:-"⬡"}
 GEOMETRY_NODE_PACKAGER_VERSION=$(prompt_geometry_colorize $GEOMETRY_COLOR_PACKAGER_VERSION $GEOMETRY_SYMBOL_PACKAGER_VERSION) 
 
 geometry_prompt_node_setup() {
-    (( $+commands[node] )) || (( $+commands[yarn] )) || return 1
+    (( $+commands[node] )) || (( $+commands[yarn] )) || return false
 }
 
 geometry_prompt_node_check() {
-    test -f package.json || test -f yarn.lock || return 1
+    test -f package.json || test -f yarn.lock || return false
 }
 
 geometry_prompt_node_render() {
