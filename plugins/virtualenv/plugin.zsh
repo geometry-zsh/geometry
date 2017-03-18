@@ -9,7 +9,7 @@ geometry_prompt_virtualenv_check() {
 
 geometry_prompt_virtualenv_render() {
   local ref=$(basename $VIRTUAL_ENV)
-  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref})")"
+  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV "(${ref/\$/\\$/})")"
 }
 
 # Self-register plugin

@@ -54,7 +54,7 @@ prompt_geometry_git_time_since_commit() {
 prompt_geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
+  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH ${ref/\$/\\$})"
 }
 
 prompt_geometry_git_status() {
