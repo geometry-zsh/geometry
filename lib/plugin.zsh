@@ -10,18 +10,10 @@ fi
 # List of active plugins
 typeset -ga _GEOMETRY_PROMPT_PLUGINS
 
-# List of pinned plugins
-typeset -ga _GEOMETRY_PROMPT_PLUGINS_PINNED
-
 # Set up default plugins
 geometry_plugin_setup() {
   for plugin in $GEOMETRY_PROMPT_PLUGINS; do
-    if [[ $plugin[1] == '+' ]]; then
-      plugin=${plugin#?}
-      _GEOMETRY_PROMPT_PLUGINS_PINNED+=$plugin
-    fi
-
-    source "$GEOMETRY_ROOT/plugins/$plugin/plugin.zsh"
+    test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
   done
 }
 
@@ -64,10 +56,6 @@ geometry_plugin_unregister() {
     geometry_prompt_${plugin}_shutdown
   fi
 
-  if [[ $_GEOMETRY_PROMPT_PLUGINS_PINNED[(r)$plugin] != "" ]]; then
-    _GEOMETRY_PROMPT_PLUGINS_PINNED[$_GEOMETRY_PROMPT_PLUGINS_PINNED[(i)$plugin]]=()
-  fi
-
   _GEOMETRY_PROMPT_PLUGINS[$_GEOMETRY_PROMPT_PLUGINS[(i)$plugin]]=()
 }
 
@@ -80,7 +68,7 @@ geometry_plugin_list() {
 geometry_plugin_check() {
   local plugin=$1
 
-  [ $_GEOMETRY_PROMPT_PLUGINS_PINNED[(r)$plugin] ] && return true
+  [ $GEOMETRY_PROMPT_PLUGINS[(r)+$plugin] ] && return true
 
   (( $+functions[geometry_prompt_${plugin}_check] )) || return true
 
