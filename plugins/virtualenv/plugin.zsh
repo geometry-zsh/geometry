@@ -4,7 +4,7 @@ GEOMETRY_COLOR_VIRTUALENV=${GEOMETRY_COLOR_PROMPT:-green}
 geometry_prompt_virtualenv_setup() {}
 
 geometry_prompt_virtualenv_check() {
-  test $VIRTUAL_ENV || return false
+  test $VIRTUAL_ENV || return 1
 }
 
 geometry_prompt_virtualenv_render() {

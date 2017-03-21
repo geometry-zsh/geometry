@@ -145,11 +145,11 @@ prompt_geometry_git_conflicts() {
 }
 
 geometry_prompt_git_setup() {
-  (( $+commands[git] )) || return false
+  (( $+commands[git] )) || return 1
 }
 
 geometry_prompt_git_check() {
-  git rev-parse --git-dir > /dev/null 2>&1 || return false
+  git rev-parse --git-dir > /dev/null 2>&1 || return 1
 }
 
 geometry_prompt_git_render() {
