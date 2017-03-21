@@ -25,7 +25,7 @@ typeset -g GEOMETRY_ASYNC_PROC_ID=0
 
 # Removes the async temp file when zsh exits
 -geometry_async_zshexit() {
-    rm -f "${GEOMETRY_ASYNC_TMP_FULL_PATH}$$"
+    \rm -f "${GEOMETRY_ASYNC_TMP_FULL_PATH}$$"
 }
 
 # geometry_async_setup adds zsh-hooks into precmd and zshexit, as well as a
