@@ -24,11 +24,11 @@ geometry_prompt_hg_status() {
 }
 
 geometry_prompt_hg_setup() {
-  (( $+commands['hg'] )) || return false
+  (( $+commands['hg'] )) || return 1
 }
 
 geometry_prompt_hg_check() {
-  test -d .hg || return false
+  test -d .hg || return 1
 }
 
 geometry_prompt_hg_render() {

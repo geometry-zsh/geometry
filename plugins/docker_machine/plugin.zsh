@@ -7,7 +7,7 @@ GEOMETRY_SYMBOL_DOCKER_MACHINE=${GEOMETRY_SYMBOL_DOCKER_MACHINE:-"⚓"}
 geometry_prompt_docker_machine_setup() {}
 
 geometry_prompt_docker_machine_check() {
-  test -n $DOCKER_MACHINE_NAME || return false
+  test -n $DOCKER_MACHINE_NAME || return 1
 }
 
 geometry_prompt_docker_machine_render() {
