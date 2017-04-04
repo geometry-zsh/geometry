@@ -37,6 +37,7 @@ geometry_async_setup() {
 
     TRAPUSR1() {
         # read from temp file
+        setopt no_prompt_subst
         RPROMPT="$(<${GEOMETRY_ASYNC_TMP_FULL_PATH}$$)"
 
         # reset proc number
