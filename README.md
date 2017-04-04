@@ -1,6 +1,6 @@
 # geometry
 
-[![Gitter](https://badges.gitter.im/Join Chat.svg)](https://gitter.im/geometry-zsh/Lobby)
+[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geometry-zsh/Lobby)
 
 geometry is a minimalistic, fully customizable zsh prompt theme.
 
