@@ -78,6 +78,7 @@ prompt_geometry_render() {
         # comes with newer git info
         RPROMPT=""
     else
+        setopt localoptions no_prompt_subst
         RPROMPT="$(prompt_geometry_render_rprompt)"
     fi
   fi
