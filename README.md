@@ -217,6 +217,15 @@ This is also a known issue. Make sure you have `PROMPT_GEOMETRY_RPROMPT_ASYNC` s
 
 Sure. It's [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono). Don't forget to use the [powerline patched version](https://github.com/powerline/fonts/tree/master/RobotoMono) if you want to use the default rebase symbol.
 
+**"Warning: Plugin <name> already registered." omg what is happening is the
+world going to end?**
+
+Well, yeah. Eventually. But this warning message doesn't mean anything is wrong.
+Feel free to relax. It shows when you load geometry twice. It was intended as a
+warning for faulty custom configuration, such as registering a plugin in two
+different places. If you do `source ~/.zshrc` it's perfectly normal to show up.
+See [this discussion](https://github.com/frmendes/geometry/issues/109#issuecomment-288997441) for more info.
+
 ## Maintainers
 
 geometry is currently maintained by [frmendes](https://github.com/frmendes) and [desyncr](https://github.com/desyncr).
