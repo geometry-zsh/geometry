@@ -228,6 +228,6 @@ See [this discussion](https://github.com/frmendes/geometry/issues/109#issuecomme
 
 ## Maintainers
 
-geometry is currently maintained by [frmendes](https://github.com/frmendes) and [desyncr](https://github.com/desyncr).
+geometry is currently maintained by [frmendes](https://github.com/frmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
 
-A big thank you to those who have previously [contributed](https://github.com/frmendes/geometry/graphs/contributors), [jedahan](https://github.com/jedahan) in particular.
+A big thank you to those who have previously [contributed](https://github.com/frmendes/geometry/graphs/contributors).
