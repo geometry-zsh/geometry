@@ -40,6 +40,7 @@ GEOMETRY_PROMPT_SUFFIX=${GEOMETRY_PROMPT_SUFFIX:-''}
 prompt_geometry_set_cmd_title() {
   local COMMAND="${2}"
   local CURR_DIR="${PWD##*/}"
+  setopt localoptions prompt_subst
   print -n '\e]0;'
   print -Pn '$COMMAND @ $CURR_DIR'
   print -n '\a'
@@ -47,6 +48,7 @@ prompt_geometry_set_cmd_title() {
 
 # Prevent command showing on title after ending
 prompt_geometry_set_title() {
+  setopt localoptions prompt_subst
   print -n '\e]0;'
   print -Pn '%~'
   print -n '\a'
@@ -85,7 +87,6 @@ prompt_geometry_render() {
 }
 
 prompt_geometry_setup() {
-  setopt PROMPT_SUBST
   zmodload zsh/datetime
   autoload -U add-zsh-hook
   if $PROMPT_GEOMETRY_ENABLE_PLUGINS; then
