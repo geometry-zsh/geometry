@@ -42,7 +42,7 @@ prompt_geometry_set_cmd_title() {
   local CURR_DIR="${PWD##*/}"
   setopt localoptions no_prompt_subst
   print -n '\e]0;'
-  print -Pn '$COMMAND @ $CURR_DIR'
+  print -rn "$COMMAND @ $CURR_DIR"
   print -n '\a'
 }
 
