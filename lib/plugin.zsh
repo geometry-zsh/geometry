@@ -20,21 +20,21 @@ geometry_plugin_setup() {
 # Registers a plugin
 geometry_plugin_register() {
   if [[ $# -eq 0 ]]; then
-    echo "Error: Missing argument."
+    >&2 echo "Error: Missing argument."
     return 1
   fi
 
   local plugin=$1
   # Check plugin wasn't registered before
   if [[ ! $_GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
-    echo "Warning: Plugin $plugin already registered."
+    >&2 echo "Warning: Plugin $plugin already registered."
     return 1
   fi
 
   # Check plugin has been sourced
   local plugin_setup_function="geometry_prompt_${plugin}_setup"
   if [[ $+functions[$plugin_setup_function] == 0 ]]; then
-    echo "Error: Plugin $plugin not available."
+    >&2 echo "Error: Plugin $plugin not available."
     return 1
   fi
 
@@ -48,7 +48,7 @@ geometry_plugin_unregister() {
   local plugin=$1
   # Check plugin is registered
   if [[ $_GEOMETRY_PROMPT_PLUGINS[(r)$plugin] == "" ]]; then
-    echo "Error: Plugin $plugin not registered."
+    >&2 echo "Error: Plugin $plugin not registered."
     return 1
   fi
 
