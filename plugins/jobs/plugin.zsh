@@ -11,7 +11,8 @@ geometry_prompt_jobs_check() {
 }
 
 geometry_prompt_jobs_render() {
-  echo $(prompt_geometry_colorize $GEOMETRY_COLOR_JOBS '%(1j.${GEOMETRY_SYMBOL_JOBS} %j.)')
+  local jobs_prompt='%(1j.'$GEOMETRY_SYMBOL_JOBS' %j.)'
+  echo $(prompt_geometry_colorize $GEOMETRY_COLOR_JOBS $jobs_prompt)
 }
 
 geometry_plugin_register jobs
