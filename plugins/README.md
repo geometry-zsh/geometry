@@ -14,11 +14,12 @@ Available plugins:
 * [Ruby](/plugins/ruby)
 * [Rustup](/plugins/rustup)
 * [Virtualenv](/plugins/virtualenv)
+* [Background jobs](/plugins/jobs)
 
 ## Default plugins
 
-By default, geometry uses `exec_time`, `git` and `hg`. You can configure a different
-setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own
+By default, geometry uses `exec_time`, `jobs`, `git` and `hg`. You can configure
+a different setup by changing the `GEOMETRY_PROMPT_PLUGINS` variable in your own
 configuration files.
 
 
