@@ -42,7 +42,7 @@ Clone this repository as follows:
 
     git clone https://github.com/frmendes/geometry
     cd geometry
-    git submodule init && git submodule update
+    git submodule update --init --recursive
 
 Then add it to your `.zshrc` configuration:
 
