@@ -36,6 +36,17 @@ Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `
 
 Add `zplug "frmendes/geometry"` to your `.zshrc`.
 
+### Manual install
+
+Clone this repository as follows:
+
+    git clone https://github.com/frmendes/geometry
+    cd geometry
+    git submodule init && git submodule update
+
+Then add it to your `.zshrc` configuration:
+
+    source /path/to/geometry/geometry.zsh
 
 ## Dependencies
 
