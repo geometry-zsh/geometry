@@ -122,7 +122,9 @@ prompt_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
   if [[ ! -z $conflicts ]]; then
+    pushd -q $(git rev-parse --show-toplevel)
     conflict_list=$($GEOMETRY_GREP -cH '^=======$' $(echo $conflicts))
+    popd -q
 
     raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
     file_count=${raw_file_count##*( )}

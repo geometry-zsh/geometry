@@ -5,4 +5,4 @@ prompt_geometry_set_grep() {
   || echo "grep"
 }
 
-GEOMETRY_GREP=${GREP:-$(prompt_geometry_set_grep)}
+GEOMETRY_GREP=${GEOMETRY_GREP:-$(prompt_geometry_set_grep)}
