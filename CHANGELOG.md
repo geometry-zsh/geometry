@@ -6,8 +6,13 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 ### Added
-
+- Background-jobs plugin as builtin plugin
+  
 ### Changed
+- Using `zsh-async` for right-prompt (git, hg, etc)
+
+### Fixed
+- Fix conflict count on non top-level directory
 
 ## 1.0.0 - 2017-04-05
 ### Added
