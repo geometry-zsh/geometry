@@ -1,4 +1,3 @@
-source $GEOMETRY_ROOT/lib/zsh-async/async.zsh
 
 # Callback handler to properly render RPROMPT with calculated output
 -geometry-async-callback() {
@@ -24,6 +23,13 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh
 
 # Initialize zsh-async and creates a worker
 geometry_async_setup() {
+    # Workaround for missing zsh-async lib
+    if (( ! $+functions[async_init] )); then
+      builtin cd -q $GEOMETRY_ROOT && git submodule update --init > /dev/null
+    fi
+
+    source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null || echo "Error: Could not load zsh-async library." >&2 && return 1
+
     async_init
     # See https://github.com/mafredri/zsh-async#async_start_worker-worker_name--u--n--p-pid
     async_start_worker geometry_async_worker -u -n # unique, notify through SIGWINCH
