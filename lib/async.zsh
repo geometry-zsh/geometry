@@ -18,6 +18,10 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
 # Flushed currently running async jobs and queues a new one
 # See https://github.com/mafredri/zsh-async#async_flush_jobs-worker_name
 -geometry-async-job() {
+    # See https://github.com/mafredri/zsh-async#async_start_worker-worker_name--u--n--p-pid
+    async_start_worker geometry_async_worker -u -n # unique, notify through SIGWINCH
+    async_register_callback geometry_async_worker -geometry-async-callback
+
     async_flush_jobs geometry_async_worker 
     async_job geometry_async_worker -geometry-async-prompt $PWD
 }
@@ -33,9 +37,6 @@ geometry_async_setup() {
     fi
 
     async_init
-    # See https://github.com/mafredri/zsh-async#async_start_worker-worker_name--u--n--p-pid
-    async_start_worker geometry_async_worker -u -n # unique, notify through SIGWINCH
-    async_register_callback geometry_async_worker -geometry-async-callback
 
     # Submit a new job every precmd
     add-zsh-hook precmd -geometry-async-job
