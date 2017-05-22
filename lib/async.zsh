@@ -5,6 +5,9 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
     local job="$1" code="$2" output="$3" exec_time="$4" stderr="$5"
     RPROMPT="${(j/::/)output}"
     zle && zle reset-prompt
+
+    # Explicitely stop async worker
+    async_stop_worker geometry_async_worker
 }
 
 # Wrapper to call rprompt renderer, needed to set up workers status
