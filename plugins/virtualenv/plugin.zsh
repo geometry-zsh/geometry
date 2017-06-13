@@ -13,22 +13,28 @@ geometry_prompt_virtualenv_check() {
 
 geometry_prompt_virtualenv_render() {
 
+    local environment_str=""
+
+    # Add virtualenv name if active
     if [ -n "${VIRTUAL_ENV}" ]; then
-
-        virtualenv_ref=$(basename $VIRTUAL_ENV)
-        virtualenv_str="$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV ${virtualenv_ref})"
-
-        if [ -n "${CONDA_PREFIX}" ]; then
-            conda_ref="$(basename $CONDA_PREFIX)"
-            virtualenv_str="${virtualenv_str}${GEOMETRY_VIRTUALENV_CONDA_SEPARATOR}$(prompt_geometry_colorize $GEOMETRY_COLOR_CONDA ${conda_ref})"
-        fi
-
-        echo "$virtualenv_str"
-
-    elif [ -n "${CONDA_PREFIX}" ]; then
-        conda_ref="$(basename $CONDA_PREFIX)"
-        echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_CONDA ${conda_ref})"
+        local virtualenv_ref=$(basename $VIRTUAL_ENV)
+        environment_str="$(prompt_geometry_colorize $GEOMETRY_COLOR_VIRTUALENV ${virtualenv_ref})"
     fi
+
+    # Add separator if both active
+    if [ -n "${VIRTUAL_ENV}" -a -n "${CONDA_PREFIX}" ]; then
+        environment_str="${environment_str}${GEOMETRY_VIRTUALENV_CONDA_SEPARATOR}"
+    fi
+
+    # Add conda environment name if active
+    if [ -n "${CONDA_PREFIX}" ]; then
+        local conda_ref="$(basename $CONDA_PREFIX)"
+        environment_str="${environment_str}$(prompt_geometry_colorize $GEOMETRY_COLOR_CONDA ${conda_ref})"
+    fi
+
+    # Print to stdout
+    echo "${environment_str}"
+
 }
 
 # Self-register plugin
