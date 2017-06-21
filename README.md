@@ -116,7 +116,7 @@ There are a set of symbols available which you can override with environment var
 
 ```shell
 GEOMETRY_SYMBOL_PROMPT="▲"                  # default prompt symbol
-GEOMETRY_SYMBOL_PROMPT2="◇"                 # multiline prompts
+GEOMETRY_SYMBOL_RPROMPT="◇"                 # multiline prompts
 GEOMETRY_SYMBOL_EXIT_VALUE="△"              # displayed when exit value is != 0
 GEOMETRY_SYMBOL_ROOT="▲"                    # when logged in user is root
 ```
