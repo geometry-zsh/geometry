@@ -47,7 +47,7 @@ Clone this repository as follows:
 
 Then add it to your `.zshrc` configuration:
 
-    source /path/to/geometry/geometry.zsh
+    . /path/to/geometry/geometry.zsh
 
 ## Dependencies
 
@@ -237,7 +237,7 @@ world going to end?**
 Well, yeah. Eventually. But this warning message doesn't mean anything is wrong.
 Feel free to relax. It shows when you load geometry twice. It was intended as a
 warning for faulty custom configuration, such as registering a plugin in two
-different places. If you do `source ~/.zshrc` it's perfectly normal to show up.
+different places. If you do `. ~/.zshrc` it's perfectly normal to show up.
 See [this discussion](https://github.com/frmendes/geometry/issues/109#issuecomment-288997441) for more info.
 
 ## Maintainers
