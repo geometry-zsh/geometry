@@ -136,7 +136,7 @@ prompt_geometry_git_conflicts() {
       text=$GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED
       color=$GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED
     else
-      text="$GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED ($file_count|$total)"
+      text="$GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
       color=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
     fi
 
