@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Background-jobs plugin as builtin plugin
-  
+
 ### Changed
 - Using `zsh-async` for right-prompt (git, hg, etc)
 
@@ -19,4 +19,4 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Change Log file
 - Initial release features
 
-[Unreleased]: https://github.com/frmendes/geometry/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/geometry-zsh/geometry/compare/v1.0.0...HEAD

@@ -2,7 +2,7 @@
 
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geometry-zsh/Lobby)
 [![Trello](https://img.shields.io/badge/trello-board-blue.svg)](https://trello.com/b/GfM4e6Ro/geometry)
-[![GitHub release](https://img.shields.io/github/release/frmendes/geometry.svg)](https://github.com/frmendes/geometry/releases/latest)
+[![GitHub release](https://img.shields.io/github/release/geometry-zsh/geometry.svg)](https://github.com/geometry-zsh/geometry/releases/latest)
 
 geometry is a minimalistic, fully customizable zsh prompt theme.
 
@@ -25,7 +25,7 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 ### Install using antigen
 
-Just add `antigen theme frmendes/geometry` to your `.zshrc`.
+Just add `antigen theme geometry-zsh/geometry` to your `.zshrc`.
 
 
 ### Install using oh-my-zsh
@@ -35,13 +35,13 @@ Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `
 
 ### Install using zplug
 
-Add `zplug "frmendes/geometry"` to your `.zshrc`.
+Add `zplug "geometry-zsh/geometry"` to your `.zshrc`.
 
 ### Manual install
 
 Clone this repository as follows:
 
-    git clone https://github.com/frmendes/geometry
+    git clone https://github.com/geometry-zsh/geometry
     cd geometry
     git submodule update --init --recursive
 
@@ -99,12 +99,12 @@ export GEOMETRY_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always rend
 geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
 instructions and examples.
 
-Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/frmendes/geometry/wiki/Plugins).
+Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/geometry-zsh/geometry/wiki/Plugins).
 
 ## Configuration
 
 geometry was built with easy configuration in mind. The best way to do so is by
-[using environment variables](https://github.com/frmendes/dotfiles/blob/7f448626e1c6e9c0ab7b474c5ff2c1939b64b7d2/system/prompt.zsh#L18-L24).
+[using environment variables](https://github.com/fribmendes/dotfiles/blob/7f448626e1c6e9c0ab7b474c5ff2c1939b64b7d2/system/prompt.zsh#L18-L24).
 
 Pretty much everything in geometry can be changed by setting a variable **before
 you load the theme**.
@@ -216,12 +216,12 @@ variables before geometry is loaded**.
 
 [Relevant xkcd](http://xkcd.com/1726/)
 
-This is a [known problem](https://github.com/frmendes/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update geometry and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
+This is a [known problem](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update geometry and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
 
 **There are too many/few spaces after the symbol or the prompt.**
 
 You're probably using a different prompt character. zsh has a few issues determining the length of the prompt and while it should work for most cases, changing the symbol to a different character (an example would be:  ☁︎ )
-will result in a few extra spaces after the prompt. That problem is [documented here](https://github.com/frmendes/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space through the `prompt_geometry_render` function in `geometry.zsh`. If you find a universal solution, feel free to make a PR for it.
+will result in a few extra spaces after the prompt. That problem is [documented here](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space through the `prompt_geometry_render` function in `geometry.zsh`. If you find a universal solution, feel free to make a PR for it.
 
 **The prompt is slow on large repos.**
 
@@ -238,10 +238,10 @@ Well, yeah. Eventually. But this warning message doesn't mean anything is wrong.
 Feel free to relax. It shows when you load geometry twice. It was intended as a
 warning for faulty custom configuration, such as registering a plugin in two
 different places. If you do `source ~/.zshrc` it's perfectly normal to show up.
-See [this discussion](https://github.com/frmendes/geometry/issues/109#issuecomment-288997441) for more info.
+See [this discussion](https://github.com/geometry-zsh/geometry/issues/109#issuecomment-288997441) for more info.
 
 ## Maintainers
 
-geometry is currently maintained by [frmendes](https://github.com/frmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
+geometry is currently maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
 
-A big thank you to those who have previously [contributed](https://github.com/frmendes/geometry/graphs/contributors).
+A big thank you to those who have previously [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
