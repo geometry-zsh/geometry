@@ -14,7 +14,7 @@ When contributing to this repository, please first discuss the change you wish t
 
 ## New plugin template
 
-Details about creating a new plugin are listed [here](https://github.com/geometry-zsh/geometry/blob/master/plugins/README.md). See below for a common template that can be followed while creating a new plugin.
+Details about creating a new plugin are listed [here](https://github.com/geometry-zsh/geometry/blob/master/plugins/README.md) and a wiki using third party plugins are [here](https://github.com/geometry-zsh/geometry/wiki/plugins) . See below for a common template that can be followed while creating a new plugin.
 
 * To create a new plugin, you will need a setup, check, and a render function, with the plugin name on them
 * Your new plugin needs to be a plugin.zsh file placed inside a directory with the name of the plugin
@@ -22,7 +22,7 @@ Details about creating a new plugin are listed [here](https://github.com/geometr
 * Add your plugin directory to `geometry/plugins/` folder
 
 
-```
+``` zsh
 # Step1: Define your variables above all 
 GEOMETRY_<PLUGIN_NAME>_VAR1=${GEOMETRY_<PLUGIN_NAME>_VAR1:-"VALUE1"}
 GEOMETRY_<PLUGIN_NAME>_VAR2=${GEOMETRY_<PLUGIN_NAME>_VAR2:-"VALUE2"}
