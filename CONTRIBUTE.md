@@ -5,23 +5,24 @@ When contributing to this repository, please first discuss the change you wish t
 
 ## Pull Request Process
 
-1. Ensure any install or build dependencies are removed before the end of the layer when doing a 
-   build.
-2. Update the CHANGELOG.md with details of changes to the interface, this includes new environment 
-   variables, exposed ports, useful file locations and container parameters.
+1. It is advised to create a PR if you are stuck (so others can help you) or when your feature is complete and tested. 
+2. Update the CHANGELOG.md with details of changes made.
 3. Increase the version numbers in any examples files and the README.md to the new version that this
    Pull Request would represent.
 4. Your PR will be merged (if accepted) once it is reviewed by other developers.
-5. It is advised to create a PR if you are stuck (so others can help you) or when your feature is complete and tested. 
+
 
 ## New plugin template
 
 Details about creating a new plugin are listed [here](https://github.com/geometry-zsh/geometry/blob/master/plugins/README.md). See below for a common template that can be followed while creating a new plugin.
 
-* Add your plugin to `geometry/plugins/` folder 
-* To create a new plugin, you will need a setup, check, and a render function, with the plugin name on them.
+* To create a new plugin, you will need a setup, check, and a render function, with the plugin name on them
+* Your new plugin needs to be a plugin.zsh file placed inside a directory with the name of the plugin
+* Users are advised to also place a README.md file inside the plugin directory with details about its behaviour, use and customization options  
+* Add your plugin directory to `geometry/plugins/` folder
 
-```bash
+
+```
 # Step1: Define your variables above all 
 GEOMETRY_<PLUGIN_NAME>_VAR1=${GEOMETRY_<PLUGIN_NAME>_VAR1:-"VALUE1"}
 GEOMETRY_<PLUGIN_NAME>_VAR2=${GEOMETRY_<PLUGIN_NAME>_VAR2:-"VALUE2"}
