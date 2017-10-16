@@ -145,6 +145,9 @@ You can find color configuration for specific plugins under the
 ```shell
 GEOMETRY_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
 GEOMETRY_PROMPT_SUFFIX=""                   # suffix prompt
+GEOMETRY_PROMPT_PREFIX_SPACER=" "           # string to place between prefix and symbol
+GEOMETRY_SYMBOL_SPACER=" "                  # string to place between symbol and directory
+GEOMETRY_DIR_SPACER=" "                     # string to place between directory and suffix
 GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
 GEOMETRY_GREP=""                            # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
 ```
