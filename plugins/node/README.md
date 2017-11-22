@@ -7,7 +7,7 @@ Node plugin. Displays node and npm/yarn version when in a node project context (
 ### Colors
 
 ```sh
-GEOMETRY_COLOR_NODE_NPM_VERSION="black"
+GEOMETRY_COLOR_PACKAGER_VERSION="black"
 ```
 
 
