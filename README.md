@@ -107,7 +107,7 @@ geometry was built with easy configuration in mind. The best way to do so is by
 [using environment variables](https://github.com/fribmendes/dotfiles/blob/7f448626e1c6e9c0ab7b474c5ff2c1939b64b7d2/system/prompt.zsh#L18-L24).
 
 Pretty much everything in geometry can be changed by setting a variable **before
-you load the theme**.
+you load the theme**. Note that if you use antigen, you must set them before sourcing `antigen.zsh`.
 
 The default options try to balance the theme in order to be both lightweight and contain useful features.
 
