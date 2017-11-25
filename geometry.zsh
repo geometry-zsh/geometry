@@ -13,6 +13,7 @@ source "$GEOMETRY_ROOT/lib/grep.zsh"
 PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
 PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
 PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
+PROMPT_GEOMETRY_PRIMARY_SUFFIX=${PROMPT_GEOMETRY_PRIMARY_SUFFIX:-" "}
 
 # Show current command in title
 prompt_geometry_set_cmd_title() {
@@ -32,7 +33,7 @@ prompt_geometry_set_title() {
 }
 
 prompt_geometry_render() {
-  PROMPT="$(geometry_plugin_render primary)"
+  PROMPT="$(geometry_plugin_render primary)$PROMPT_GEOMETRY_PRIMARY_SUFFIX"
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 

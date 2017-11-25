@@ -9,7 +9,7 @@ fi
 
 # Migrate from old config
 if [[ ! $#GEOMETRY_PROMPT_PLUGINS -eq 0 ]]; then
-  GEOMETRY_PROMPT_PLUGINS_SECONDARY=${(j/ /)GEOMETRY_PLUGIN_PLUGINS}
+  GEOMETRY_PROMPT_PLUGINS_SECONDARY=${(j/ /)GEOMETRY_PROMPT_PLUGINS}
 fi
 
 # Define default plugins
@@ -31,7 +31,7 @@ geometry_plugin_setup() {
   for ctx in $GEOMETRY_PROMPT_CTX; do
     local _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
-      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
+      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_ && geometry_plugin_register $plugin $ctx
     done
   done
 }

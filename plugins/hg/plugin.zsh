@@ -34,6 +34,3 @@ geometry_prompt_hg_check() {
 geometry_prompt_hg_render() {
   echo "$(geometry_prompt_hg_branch) ${GEOMETRY_SYMBOL_HG_SEPARATOR} $(geometry_prompt_hg_status)"
 }
-
-geometry_plugin_register hg
-

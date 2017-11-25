@@ -10,6 +10,3 @@ geometry_prompt_hostname_check() {
 geometry_prompt_hostname_render() {
   echo "$GEOMETRY_PLUGIN_HOSTNAME_PREFIX $(hostname) $GEOMETRY_PLUGIN_HOSTNAME_SUFFIX"
 }
-
-geometry_plugin_register hostname primary
-

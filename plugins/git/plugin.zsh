@@ -182,6 +182,3 @@ geometry_prompt_git_render() {
 
   echo -n $render
 }
-
-# Self-register plugin
-geometry_plugin_register git

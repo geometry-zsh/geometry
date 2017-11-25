@@ -13,6 +13,3 @@ geometry_prompt_docker_machine_check() {
 geometry_prompt_docker_machine_render() {
   echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_DOCKER_MACHINE "(${GEOMETRY_SYMBOL_DOCKER_MACHINE} ${DOCKER_MACHINE_NAME})")"
 }
-
-# Self-register plugin
-geometry_plugin_register docker_machine

@@ -42,6 +42,3 @@ geometry_prompt_exec_time_check() {}
 geometry_prompt_exec_time_render() {
   echo "$prompt_geometry_command_exec_time"
 }
-
-# Self-register plugin
-geometry_plugin_register exec_time
