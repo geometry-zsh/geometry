@@ -117,9 +117,9 @@ geometry_plugin_check() {
 
 # Renders the registered plugins
 geometry_plugin_render() {
-  local rprompt=""
-  local render=""
   local ctx=${1:-secondary}
+  local render=""
+  local ctx_prompt=""
 
   local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   for plugin in $_ctx_plugins; do
@@ -127,10 +127,10 @@ geometry_plugin_render() {
 
     render=$(geometry_prompt_${plugin}_render $ctx)
     if [[ -n $render ]]; then
-      [[ -n $rprompt ]] && rprompt+="$GEOMETRY_PLUGIN_SEPARATOR"
-      rprompt+="$render"
+      [[ -n $ctx_prompt ]] && ctx_prompt+="$GEOMETRY_PLUGIN_SEPARATOR"
+      ctx_prompt+="$render"
     fi
   done
 
-  echo "$rprompt"
+  echo "$ctx_prompt"
 }
