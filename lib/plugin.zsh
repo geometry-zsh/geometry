@@ -7,20 +7,27 @@ if [[ $#GEOMETRY_PROMPT_CTX -eq 0 ]]; then
   GEOMETRY_PROMPT_CTX=(primary secondary)
 fi
 
-# Migrate from old config
+# Migrate from old config, previously it was only possible to
+# configure the right prompt which maps to secondary ctx
 if [[ ! $#GEOMETRY_PROMPT_PLUGINS -eq 0 ]]; then
-  GEOMETRY_PROMPT_PLUGINS_SECONDARY=${(j/ /)GEOMETRY_PROMPT_PLUGINS}
+  GEOMETRY_PROMPT_PLUGINS_SECONDARY=$GEOMETRY_PROMPT_PLUGINS
 fi
 
-# Define default plugins
+# Define default plugins for primary and secondary ctx
 typeset -gA GEOMETRY_PROMPT_PLUGINS
-GEOMETRY_PROMPT_PLUGINS[primary]='path hostname'
 
-# Migrate from old config
-if [[ $GEOMETRY_PROMPT_PLUGINS_SECONDARY == "" ]]; then
-  GEOMETRY_PROMPT_PLUGINS[secondary]='exec_time jobs git hg'
+# Default plugins for primary ctx
+if [[ $#GEOMETRY_PROMPT_PLUGINS_PRIMARY -gt 0 ]]; then
+  GEOMETRY_PROMPT_PLUGINS[primary]=${(j/ /)GEOMETRY_PROMPT_PLUGINS_PRIMARY}
 else
-  GEOMETRY_PROMPT_PLUGINS[secondary]=$GEOMETRY_PROMPT_PLUGINS_SECONDARY
+  GEOMETRY_PROMPT_PLUGINS[primary]='path hostname'
+fi
+
+# Default plugins for secondary ctx
+if [[ $#GEOMETRY_PROMPT_PLUGINS_SECONDARY -gt 0 ]]; then
+  GEOMETRY_PROMPT_PLUGINS[secondary]=${(j/ /)GEOMETRY_PROMPT_PLUGINS_SECONDARY}
+else
+  GEOMETRY_PROMPT_PLUGINS[secondary]='exec_time jobs git hg'
 fi
 
 # List of active plugins
