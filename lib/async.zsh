@@ -44,4 +44,3 @@ geometry_async_setup() {
     # Submit a new job every precmd
     add-zsh-hook precmd -geometry-async-job
 }
-

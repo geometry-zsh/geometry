@@ -24,6 +24,23 @@ GEOMETRY_PROMPT_BASENAME=${GEOMETRY_PROMPT_BASENAME:-false}
 PROMPT_GEOMETRY_COLORIZE_SYMBOL=${PROMPT_GEOMETRY_COLORIZE_SYMBOL:-false}
 PROMPT_GEOMETRY_COLORIZE_ROOT=${PROMPT_GEOMETRY_COLORIZE_ROOT:-false}
 
+# Helper function to colorize based off a string
+prompt_geometry_hash_color() {
+  colors=(`seq 1 9`)
+
+  if (($(echotc Co) == 256)); then
+    colors+=(`seq 17 230`)
+  fi
+
+  local sum=0
+  for i in {0..${#1}}; do
+    ord=$(printf '%d' "'${1[$i]}")
+    sum=$(($sum + $ord))
+  done
+
+  echo ${colors[$(($sum % ${#colors}))]}
+}
+
 geometry_prompt_path_setup() {
   # Combine color and symbols
   GEOMETRY_EXIT_VALUE=$(prompt_geometry_colorize $GEOMETRY_COLOR_EXIT_VALUE $GEOMETRY_SYMBOL_EXIT_VALUE)

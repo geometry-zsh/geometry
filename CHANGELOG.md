@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## [Unreleased]
 ### Added
 - Background-jobs plugin as builtin plugin
+- Support for left-prompt customization (contexts)
+- Path and hostname as primary context plugins
 
 ### Changed
 - Using `zsh-async` for right-prompt (git, hg, etc)

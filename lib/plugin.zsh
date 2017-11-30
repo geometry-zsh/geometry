@@ -38,7 +38,8 @@ geometry_plugin_setup() {
   for ctx in $GEOMETRY_PROMPT_CTX; do
     local _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
-      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_ && geometry_plugin_register $plugin $ctx
+      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && \
+        source $_ && geometry_plugin_register $plugin $ctx
     done
   done
 }
@@ -46,7 +47,7 @@ geometry_plugin_setup() {
 # Registers a plugin
 geometry_plugin_register() {
   if [[ $# -eq 0 ]]; then
-    >&2 echo "Error: Missing argument."
+    echo "Error: Missing argument." >&2
     return 1
   fi
 
@@ -57,14 +58,14 @@ geometry_plugin_register() {
   # Check plugin wasn't registered before
   local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   if [[ ! $_ctx_plugins[(r)$plugin] == "" ]]; then
-    >&2 echo "Warning: '$plugin' plugin already registered on $ctx context."
+    echo "Warning: '$plugin' plugin already registered on $ctx context." >&2
     return 1
   fi
 
   # Check plugin has been sourced
   local plugin_setup_function="geometry_prompt_${plugin}_setup"
   if [[ $+functions[$plugin_setup_function] == 0 ]]; then
-    >&2 echo "Error: '$plugin' plugin not available."
+    echo "Error: '$plugin' plugin not available." >&2
     return 1
   fi
 
@@ -82,7 +83,7 @@ geometry_plugin_unregister() {
   # Check plugin is registered
   local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   if [[ $_ctx_plugins[(r)$plugin] == "" ]]; then
-    >&2 echo "Error: '$plugin' plugin not registered on $ctx context."
+    echo "Error: '$plugin' plugin not registered on $ctx context." >&2
     return 1
   fi
 

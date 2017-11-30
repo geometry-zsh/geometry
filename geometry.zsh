@@ -5,32 +5,15 @@
 GEOMETRY_ROOT=${0:A:h}
 source "$GEOMETRY_ROOT/lib/async.zsh"
 source "$GEOMETRY_ROOT/lib/plugin.zsh"
-source "$GEOMETRY_ROOT/lib/time.zsh"
 source "$GEOMETRY_ROOT/lib/color.zsh"
 source "$GEOMETRY_ROOT/lib/grep.zsh"
+source "$GEOMETRY_ROOT/lib/title.zsh"
 
 # Flags
 PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
 PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
 PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
 PROMPT_GEOMETRY_PRIMARY_SUFFIX=${PROMPT_GEOMETRY_PRIMARY_SUFFIX:-" "}
-
-# Show current command in title
-prompt_geometry_set_cmd_title() {
-  local COMMAND="${2}"
-  local CURR_DIR="${PWD##*/}"
-  setopt localoptions no_prompt_subst
-  print -n '\e]0;'
-  print -rn "$COMMAND @ $CURR_DIR"
-  print -n '\a'
-}
-
-# Prevent command showing on title after ending
-prompt_geometry_set_title() {
-  print -n '\e]0;'
-  print -Pn '%~'
-  print -n '\a'
-}
 
 prompt_geometry_render() {
   PROMPT="$(geometry_plugin_render primary)$PROMPT_GEOMETRY_PRIMARY_SUFFIX"
@@ -52,17 +35,21 @@ prompt_geometry_render() {
 prompt_geometry_setup() {
   zmodload zsh/datetime
   autoload -U add-zsh-hook
+
   if $PROMPT_GEOMETRY_ENABLE_PLUGINS; then
-      geometry_plugin_setup
+    geometry_plugin_setup
   fi
 
+  # Helper functions from lib/title.zsh
   add-zsh-hook preexec prompt_geometry_set_cmd_title
   add-zsh-hook precmd prompt_geometry_set_title
+
   add-zsh-hook precmd prompt_geometry_render
 
   if $PROMPT_GEOMETRY_SHOW_RPROMPT && $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
-     geometry_async_setup
+    geometry_async_setup
   fi
 }
 
+# Setup and initialize geometry
 prompt_geometry_setup
