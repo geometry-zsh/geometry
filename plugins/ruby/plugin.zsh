@@ -69,5 +69,3 @@ geometry_prompt_ruby_render() {
 
   echo $result
 }
-
-geometry_plugin_register ruby

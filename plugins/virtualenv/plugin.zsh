@@ -36,6 +36,3 @@ geometry_prompt_virtualenv_render() {
     echo "${environment_str}"
 
 }
-
-# Self-register plugin
-geometry_plugin_register virtualenv

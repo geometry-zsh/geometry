@@ -22,5 +22,3 @@ geometry_prompt_rustup_render() {
     GEOMETRY_COLOR_RUSTUP=${(e)GEOMETRY_RUSTUP_TOOLCHAIN:+\$GEOMETRY_COLOR_RUSTUP_${GEOMETRY_RUSTUP_TOOLCHAIN}}
     echo $(prompt_geometry_colorize $GEOMETRY_COLOR_RUSTUP $GEOMETRY_SYMBOL_RUSTUP)
 }
-
-geometry_plugin_register rustup

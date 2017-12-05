@@ -24,6 +24,3 @@ geometry_prompt_node_render() {
     GEOMETRY_NODE_VERSION="$(node -v 2> /dev/null)"
     echo "$GEOMETRY_NODE_PACKAGER_VERSION $GEOMETRY_NODE_VERSION ($GEOMETRY_NODE_DEFAULT_PACKAGE_MANAGER:$GEOMETRY_PACKAGER_VERSION)"
 }
-
-geometry_plugin_register node
-
