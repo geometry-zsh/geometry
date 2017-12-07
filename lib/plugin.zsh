@@ -35,8 +35,10 @@ typeset -gA _GEOMETRY_PROMPT_PLUGINS
 
 # Set up default plugins
 geometry_plugin_setup() {
+  local _ctx_plugins
+
   for ctx in $GEOMETRY_PROMPT_CTX; do
-    local _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
+    _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
       test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && \
         source $_ && geometry_plugin_register $plugin $ctx
@@ -56,7 +58,8 @@ geometry_plugin_register() {
   local ctx=${2:-secondary}
 
   # Check plugin wasn't registered before
-  local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  local _ctx_plugins;
+  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   if [[ ! $_ctx_plugins[(r)$plugin] == "" ]]; then
     echo "Warning: '$plugin' plugin already registered on $ctx context." >&2
     return 1
@@ -81,7 +84,8 @@ geometry_plugin_unregister() {
   local ctx=${2:-secondary}
 
   # Check plugin is registered
-  local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  local _ctx_plugins
+  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   if [[ $_ctx_plugins[(r)$plugin] == "" ]]; then
     echo "Error: '$plugin' plugin not registered on $ctx context." >&2
     return 1
@@ -107,8 +111,9 @@ geometry_plugin_list() {
 geometry_plugin_check() {
   local plugin=$1
   local ctx=${2:-secondary}
+  local _ctx_plugins;
 
-  local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   [ $_ctx_plugins[(r)+$plugin] ] && return 0
 
   (( $+functions[geometry_prompt_${plugin}_check] )) || return 0
@@ -121,8 +126,9 @@ geometry_plugin_render() {
   local ctx=${1:-secondary}
   local render=""
   local ctx_prompt=""
+  local _ctx_plugins;
 
-  local _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   for plugin in $_ctx_plugins; do
     geometry_plugin_check $plugin $ctx || continue
 
