@@ -61,18 +61,19 @@ geometry_plugin_register() {
   local _ctx_plugins;
   _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   if [[ ! $_ctx_plugins[(r)$plugin] == "" ]]; then
-    echo "Warning: '$plugin' plugin already registered on $ctx context." >&2
+    echo "Warning: '${plugin#+}' plugin already registered on $ctx context." >&2
     return 1
   fi
 
   # Check plugin has been sourced
-  local plugin_setup_function="geometry_prompt_${plugin}_setup"
+  local plugin_setup_function="geometry_prompt_${plugin#+}_setup"
   if [[ $+functions[$plugin_setup_function] == 0 ]]; then
-    echo "Error: '$plugin' plugin not available." >&2
+    echo "Error: '${plugin#+}' plugin not available." >&2
     return 1
   fi
 
-  if geometry_prompt_${plugin}_setup $ctx; then
+  if geometry_prompt_${plugin#+}_setup $ctx; then
+    # Register plugin in $ctx with '+' for pinning
     _ctx_plugins+=$plugin
     _GEOMETRY_PROMPT_PLUGINS[$ctx]=${(j/ /)_ctx_plugins}
   fi
@@ -87,12 +88,13 @@ geometry_plugin_unregister() {
   local _ctx_plugins
   _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
   if [[ $_ctx_plugins[(r)$plugin] == "" ]]; then
-    echo "Error: '$plugin' plugin not registered on $ctx context." >&2
+    echo "Error: '${plugin#+}' plugin not registered on $ctx context." >&2
     return 1
   fi
 
-  if [[ $+functions["geometry_prompt_${plugin}_shutdown"] != 0 ]]; then
-    geometry_prompt_${plugin}_shutdown $ctx
+  # Use shutdown function (handle pinned plugins)
+  if [[ $+functions["geometry_prompt_${plugin#+}_shutdown"] != 0 ]]; then
+    geometry_prompt_${plugin#+}_shutdown $ctx
   fi
 
   _ctx_plugins[$_ctx_plugins[(i)$plugin]]=()
@@ -114,8 +116,10 @@ geometry_plugin_check() {
   local _ctx_plugins;
 
   _ctx_plugins=(${(s/ /)_GEOMETRY_PROMPT_PLUGINS[$ctx]})
+  # Pinned plugins aren't checked for
   [ $_ctx_plugins[(r)+$plugin] ] && return 0
 
+  # No need to strip-out '+' from $plugin as we have returned above
   (( $+functions[geometry_prompt_${plugin}_check] )) || return 0
 
   geometry_prompt_${plugin}_check $ctx || return 1
@@ -132,7 +136,7 @@ geometry_plugin_render() {
   for plugin in $_ctx_plugins; do
     geometry_plugin_check $plugin $ctx || continue
 
-    render=$(geometry_prompt_${plugin}_render $ctx)
+    render=$(geometry_prompt_${plugin#+}_render $ctx)
     if [[ -n $render ]]; then
       [[ -n $ctx_prompt ]] && ctx_prompt+="$GEOMETRY_PLUGIN_SEPARATOR"
       ctx_prompt+="$render"
