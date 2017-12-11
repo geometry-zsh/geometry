@@ -6,7 +6,7 @@
 
 geometry is a minimalistic, fully customizable zsh prompt theme.
 
-![geometry](screenshots/geometry.png)
+![geometry](screenshots/screencast.gif)
 
 geometry starts small, with good defaults, and allows you to customize it at your own will. It can be as simple or complex as you like.
 
