@@ -72,7 +72,7 @@ geometry_plugin_register() {
     return 1
   fi
 
-  if geometry_prompt_${plugin#+}_setup $ctx; then
+  if $plugin_setup_function $ctx; then
     # Register plugin in $ctx with '+' for pinning
     _ctx_plugins+=$plugin
     _GEOMETRY_PROMPT_PLUGINS[$ctx]=${(j/ /)_ctx_plugins}
@@ -111,7 +111,7 @@ geometry_plugin_list() {
 
 # Checks a registered plugin
 geometry_plugin_check() {
-  local plugin=$1
+  local plugin=${1#+}
   local ctx=${2:-secondary}
   local _ctx_plugins;
 
