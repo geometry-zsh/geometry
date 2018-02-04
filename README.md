@@ -67,6 +67,7 @@ In a nutshell, it can:
 - display current git branch, state and time since last commit
 - tell you whether you need to pull, push or if you're mid-rebase
 - display the number of conflicting files and total number of conflicts
+- display if there is a stash
 - display the running time of long running commands
 - set the terminal title to current command and directory
 - make you the coolest hacker in the whole Starbucks

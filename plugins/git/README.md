@@ -38,6 +38,14 @@ unchecked by setting the `PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY` variable to
 You can also customize the message by changing the
 `GEOMETRY_GIT_NO_COMMITS_MESSAGE` to whatever you would like the message to be.
 
+### Hide stash indicator
+
+By default, we show an indicator if there are any git stashes `●`.
+If you would like to hide this indicator, set `PROMPT_GEOMETRY_GIT_SHOW_STASHES=false`.
+
+You can also change the symbol and color with `GEOMETRY_SYMBOL_GIT_STASHES`, and
+`GEOMETRY_COLOR_GIT_STASHES`.
+
 ## Symbols
 
 The following symbols can be overriden:
