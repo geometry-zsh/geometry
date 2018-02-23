@@ -4,9 +4,10 @@
 # pure: https://github.com/sindresorhus/pure
 GEOMETRY_ROOT=${0:A:h}
 source "$GEOMETRY_ROOT/lib/async.zsh"
-source "$GEOMETRY_ROOT/lib/plugin.zsh"
 source "$GEOMETRY_ROOT/lib/color.zsh"
 source "$GEOMETRY_ROOT/lib/grep.zsh"
+source "$GEOMETRY_ROOT/lib/plugin.zsh"
+source "$GEOMETRY_ROOT/lib/time.zsh"
 source "$GEOMETRY_ROOT/lib/title.zsh"
 
 # Flags
