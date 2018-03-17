@@ -40,12 +40,9 @@ geometry_plugin_setup() {
   for ctx in $GEOMETRY_PROMPT_CTX; do
     _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
-      # Source built-in plugin if necessary, custom plugins should be already
-      # sourced by the user, otherwise `geometry_plugin_register` will raise and error
-      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
-
-      # Register plugin for it's context
-      geometry_plugin_register $plugin $ctx
+      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" \
+      && source $_ \
+      && geometry_plugin_register $plugin $ctx
     done
   done
 }
@@ -60,6 +57,11 @@ geometry_plugin_register() {
   local plugin=$1
   # Default to secondary context for backward compatibility
   local ctx=${2:-secondary}
+
+  # Override default if found in primary
+  if (( ${+GEOMETRY_PROMPT_PLUGINS_PRIMARY[(r)$plugin]} )); then
+    ctx=primary
+  fi
 
   # Check plugin wasn't registered before
   local _ctx_plugins;
