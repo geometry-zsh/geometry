@@ -40,8 +40,12 @@ geometry_plugin_setup() {
   for ctx in $GEOMETRY_PROMPT_CTX; do
     _ctx_plugins=(${(s/ /)GEOMETRY_PROMPT_PLUGINS[$ctx]})
     for plugin in $_ctx_plugins; do
-      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && \
-        source $_ && geometry_plugin_register $plugin $ctx
+      # Source built-in plugin if necessary, custom plugins should be already
+      # sourced by the user, otherwise `geometry_plugin_register` will raise and error
+      test -f "$GEOMETRY_ROOT/plugins/${plugin#+}/plugin.zsh" && source $_
+
+      # Register plugin for it's context
+      geometry_plugin_register $plugin $ctx
     done
   done
 }
