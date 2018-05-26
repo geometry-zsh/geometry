@@ -10,6 +10,7 @@ Available plugins:
 * [Exec Time](/plugins/exec_time)
 * [Git](/plugins/git)
 * [Hg](/plugins/hg)
+* [Kube](/plugins/kube)
 * [Node](/plugins/node)
 * [Ruby](/plugins/ruby)
 * [Rustup](/plugins/rustup)
