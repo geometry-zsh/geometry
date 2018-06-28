@@ -55,10 +55,12 @@ geometry_prompt_path_setup() {
 geometry_prompt_path_check() {}
 
 geometry_prompt_path_render() {
+  local prompt_symbol=""
+
   if [ $? -eq 0 ] ; then
-    PROMPT_SYMBOL=$GEOMETRY_SYMBOL_PROMPT
+    prompt_symbol=$GEOMETRY_SYMBOL_PROMPT
   else
-    PROMPT_SYMBOL=$GEOMETRY_SYMBOL_EXIT_VALUE
+    prompt_symbol=$GEOMETRY_SYMBOL_EXIT_VALUE
   fi
 
   if $PROMPT_GEOMETRY_COLORIZE_ROOT && [[ $UID == 0 || $EUID == 0 ]]; then
@@ -70,5 +72,21 @@ geometry_prompt_path_render() {
     dir=$(basename $PWD)
   fi
 
-  echo "$GEOMETRY_PROMPT_PREFIX$GEOMETRY_PROMPT_PREFIX_SPACER%${#PROMPT_SYMBOL}{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%}$GEOMETRY_SYMBOL_SPACER%F{$GEOMETRY_COLOR_DIR}$dir%f$GEOMETRY_DIR_SPACER$GEOMETRY_PROMPT_SUFFIX"
+  local prompt_prefix="$GEOMETRY_PROMPT_PREFIX$GEOMETRY_PROMPT_PREFIX_SPACER"
+
+  # Getting the correct symbol width is not as simple as getting the variable length
+  # There are zero width characters that should not be accounted for.
+  # E.g: characters that change the symbol to bold.
+  # See https://github.com/geometry-zsh/geometry/pull/216 for context.
+  # Regex used is the one in the adam2 prompt.
+  #
+  # TODO: We do not account for utf-8 characters which differ in the number of bytes
+  # (which we calculate in the symbol_width) and in the number of columns they
+  # occupy on screen. See: https://github.com/geometry-zsh/geometry/issues/3
+  local symbol_width="${#${(S%%)prompt_symbol//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+  local colorized_prompt_symbol="%$symbol_width{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%}$GEOMETRY_SYMBOL_SPACER"
+
+  local colorized_prompt_dir="%F{$GEOMETRY_COLOR_DIR}$dir%f$GEOMETRY_DIR_SPACER"
+
+  echo "$prompt_prefix$colorized_prompt_symbol$colorized_prompt_dir$GEOMETRY_PROMPT_SUFFIX"
 }
