@@ -222,6 +222,10 @@ variables before geometry is loaded**.
 
 This is a [known problem](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update geometry and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
 
+**My syntax highlighting gets thrown off in version controled directories...**
+
+Yeah, turns out this might be an issue with `zsh-syntax-highlighting` [as described here](https://github.com/geometry-zsh/geometry/issues/214#issuecomment-396057863). We recommend trying [`zdharma/fast-syntax-highlighting`](https://github.com/zdharma/fast-syntax-highlighting) instead. If the problem persists, [comment on this issue](https://github.com/geometry-zsh/geometry/issues/214).
+
 **There are too many/few spaces after the symbol or the prompt.**
 
 You're probably using a different prompt character. zsh has a few issues determining the length of the prompt and while it should work for most cases, changing the symbol to a different character (an example would be:  ☁︎ )
