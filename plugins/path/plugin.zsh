@@ -41,6 +41,20 @@ prompt_geometry_hash_color() {
   echo ${colors[$(($sum % ${#colors}))]}
 }
 
+prompt_geometry_char_size() {
+  local char_bytes=$(echo -n $1 | hexdump | head -n 1 | cut -d ' ' -f 2- | tr -d ' ')
+  echo $((${#char_bytes} / 4 ))
+
+  # local bytes=$(echo -n $1 | hexdump | head -n 1 | cut -d ' ' -f 2- | tr -d ' ')
+  # local byte_size=$((${#bytes} / 4 ))
+
+  # if [ $((byte_size % 2)) -eq 0 ]; then
+  #   echo $byte_size
+  # else
+  #   echo $((byte_size - 1))
+  # fi
+}
+
 geometry_prompt_path_setup() {
   # Combine color and symbols
   GEOMETRY_EXIT_VALUE=$(prompt_geometry_colorize $GEOMETRY_COLOR_EXIT_VALUE $GEOMETRY_SYMBOL_EXIT_VALUE)
@@ -74,7 +88,10 @@ geometry_prompt_path_render() {
 
   local prompt_prefix="$GEOMETRY_PROMPT_PREFIX$GEOMETRY_PROMPT_PREFIX_SPACER"
 
-  local symbol_width="${#${(S%%)prompt_symbol//\\e\[[0-9]m}}"
+  # local bare_symbol="${#${(S%%)prompt_symbol//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+  local bare_symbol=$prompt_symbol
+  local symbol_width=$(prompt_geometry_char_size $bare_symbol)
+
   local colorized_prompt_symbol="%$symbol_width{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%}$GEOMETRY_SYMBOL_SPACER"
 
   local colorized_prompt_dir="%F{$GEOMETRY_COLOR_DIR}$dir%f$GEOMETRY_DIR_SPACER"
