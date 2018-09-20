@@ -46,6 +46,13 @@ If you would like to hide this indicator, set `PROMPT_GEOMETRY_GIT_SHOW_STASHES=
 You can also change the symbol and color with `GEOMETRY_SYMBOL_GIT_STASHES`, and
 `GEOMETRY_COLOR_GIT_STASHES`.
 
+### Ignore untracked files 
+
+Normally, untracked files are included when dirtiness checks are performed.
+However, for large git repositories, it may be useful to ignore these files in order to gain significant speed improvements. 
+
+You can specify that untracked files should not be included by setting `PROMPT_GEOMETRY_GIT_UNTRACKED_DIRTY=false`. 
+
 ## Symbols
 
 The following symbols can be overriden:
