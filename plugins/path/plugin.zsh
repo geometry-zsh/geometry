@@ -72,7 +72,7 @@ geometry_prompt_path_render() {
     dir=$(basename $PWD)
   fi
 
-  export geometry_prompt_prefix="$GEOMETRY_PROMPT_PREFIX$GEOMETRY_PROMPT_PREFIX_SPACER"
+  export var_geometry_prompt_prefix="$GEOMETRY_PROMPT_PREFIX$GEOMETRY_PROMPT_PREFIX_SPACER"
 
   # Getting the correct symbol width is not as simple as getting the variable length
   # There are zero width characters that should not be accounted for.
@@ -84,13 +84,13 @@ geometry_prompt_path_render() {
   # (which we calculate in the symbol_width) and in the number of columns they
   # occupy on screen. See: https://github.com/geometry-zsh/geometry/issues/3
   local symbol_width="${#${(S%%)prompt_symbol//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
-  export geometry_colorized_prompt_symbol="%$symbol_width{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%}$GEOMETRY_SYMBOL_SPACER"
+  export var_geometry_colorized_prompt_symbol="%$symbol_width{%(?.$GEOMETRY_PROMPT.$GEOMETRY_EXIT_VALUE)%}$GEOMETRY_SYMBOL_SPACER"
 
-  export geometry_colorized_prompt_dir="%F{$GEOMETRY_COLOR_DIR}$dir%f$GEOMETRY_DIR_SPACER"
+  export var_geometry_colorized_prompt_dir="%F{$GEOMETRY_COLOR_DIR}$dir%f$GEOMETRY_DIR_SPACER"
 
   if typeset -f geometry_prompt_path_render_override > /dev/null; then
     echo "$(geometry_prompt_path_render_override)"
   else
-    echo "$geometry_prompt_prefix$geometry_colorized_prompt_symbol$geometry_colorized_prompt_dir$GEOMETRY_PROMPT_SUFFIX"
+    echo "$var_geometry_prompt_prefix$var_geometry_colorized_prompt_symbol$var_geometry_colorized_prompt_dir$GEOMETRY_PROMPT_SUFFIX"
   fi
 }

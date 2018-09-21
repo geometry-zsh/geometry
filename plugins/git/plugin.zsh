@@ -166,27 +166,31 @@ geometry_prompt_git_render() {
   fi
 
   if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
-    conflicts="$(prompt_geometry_git_conflicts)"
+    export var_geometry_git_conflicts="$(prompt_geometry_git_conflicts)"
   fi
 
   if $PROMPT_GEOMETRY_GIT_TIME; then
     local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
     if [[ -n $git_time_since_commit ]]; then
-        time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
+        export var_geometry_git_time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
     fi
   fi
 
   if $PROMPT_GEOMETRY_GIT_SHOW_STASHES && git rev-parse --quiet --verify refs/stash >/dev/null; then
-      stashes=" $GEOMETRY_GIT_STASHES $GEOMETRY_GIT_SEPARATOR";
+      var_geometry_git_stashes=" $GEOMETRY_GIT_STASHES $GEOMETRY_GIT_SEPARATOR";
   fi
 
-  local render="$(prompt_geometry_git_symbol)"
+  if typeset -f geometry_prompt_git_render_override > /dev/null; then
+    echo "$(geometry_prompt_git_render_override)"
+  else
+    local render="$(prompt_geometry_git_symbol)"
 
-  if [[ -n $render ]]; then
-    render+=" "
+    if [[ -n $render ]]; then
+      render+=" "
+    fi
+
+    render+="$(prompt_geometry_git_branch) ${var_geometry_git_conflicts}${GEOMETRY_GIT_SEPARATOR}${var_geometry_git_time}${var_geometry_git_stashes} $(prompt_geometry_git_status)"
+
+    echo -n $render
   fi
-
-  render+="$(prompt_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time}${stashes} $(prompt_geometry_git_status)"
-
-  echo -n $render
 }
