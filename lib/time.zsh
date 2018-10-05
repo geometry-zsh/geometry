@@ -75,5 +75,5 @@ _geometry_seconds_to_human_time() {
     _geometry_time_short_format $days $hours $minutes $seconds
   fi
 
-  echo "$(_geometry_colorize $geometry_time_color $geometry_time_human)"
+  echo "$(color $geometry_time_color $geometry_time_human)"
 }
