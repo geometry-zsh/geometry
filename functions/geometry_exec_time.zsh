@@ -28,17 +28,11 @@ prompt_geometry_set_command_timestamp() {
   prompt_geometry_command_timestamp=$EPOCHSECONDS
 }
 
-geometry_prompt_exec_time_setup() {
-  # Begin to track the EPOCHSECONDS since this command is executed
-  add-zsh-hook preexec prompt_geometry_set_command_timestamp
-  # Check if we need to display execution time
-  add-zsh-hook precmd prompt_geometry_check_command_exec_time
+# Begin to track the EPOCHSECONDS since this command is executed
+add-zsh-hook preexec prompt_geometry_set_command_timestamp
+# Check if we need to display execution time
+add-zsh-hook precmd prompt_geometry_check_command_exec_time
 
-  return true
-}
-
-geometry_prompt_exec_time_check() {}
-
-geometry_prompt_exec_time_render() {
-  echo "$prompt_geometry_command_exec_time"
+geometry_exec_time() {
+  echo -n "$prompt_geometry_command_exec_time"
 }

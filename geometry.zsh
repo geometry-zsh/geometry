@@ -13,7 +13,7 @@ _geometry_colorize() {
   echo "%F{$1}$2%f"
 }
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status)
-(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_git geometry_hostname geometry_path)
+(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hostname geometry_path)
 
 function _geometry_source_functions {
   local cmd
