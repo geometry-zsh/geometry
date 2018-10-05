@@ -72,7 +72,7 @@ We bundle a few useful functions to start out with, that can:
 - make the prompt symbol color change with your hostname
 - make you the coolest hacker in the whole Starbucks
 
-~~The right side prompt is printed asynchronously, so you know it's going to be fast™.~~ UNDER CONSTRUCTION
+The right side prompt is printed asynchronously, so you know it's going to be fast™.
 
 ## Commands
 
@@ -138,9 +138,9 @@ GEOMETRY_GREP=""                            # define which grep-like tool to use
 
 ### Features
 
-#### ~~Async `RPROMPT`~~
+#### Async `RPROMPT`
 
-geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_RPROMPT_ASYNC` to `false`.
+geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations.
 
 #### Randomly colorize prompt symbol
 

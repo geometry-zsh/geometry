@@ -15,7 +15,7 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
     # In order to work with zsh-async we need to set workers in
     # the proper directory.
     cd -q $1 > /dev/null
-    geometry_plugin_render secondary
+    _geometry_wrap GEOMETRY_RPROMPT
 }
 
 # Flushed currently running async jobs and queues a new one
@@ -30,7 +30,7 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
 }
 
 # Initialize zsh-async and creates a worker
-geometry_async_setup() {
+_geometry_async_setup() {
     # Workaround for missing zsh-async lib
     if (( ! $+functions[async_init] )); then
       builtin pushd -q $GEOMETRY_ROOT > /dev/null

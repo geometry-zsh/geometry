@@ -5,6 +5,7 @@
 # mnml: https://github.com/subnixr/minimal/
 
 GEOMETRY_ROOT=${0:A:h}
+source "${GEOMETRY_ROOT}/lib/async.zsh"
 source "${GEOMETRY_ROOT}/lib/time.zsh"
 
 # Define how to colorize before the variables
@@ -78,8 +79,9 @@ autoload -U colors && colors
 setopt prompt_subst
 
 _geometry_source_functions
+_geometry_async_setup
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT) '
-RPROMPT='$(_geometry_wrap GEOMETRY_RPROMPT)'
+RPROMPT=''
 
 _geometry_bind_widgets
