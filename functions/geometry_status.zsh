@@ -1,13 +1,18 @@
-# Color definitions
-GEOMETRY_STATUS_COLOR_OK=${GEOMETRY_STATUS_COLOR_OK:-white}
-GEOMETRY_STATUS_COLOR_ERROR=${GEOMETRY_STATUS_COLOR_ERROR:-magenta}
-GEOMETRY_STATUS_COLOR_HASH=${GEOMETRY_STATUS_SYMBOL_COLOR_HASH:-false}
+# Status
+#
+# Display a symbol with error/success and root/non-root information
+#
+# Feel free to change these environment variables before sourcing
 
-# Symbol definitions
-GEOMETRY_STATUS_SYMBOL_OK=${GEOMETRY_SYMBOL_STATUS_OK:-"▲"}
-GEOMETRY_STATUS_SYMBOL_ERROR=${GEOMETRY_STATUS_SYMBOL_ERROR:-"△"}
-GEOMETRY_STATUS_SYMBOL_ROOT_OK=${GEOMETRY_SYMBOL_STATUS_ROOT:-"▲"}
-GEOMETRY_STATUS_SYMBOL_ROOT_ERROR=${GEOMETRY_SYMBOL_STATUS_ERROR:-"△"}
+: ${GEOMETRY_STATUS_COLOR_OK:=white}      # Color when everything is ok
+: ${GEOMETRY_STATUS_COLOR_ERROR:=magenta} # Color if there was an error
+: ${GEOMETRY_STATUS_COLOR_HASH:=false}    # Color indicates hostname
+
+: ${GEOMETRY_STATUS_SYMBOL_OK:=▲}         # Default symbol
+: ${GEOMETRY_STATUS_SYMBOL_ERROR:=△}      # Error symbol
+: ${GEOMETRY_SYMBOL_STATUS_ROOT_OK:=▲}    # Root symbol
+: ${GEOMETRY_SYMBOL_STATUS_ROOT_ERROR:=△} # Root error symbol
+
 
 # Helper function to colorize based off a string
 _geometry_hash_color() {
