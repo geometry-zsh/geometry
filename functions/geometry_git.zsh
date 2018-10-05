@@ -36,10 +36,10 @@
 : ${GEOMETRY_GIT_SEPARATOR:="::"}
 
 # Combine color and symbols
-GEOMETRY_GIT_DIRTY=$(_geometry_colorize $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
-GEOMETRY_GIT_CLEAN=$(_geometry_colorize $GEOMETRY_COLOR_GIT_CLEAN $GEOMETRY_SYMBOL_GIT_CLEAN)
-GEOMETRY_GIT_BARE=$(_geometry_colorize $GEOMETRY_COLOR_GIT_BARE $GEOMETRY_SYMBOL_GIT_BARE)
-GEOMETRY_GIT_STASHES=$(_geometry_colorize $GEOMETRY_COLOR_GIT_STASHES $GEOMETRY_SYMBOL_GIT_STASHES)
+GEOMETRY_GIT_DIRTY=$(color $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
+GEOMETRY_GIT_CLEAN=$(color $GEOMETRY_COLOR_GIT_CLEAN $GEOMETRY_SYMBOL_GIT_CLEAN)
+GEOMETRY_GIT_BARE=$(color $GEOMETRY_COLOR_GIT_BARE $GEOMETRY_SYMBOL_GIT_BARE)
+GEOMETRY_GIT_STASHES=$(color $GEOMETRY_COLOR_GIT_STASHES $GEOMETRY_SYMBOL_GIT_STASHES)
 GEOMETRY_GIT_REBASE=$GEOMETRY_SYMBOL_GIT_REBASE
 GEOMETRY_GIT_UNPULLED=$GEOMETRY_SYMBOL_GIT_UNPULLED
 GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
@@ -55,7 +55,7 @@ _geometry_git_time_since_commit() {
       seconds_since_last_commit=$((now - last_commit))
       git_time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT)
   elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
-      git_time_since_commit=$(_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
+      git_time_since_commit=$(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
 
   echo $git_time_since_commit
@@ -64,7 +64,7 @@ _geometry_git_time_since_commit() {
 _geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$(_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
+  echo "$(color $GEOMETRY_COLOR_GIT_BRANCH $ref)"
 }
 
 _geometry_git_status() {
@@ -144,13 +144,13 @@ _geometry_git_conflicts() {
 
     if [[ -z $total ]]; then
       text=$GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED
-      color=$GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED
+      highlight=$GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED
     else
       text="$GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
-      color=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
+      highlight=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
     fi
 
-    echo "$(_geometry_colorize $color $text) "
+    echo "$(color $highlight $text) "
   else
     echo ""
   fi

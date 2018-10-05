@@ -1,4 +1,8 @@
-GEOMETRY_HOSTNAME_SEPARATOR=${GEOMETRY_HOSTNAME_SEPARATOR:-@}
+# Hostname
+#
+# show user@hostname
+
+: ${GEOMETRY_HOSTNAME_SEPARATOR:=@}
 
 function geometry_hostname {
   [[ -n "$SSH_CLIENT" || -n "$SSH_TTY" ]] && return 0

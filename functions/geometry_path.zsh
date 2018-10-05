@@ -12,5 +12,5 @@ function geometry_path {
     dir=$(basename $PWD)
   fi
 
-  echo -n $(_geometry_colorize $GEOMETRY_PATH_COLOR $dir)
+  echo -n $(color $GEOMETRY_PATH_COLOR $dir)
 }

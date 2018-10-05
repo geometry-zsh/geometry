@@ -7,11 +7,8 @@
 GEOMETRY_ROOT=${0:A:h}
 source "${GEOMETRY_ROOT}/lib/async.zsh"
 source "${GEOMETRY_ROOT}/lib/time.zsh"
+source "${GEOMETRY_ROOT}/lib/color.zsh"
 
-# Define how to colorize before the variables
-_geometry_colorize() {
-  echo "%F{$1}$2%f"
-}
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status)
 (($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hostname geometry_path)
 
