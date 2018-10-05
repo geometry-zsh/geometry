@@ -13,7 +13,7 @@ _geometry_colorize() {
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status)
 (($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_hostname geometry_path)
 
-function _geometry_source_plugins { 
+function _geometry_source_commands {
   local cmd
   for context in GEOMETRY_PROMPT GEOMETRY_RPROMPT; do
     for cmd in ${(P)context}; do
@@ -76,7 +76,7 @@ function _geometry_bind_widgets() {
 autoload -U colors && colors
 setopt prompt_subst
 
-_geometry_source_plugins
+_geometry_source_commands
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT) '
 RPROMPT='$(_geometry_wrap GEOMETRY_RPROMPT)'
