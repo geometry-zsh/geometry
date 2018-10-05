@@ -1,7 +1,7 @@
 # Color definitions
 GEOMETRY_STATUS_COLOR_OK=${GEOMETRY_STATUS_COLOR_OK:-white}
 GEOMETRY_STATUS_COLOR_ERROR=${GEOMETRY_STATUS_COLOR_ERROR:-magenta}
-GEOMETRY_STATUS_SYMBOL_COLOR_HASH=${GEOMETRY_STATUS_SYMBOL_COLOR_HASH:-false}
+GEOMETRY_STATUS_COLOR_HASH=${GEOMETRY_STATUS_SYMBOL_COLOR_HASH:-false}
 
 # Symbol definitions
 GEOMETRY_STATUS_SYMBOL_OK=${GEOMETRY_SYMBOL_STATUS_OK:-"▲"}
@@ -33,7 +33,7 @@ GEOMETRY_STATUS_ROOT_OK=$(_geometry_colorize $GEOMETRY_STATUS_COLOR_OK $GEOMETRY
 GEOMETRY_STATUS_ROOT_ERROR=$(_geometry_colorize $GEOMETRY_STATUS_COLOR_ERROR $GEOMETRY_STATUS_SYMBOL_ROOT_ERROR)
 
 if $GEOMETRY_STATUS_SYMBOL_COLOR_HASH; then
-  GEOMETRY_STATUS_COLOR_OK=$(prompt_geometry_hash_color $HOST)
+  GEOMETRY_STATUS_COLOR_OK=$(_geometry_hash_color $HOST)
   GEOMETRY_STATUS_OK=$(_geometry_colorize $GEOMETRY_STATUS_COLOR_OK $GEOMETRY_STATUS_SYMBOL_OK)
 fi
 
@@ -41,7 +41,7 @@ fi
 function geometry_status() {
   local _status=$GEOMETRY_STATUS_OK
 
-  if [[ $GEOMETRY_LAST_ERROR == '0' ]]; then
+  if (( $+GEOMETRY_LAST_ERROR )); then
     if [[ $UID == 0 || $EUID == 0 ]]; then
         _status=$GEOMETRY_STATUS_ROOT_OK
     fi
@@ -52,16 +52,5 @@ function geometry_status() {
     fi
   fi
 
-  # Getting the correct symbol width is not as simple as getting the variable length
-  # There are zero width characters that should not be accounted for.
-  # E.g: characters that change the symbol to bold.
-  # See https://github.com/geometry-zsh/geometry/pull/216 for context.
-  # Regex used is the one in the adam2 prompt.
-  #
-  # TODO: We do not account for utf-8 characters which differ in the number of bytes
-  # (which we calculate in the symbol_width) and in the number of columns they
-  # occupy on screen. See: https://github.com/geometry-zsh/geometry/issues/3
-  local symbol_width="${#${(S%%)_symbol//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
-
-  echo -n "%$symbol_width{%(?.$_status.$GEOMETRY_EXIT_VALUE)%}"
+  echo -n "%{%(?.$_status.$GEOMETRY_STATUS_ERROR)%}"
 }
