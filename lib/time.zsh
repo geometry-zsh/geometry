@@ -1,13 +1,20 @@
-GEOMETRY_COLOR_TIME_SHORT=${GEOMETRY_COLOR_TIME_SHORT:-green}
-GEOMETRY_COLOR_TIME_NEUTRAL=${GEOMETRY_COLOR_TIME_NEUTRAL:-white}
-GEOMETRY_COLOR_TIME_LONG=${GEOMETRY_COLOR_TIME_LONG:-red}
-GEOMETRY_COLOR_NO_TIME=${GEOMETRY_COLOR_NO_TIME:-red}
+# Time
+#
+# Library to convert timestamps to human readable stuff
+#
+# We have a concept of color mapping lengths of time, but that
+# should probably be factored out
+
+: ${GEOMETRY_COLOR_TIME_SHORT:=green}
+: ${GEOMETRY_COLOR_TIME_NEUTRAL:=white}
+: ${GEOMETRY_COLOR_TIME_LONG:=red}
+: ${GEOMETRY_COLOR_NO_TIME:=red}
 
 typeset -g geometry_time_human
 typeset -g geometry_time_color
 
 # Format time in short format: 4s, 4h, 1d
--prompt_geometry_time_short_format() {
+_geometry_time_short_format() {
   local human=""
   local color=""
   local days=$1
@@ -34,7 +41,7 @@ typeset -g geometry_time_color
 }
 
 # Format time in long format: 1d4h33m51s, 33m51s
--prompt_geometry_time_long_format() {
+_geometry_time_long_format() {
   local human=""
   local color=""
   local days=$1
@@ -52,7 +59,7 @@ typeset -g geometry_time_color
 }
 
 # from https://github.com/sindresorhus/pretty-time-zsh
-prompt_geometry_seconds_to_human_time() {
+_geometry_seconds_to_human_time() {
   local total_seconds=$1
   local long_format=$2
 
@@ -63,9 +70,9 @@ prompt_geometry_seconds_to_human_time() {
 
   # It looks redundant but it seems it's not
   if [[ $long_format == true ]]; then
-    -prompt_geometry_time_long_format $days $hours $minutes $seconds
+    _geometry_time_long_format $days $hours $minutes $seconds
   else
-    -prompt_geometry_time_short_format $days $hours $minutes $seconds
+    _geometry_time_short_format $days $hours $minutes $seconds
   fi
 
   echo "$(_geometry_colorize $geometry_time_color $geometry_time_human)"

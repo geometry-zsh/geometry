@@ -40,7 +40,7 @@ PROMPT_GEOMETRY_GIT_SHOW_STASHES=${PROMPT_GEOMETRY_GIT_SHOW_STASHES:-true}
 GEOMETRY_GIT_NO_COMMITS_MESSAGE=${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-"no commits"}
 GEOMETRY_GIT_SEPARATOR=${GEOMETRY_GIT_SEPARATOR:-"::"}
 
-prompt_geometry_git_time_since_commit() {
+_geometry_git_time_since_commit() {
   # Defaults to "", which would hide the git_time_since_commit block
   local git_time_since_commit=""
 
@@ -49,7 +49,7 @@ prompt_geometry_git_time_since_commit() {
   if [[ -n $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
-      git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT)
+      git_time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT)
   elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
       git_time_since_commit=$(_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
@@ -57,13 +57,13 @@ prompt_geometry_git_time_since_commit() {
   echo $git_time_since_commit
 }
 
-prompt_geometry_git_branch() {
+_geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
   echo "$(_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
 }
 
-prompt_geometry_git_status() {
+_geometry_git_status() {
   if test -z "$(git status --porcelain --ignore-submodules HEAD)"; then
     if test -z "$(git ls-files --others --modified --exclude-standard)"; then
       echo $GEOMETRY_GIT_CLEAN
@@ -75,18 +75,18 @@ prompt_geometry_git_status() {
   fi
 }
 
-prompt_geometry_is_rebasing() {
+_geometry_is_rebasing() {
   git_dir=$(git rev-parse --git-dir)
   test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply"
 }
 
-prompt_geometry_git_rebase_check() {
-  if $(prompt_geometry_is_rebasing); then
+_geometry_git_rebase_check() {
+  if $(_geometry_is_rebasing); then
     echo "$GEOMETRY_GIT_REBASE"
   fi
 }
 
-prompt_geometry_git_remote_check() {
+_geometry_git_remote_check() {
   local_commit=$(git rev-parse "@" 2>/dev/null)
   remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
 
@@ -104,10 +104,10 @@ prompt_geometry_git_remote_check() {
   fi
 }
 
-prompt_geometry_git_symbol() {
+_geometry_git_symbol() {
   local render=""
-  local git_rebase="$(prompt_geometry_git_rebase_check)"
-  local git_remote="$(prompt_geometry_git_remote_check)"
+  local git_rebase="$(_geometry_git_rebase_check)"
+  local git_remote="$(_geometry_git_remote_check)"
 
   if [[ -n $git_rebase ]]; then
     render+="$git_rebase"
@@ -124,7 +124,7 @@ prompt_geometry_git_symbol() {
   echo -n $render
 }
 
-prompt_geometry_git_conflicts() {
+_geometry_git_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
   if [[ ! -z $conflicts ]]; then
@@ -161,11 +161,11 @@ geometry_git() {
   fi
 
   if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
-    conflicts="$(prompt_geometry_git_conflicts)"
+    conflicts="$(_geometry_git_conflicts)"
   fi
 
   if $PROMPT_GEOMETRY_GIT_TIME; then
-    local git_time_since_commit=$(prompt_geometry_git_time_since_commit)
+    local git_time_since_commit=$(_geometry_git_time_since_commit)
     if [[ -n $git_time_since_commit ]]; then
         time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
     fi
@@ -175,13 +175,13 @@ geometry_git() {
       stashes=" $GEOMETRY_GIT_STASHES $GEOMETRY_GIT_SEPARATOR";
   fi
 
-  local render="$(prompt_geometry_git_symbol)"
+  local render="$(_geometry_git_symbol)"
 
   if [[ -n $render ]]; then
     render+=" "
   fi
 
-  render+="$(prompt_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time}${stashes} $(prompt_geometry_git_status)"
+  render+="$(_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time}${stashes} $(_geometry_git_status)"
 
   echo -n $render
 }

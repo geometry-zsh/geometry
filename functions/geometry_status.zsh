@@ -1,8 +1,6 @@
 # Status
 #
 # Display a symbol with error/success and root/non-root information
-#
-# Feel free to change these environment variables before sourcing
 
 : ${GEOMETRY_STATUS_COLOR_OK:=white}      # Color when everything is ok
 : ${GEOMETRY_STATUS_COLOR_ERROR:=magenta} # Color if there was an error
