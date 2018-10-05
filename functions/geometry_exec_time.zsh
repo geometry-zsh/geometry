@@ -37,6 +37,6 @@ add-zsh-hook preexec _geometry_set_command_timestamp
 # Check if we need to display execution time
 add-zsh-hook precmd _geometry_check_command_exec_time
 
-geometry_exec_time() {
+function geometry_exec_time {
   echo -n "$_geometry_command_exec_time"
 }
