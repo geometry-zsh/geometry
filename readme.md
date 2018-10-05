@@ -1,5 +1,7 @@
 # geometry
 
+**warning**: this is an experimental rewrite based on the ergonomics and code of mnml. lots of features are missing.
+
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geometry-zsh/Lobby)
 [![Trello](https://img.shields.io/badge/trello-board-blue.svg)](https://trello.com/b/GfM4e6Ro/geometry)
 [![GitHub release](https://img.shields.io/github/release/geometry-zsh/geometry.svg)](https://github.com/geometry-zsh/geometry/releases/latest)
