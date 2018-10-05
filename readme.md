@@ -39,6 +39,10 @@ Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `
 
 Add `zplug "geometry-zsh/geometry"` to your `.zshrc`.
 
+### Install using zr
+
+Add `geometry-zsh/geometry` to your `zr load` command.
+
 ### Manual install
 
 Clone this repository as follows:
@@ -59,58 +63,38 @@ You can also change the rebase symbol by setting the `GEOMETRY_SYMBOL_GIT_REBASE
 
 ## What it does
 
-To allow a pleasant configuration and customization, geometry works with the concept of plugins.
+All geometry does is run simple functions to customize the left and write prompts.
 
-In a nutshell, it can:
+We bundle a few useful functions to start out with, that can:
 
 - give you a custom, colorizable prompt symbol
 - change the prompt symbol color according to the last command exit status
 - make the prompt symbol color change with your hostname
-- display current git branch, state and time since last commit
-- tell you whether you need to pull, push or if you're mid-rebase
-- display the number of conflicting files and total number of conflicts
-- display if there is a stash
-- display the running time of long running commands
-- set the terminal title to current command and directory
 - make you the coolest hacker in the whole Starbucks
 
-The right side prompt is printed asynchronously, so you know it's going to be
-fast™.
+~~The right side prompt is printed asynchronously, so you know it's going to be fast™.~~ UNDER CONSTRUCTION
 
-## Plugins
+## Commands
 
-geometry has an internal plugin architecture. The default plugins are `exec_time`, `git` and `hg`.
-But you can enable a variety of built-in plugins just by setting the `GEOMETRY_PROMPT_PLUGINS` variable in your own configuration files:
+geometry has very little architecture. By default, we display a status symbol on the left, hostname and directory on the right.
+
+These come from the `commands/` folder and are defined as `geometry_status`, `geometry_hostname`, and `geometry_path`.
+
+To add more commands, just source the function you want, and add it to the `GEOMETRY_PROMPT` environment variable
 
 ```sh
-GEOMETRY_PROMPT_PLUGINS=(virtualenv docker_machine exec_time git hg)
+GEOMETRY_PROMPT=(geometry_status geometry_path)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*.
 
-These plugins will load and display on the right prompt. You can check the
-documentation and configuration for each specific plugin in the
-[plugins](/plugins) directory.
+Its worth looking into the `commands` directory to see if there are environment variables to make common customizations.
 
-Some plugins only render when you are in a given directory or in the presence of a given file.
-You can have those plugins always render by pinning a `+` before the name.
-
-```sh
-export GEOMETRY_PROMPT_PLUGINS=(exec_time git +rustup) # rustup will always render
-```
-
-geometry also supports your own custom plugins. See the plugin [documentation](/plugins/README.md) for
-instructions and examples.
-
-Please check out and share third-party plugins on our [Plugins wiki page](https://github.com/geometry-zsh/geometry/wiki/Plugins).
+Please check out and share third-party commands on our [Commands wiki page](https://github.com/geometry-zsh/geometry/wiki/Commands).
 
 ## Configuration
 
-geometry was built with easy configuration in mind. The best way to do so is by
-[using environment variables](https://github.com/fribmendes/dotfiles/blob/7f448626e1c6e9c0ab7b474c5ff2c1939b64b7d2/system/prompt.zsh#L18-L24).
-
-Pretty much everything in geometry can be changed by setting a variable **before
-you load the theme**.
+Pretty much everything in geometry can be changed by setting a variable **before you load the theme**.
 
 The default options try to balance the theme in order to be both lightweight and contain useful features.
 
@@ -119,14 +103,11 @@ The default options try to balance the theme in order to be both lightweight and
 There are a set of symbols available which you can override with environment variables.
 
 ```shell
-GEOMETRY_SYMBOL_PROMPT="▲"                  # default prompt symbol
-GEOMETRY_SYMBOL_RPROMPT="◇"                 # multiline prompts
-GEOMETRY_SYMBOL_EXIT_VALUE="△"              # displayed when exit value is != 0
-GEOMETRY_SYMBOL_ROOT="▲"                    # when logged in user is root
+GEOMETRY_SYMBOL_OK="▲"                 # default prompt symbol
+GEOMETRY_SYMBOL_ERROR="△"              # displayed when exit value is != 0
 ```
 
-You can find symbol configuration for specific plugins under the
-[plugins](/plugins) directory.
+You can find configuration for specific functions under the [functions](/functions) directory.
 
 ### Colors
 
@@ -157,7 +138,7 @@ GEOMETRY_GREP=""                            # define which grep-like tool to use
 
 ### Features
 
-#### Async `RPROMPT`
+#### ~~Async `RPROMPT`~~
 
 geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations. This is enabled by default but you can disable it by setting `PROMPT_GEOMETRY_RPROMPT_ASYNC` to `false`.
 
@@ -174,15 +155,6 @@ You can have your prompt symbol change color when running under the `root` user.
 To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to `true`. Both symbol and color can be customized by overriding the `GEOMETRY_SYMBOL_ROOT` and `GEOMETRY_COLOR_ROOT` variables.
 
 Note that this option overrides the color hashing of your prompt symbol.
-
-#### Display elapsed time for long-running commands
-
-You can optionally show a time display for long-running commands
-by setting the `PROMPT_GEOMETRY_EXEC_TIME` variable to `true`.
-
-If enabled, this shows the elapsed time for commands running longer than 5 seconds. You can change this threshold by changing `PROMPT_GEOMETRY_COMMAND_MAX_EXEC_TIME` to the number of desired seconds.
-
-![long_running](screenshots/long_running.png)
 
 ## FAQs
 
@@ -215,40 +187,11 @@ for those pretty command colors. You might also want to look into [base16](https
 
 **Where do I put my geometry configuration files?**
 
-Well, anywhere in your `.zshrc` file should be fine, **as long as you define
-variables before geometry is loaded**.
-
-**My tab completion is weird.**
-
-[Relevant xkcd](http://xkcd.com/1726/)
-
-This is a [known problem](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-244875921) due to the use of unicode characters. It should be fixed right now. If it persists, update geometry and check if the terminal version reported by zsh matches your terminal emulator reported version. Please comment on that thread if any new issues arise.
-
-**My syntax highlighting gets thrown off in version controled directories...**
-
-Yeah, turns out this might be an issue with `zsh-syntax-highlighting` [as described here](https://github.com/geometry-zsh/geometry/issues/214#issuecomment-396057863). We recommend trying [`zdharma/fast-syntax-highlighting`](https://github.com/zdharma/fast-syntax-highlighting) instead. If the problem persists, [comment on this issue](https://github.com/geometry-zsh/geometry/issues/214).
-
-**There are too many/few spaces after the symbol or the prompt.**
-
-You're probably using a different prompt character. zsh has a few issues determining the length of the prompt and while it should work for most cases, changing the symbol to a different character (an example would be:  ☁︎ )
-will result in a few extra spaces after the prompt. That problem is [documented here](https://github.com/geometry-zsh/geometry/issues/3#issuecomment-245571623) and there is no known fix for it except on a case-by-case basis. You can add or remove any extra space through the `prompt_geometry_render` function in `geometry.zsh`. If you find a universal solution, feel free to make a PR for it.
-
-**The prompt is slow on large repos.**
-
-This is also a known issue. Make sure you have `PROMPT_GEOMETRY_RPROMPT_ASYNC` set to `true` to avoid long waiting times. If the problem persists, our recommendation would be to disable the git time checks by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
+Well, anywhere in your `.zshrc` file should be fine, **as long as you define variables before geometry is loaded**.
 
 **That's a neat font you have there. Can I have it?**
 
 Sure. It's [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono). Don't forget to use the [powerline patched version](https://github.com/powerline/fonts/tree/master/RobotoMono) if you want to use the default rebase symbol.
-
-**"Warning: Plugin <name> already registered." omg what is happening is the
-world going to end?**
-
-Well, yeah. Eventually. But this warning message doesn't mean anything is wrong.
-Feel free to relax. It shows when you load geometry twice. It was intended as a
-warning for faulty custom configuration, such as registering a plugin in two
-different places. If you do `source ~/.zshrc` it's perfectly normal to show up.
-See [this discussion](https://github.com/geometry-zsh/geometry/issues/109#issuecomment-288997441) for more info.
 
 ## Maintainers
 
