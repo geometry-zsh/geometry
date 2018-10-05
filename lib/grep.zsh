@@ -1,8 +1,8 @@
 # Choose best version of grep
-prompt_geometry_set_grep() {
-  (command -v rg >/dev/null 2>&1 && echo "rg") \
-  || (command -v ag >/dev/null 2>&1 && echo "ag") \
+_geometry_set_grep() {
+  (  (($+commands[rg])) && echo "rg") \
+  || (($+commands[ag])) && echo "ag") \
   || echo "grep"
 }
 
-GEOMETRY_GREP=${GEOMETRY_GREP:-$(prompt_geometry_set_grep)}
+: ${GEOMETRY_GREP:=$(_geometry_set_grep)}
