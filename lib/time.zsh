@@ -68,5 +68,5 @@ prompt_geometry_seconds_to_human_time() {
     -prompt_geometry_time_short_format $days $hours $minutes $seconds
   fi
 
-  echo "$(prompt_geometry_colorize $geometry_time_color $geometry_time_human)"
+  echo "$(_geometry_colorize $geometry_time_color $geometry_time_human)"
 }

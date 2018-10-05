@@ -1,3 +1,5 @@
+(( $+commands[git] )) || return 1
+
 # Color definitions
 GEOMETRY_COLOR_GIT_DIRTY=${GEOMETRY_COLOR_GIT_DIRTY:-red}
 GEOMETRY_COLOR_GIT_CLEAN=${GEOMETRY_COLOR_GIT_CLEAN:-green}
@@ -19,10 +21,10 @@ GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED=${GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED:
 GEOMETRY_SYMBOL_GIT_STASHES=${GEOMETRY_SYMBOL_GIT_STASHES:-"●"}
 
 # Combine color and symbols
-GEOMETRY_GIT_DIRTY=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
-GEOMETRY_GIT_CLEAN=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_CLEAN $GEOMETRY_SYMBOL_GIT_CLEAN)
-GEOMETRY_GIT_BARE=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_BARE $GEOMETRY_SYMBOL_GIT_BARE)
-GEOMETRY_GIT_STASHES=$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_STASHES $GEOMETRY_SYMBOL_GIT_STASHES)
+GEOMETRY_GIT_DIRTY=$(_geometry_colorize $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
+GEOMETRY_GIT_CLEAN=$(_geometry_colorize $GEOMETRY_COLOR_GIT_CLEAN $GEOMETRY_SYMBOL_GIT_CLEAN)
+GEOMETRY_GIT_BARE=$(_geometry_colorize $GEOMETRY_COLOR_GIT_BARE $GEOMETRY_SYMBOL_GIT_BARE)
+GEOMETRY_GIT_STASHES=$(_geometry_colorize $GEOMETRY_COLOR_GIT_STASHES $GEOMETRY_SYMBOL_GIT_STASHES)
 GEOMETRY_GIT_REBASE=$GEOMETRY_SYMBOL_GIT_REBASE
 GEOMETRY_GIT_UNPULLED=$GEOMETRY_SYMBOL_GIT_UNPULLED
 GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
@@ -49,7 +51,7 @@ prompt_geometry_git_time_since_commit() {
       seconds_since_last_commit=$((now - last_commit))
       git_time_since_commit=$(prompt_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT)
   elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
-      git_time_since_commit=$(prompt_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
+      git_time_since_commit=$(_geometry_colorize $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
 
   echo $git_time_since_commit
@@ -58,7 +60,7 @@ prompt_geometry_git_time_since_commit() {
 prompt_geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$(prompt_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
+  echo "$(_geometry_colorize $GEOMETRY_COLOR_GIT_BRANCH $ref)"
 }
 
 prompt_geometry_git_status() {
@@ -144,21 +146,14 @@ prompt_geometry_git_conflicts() {
       color=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
     fi
 
-    echo "$(prompt_geometry_colorize $color $text) "
+    echo "$(_geometry_colorize $color $text) "
   else
     echo ""
   fi
 }
 
-geometry_prompt_git_setup() {
-  (( $+commands[git] )) || return 1
-}
-
-geometry_prompt_git_check() {
+geometry_git() {
   git rev-parse --git-dir > /dev/null 2>&1 || return 1
-}
-
-geometry_prompt_git_render() {
   # Check if we are in a bare repo
   if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == "false" ]] ; then
     echo -n "$GEOMETRY_GIT_BARE"

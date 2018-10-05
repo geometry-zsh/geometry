@@ -5,20 +5,21 @@
 # mnml: https://github.com/subnixr/minimal/
 
 GEOMETRY_ROOT=${0:A:h}
+source "${GEOMETRY_ROOT}/lib/time.zsh"
 
 # Define how to colorize before the variables
 _geometry_colorize() {
   echo "%F{$1}$2%f"
 }
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status)
-(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_hostname geometry_path)
+(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_git geometry_hostname geometry_path)
 
-function _geometry_source_commands {
+function _geometry_source_functions {
   local cmd
   for context in GEOMETRY_PROMPT GEOMETRY_RPROMPT; do
     for cmd in ${(P)context}; do
-      (( $+commands[$cmd] )) && return
-      source ${GEOMETRY_ROOT}/commands/${cmd}.zsh
+      (( $+functions[$cmd] )) && return
+      source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
     done
   done
 }
@@ -76,7 +77,7 @@ function _geometry_bind_widgets() {
 autoload -U colors && colors
 setopt prompt_subst
 
-_geometry_source_commands
+_geometry_source_functions
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT) '
 RPROMPT='$(_geometry_wrap GEOMETRY_RPROMPT)'

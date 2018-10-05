@@ -5,6 +5,12 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
+
+### Changed
+- Rebased on top of mnml
+
+## [Unreleased]
+
 ### Added
 - Background-jobs plugin as builtin plugin
 - Support for left-prompt customization (contexts)
