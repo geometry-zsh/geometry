@@ -54,5 +54,5 @@ function geometry_status() {
     fi
   fi
 
-  echo -n "%{%(?.$_status.$GEOMETRY_STATUS_ERROR)%}"
+  echo -n "%(?.$_status.$GEOMETRY_STATUS_ERROR)"
 }

@@ -38,26 +38,7 @@ function _geometry_wrap {
         fi
     done
 
-    local joined="${(ps.$GEOMETRY_SEPARATOR.)arr}"
-
-    # Getting the correct symbol width is not as simple as getting the variable length
-    # There are zero width characters that should not be accounted for.
-    # E.g: characters that change the symbol to bold.
-    #
-    # See https://github.com/geometry-zsh/geometry/pull/216 for context.
-    # Regex used is the one in the adam2 prompt.
-    #
-    # TODO: We do not account for utf-8 characters which differ in the number of bytes
-    # (which we calculate in the symbol_width) and in the number of columns they occupy on screen.
-    #
-    # See https://github.com/geometry-zsh/geometry/issues/3
-
-    #local width="${#${(S%%)joined//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
-    #local fullwidth="${(m)#:-joined}"
-    #local padwidth=$(( $fullwidth + $fullwidth - $width ))
-    #local padded="${(r:$(($padwidth))::${GEOMETRY_SEPARATOR}:)joined}."
-    #echo -n $padded
-    echo -n $joined$GEOMETRY_SEPARATOR
+    echo -n ${(ps.$GEOMETRY_SEPARATOR.)arr}$GEOMETRY_SEPARATOR
 }
 
 # capture exit status and reset prompt
