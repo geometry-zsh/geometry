@@ -5,7 +5,7 @@
 # mnml: https://github.com/subnixr/minimal/
 
 GEOMETRY_ROOT=${0:A:h}
-: ${GEOMETRY_SEPARATOR:=' '}
+: ${GEOMETRY_SEPARATOR:=" "}
 
 source "${GEOMETRY_ROOT}/lib/async.zsh"
 source "${GEOMETRY_ROOT}/lib/time.zsh"
@@ -38,7 +38,7 @@ function _geometry_wrap {
         fi
     done
 
-    echo -n "${(j:${GEOMETRY_SEPARATOR}:)arr}"
+    echo -n "${(j:${GEOMETRY_SEPARATOR}:e)arr}"
 }
 
 # capture exit status and reset prompt
