@@ -44,6 +44,15 @@ GEOMETRY_GIT_REBASE=$GEOMETRY_SYMBOL_GIT_REBASE
 GEOMETRY_GIT_UNPULLED=$GEOMETRY_SYMBOL_GIT_UNPULLED
 GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
 
+# Choose best version of grep
+_geometry_set_grep() {
+  ( (($+commands[rg])) && echo "rg") \
+  || ( (($+commands[ag])) && echo "ag") \
+  || echo "grep"
+}
+
+: ${GEOMETRY_GIT_GREP:=$(_geometry_set_grep)} # Which grep to use
+
 _geometry_git_time_since_commit() {
   # Defaults to "", which would hide the git_time_since_commit block
   local git_time_since_commit=""

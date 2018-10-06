@@ -11,7 +11,6 @@
 : ${GEOMETRY_SYMBOL_STATUS_ROOT:=▲}       # Root symbol
 : ${GEOMETRY_SYMBOL_STATUS_ROOT_ERROR:=△} # Root error symbol
 
-
 # Helper function to colorize based off a string
 _geometry_hash_color() {
   colors=(`seq 1 9`)

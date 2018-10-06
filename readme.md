@@ -1,7 +1,5 @@
 # geometry
 
-**warning**: this is an experimental rewrite based on the ergonomics and code of mnml. lots of features are missing.
-
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geometry-zsh/Lobby)
 [![Trello](https://img.shields.io/badge/trello-board-blue.svg)](https://trello.com/b/GfM4e6Ro/geometry)
 [![GitHub release](https://img.shields.io/github/release/geometry-zsh/geometry.svg)](https://github.com/geometry-zsh/geometry/releases/latest)
@@ -70,27 +68,34 @@ We bundle a few useful functions to start out with, that can:
 - give you a custom, colorizable prompt symbol
 - change the prompt symbol color according to the last command exit status
 - make the prompt symbol color change with your hostname
+- display current git branch, state and time since last commit
+- tell you whether you need to pull, push or if you're mid-rebase
+- display the number of conflicting files and total number of conflicts
+- display if there is a stash
+- display the running time of long running commands
+- set the terminal title to current command and directory
 - make you the coolest hacker in the whole Starbucks
 
 The right side prompt is printed asynchronously, so you know it's going to be fast™.
 
 ## Commands
 
-geometry has very little architecture. By default, we display a status symbol on the left, hostname and directory on the right.
+geometry has very little architecture. By default, we display a status symbol on the left, hostname and directory on the right. If you are in a git repository, we also display that information on the right.
 
-These come from the `commands/` folder and are defined as `geometry_status`, `geometry_hostname`, and `geometry_path`.
+These come from the `functions/` folder and are defined as `geometry_status`, `geometry_hostname`, `geometry_path`, and `geometry_git`.
 
-To add more commands, just source the function you want, and add it to the `GEOMETRY_PROMPT` environment variable
+To add more functions, just source or define them, and add it to the `GEOMETRY_PROMPT` or `GEOMETRY_RPROMPT` environment variable
 
 ```sh
 GEOMETRY_PROMPT=(geometry_status geometry_path)
+GEOMETRY_RPROMPT+=(geometry_exec_time)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*.
 
-Its worth looking into the `commands` directory to see if there are environment variables to make common customizations.
+Its worth looking into the [functions directory](/functions) to see if there are environment variables to make common customizations.
 
-Please check out and share third-party commands on our [Commands wiki page](https://github.com/geometry-zsh/geometry/wiki/Commands).
+Please check out and share third-party functions on our [Functions wiki page](https://github.com/geometry-zsh/geometry/wiki/Functions).
 
 ## Configuration
 
@@ -103,37 +108,31 @@ The default options try to balance the theme in order to be both lightweight and
 There are a set of symbols available which you can override with environment variables.
 
 ```shell
-GEOMETRY_SYMBOL_OK="▲"                 # default prompt symbol
-GEOMETRY_SYMBOL_ERROR="△"              # displayed when exit value is != 0
+GEOMETRY_STATUS_SYMBOL="▲"        # default prompt symbol
+GEOMETRY_STATUS_SYMBOL_ERROR="△"  # displayed when exit value is != 0
 ```
 
-You can find configuration for specific functions under the [functions](/functions) directory.
+You can find configuration for specific functions under the [functions directory](/functions).
 
 ### Colors
 
 The following color definitions are available for configuration:
 
 ```shell
-GEOMETRY_COLOR_EXIT_VALUE="magenta"         # prompt symbol color when exit value is != 0
-GEOMETRY_COLOR_PROMPT="white"               # prompt symbol color
-GEOMETRY_COLOR_ROOT="red"                   # root prompt symbol color
-GEOMETRY_COLOR_DIR="blue"                   # current directory color
+GEOMETRY_STATUS_COLOR_ERROR="magenta"  # prompt symbol color when exit value is != 0
+GEOMETRY_STATUS_COLOR="white"          # prompt symbol color
+GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
+GEOMETRY_PATH_COLOR="blue"             # current directory color
 ```
 
-You can find color configuration for specific plugins under the
-[plugins](/plugins) directory.
+You can find color configuration for specific plugins under the [functions](/functions) directory.
 
 
 ### Misc
 
 ```shell
-GEOMETRY_PROMPT_PREFIX="$'\n'"              # prefix prompt with a new line
-GEOMETRY_PROMPT_SUFFIX=""                   # suffix prompt
-GEOMETRY_PROMPT_PREFIX_SPACER=" "           # string to place between prefix and symbol
-GEOMETRY_SYMBOL_SPACER=" "                  # string to place between symbol and directory
-GEOMETRY_DIR_SPACER=" "                     # string to place between directory and suffix
-GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt parts
-GEOMETRY_GREP=""                            # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
+GEOMETRY_FUNCTION_SEPARATOR=" "       # use ' ' to separate right prompt parts
+GEOMETRY_GIT_GREP=""                  # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
 ```
 
 ### Features
@@ -144,17 +143,9 @@ geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations.
 
 #### Randomly colorize prompt symbol
 
-Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `PROMPT_GEOMETRY_COLORIZE_SYMBOL` to `true`.
+Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `GEOMETRY_STATUS_COLOR_HASH` to `true`.
 
 ![colorize](screenshots/colorize.png)
-
-#### Colorize prompt symbol when root
-
-You can have your prompt symbol change color when running under the `root` user.
-
-To activate this option, just set `PROMPT_GEOMETRY_COLORIZE_ROOT` to `true`. Both symbol and color can be customized by overriding the `GEOMETRY_SYMBOL_ROOT` and `GEOMETRY_COLOR_ROOT` variables.
-
-Note that this option overrides the color hashing of your prompt symbol.
 
 ## FAQs
 
