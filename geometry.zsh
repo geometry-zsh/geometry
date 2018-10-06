@@ -12,8 +12,8 @@ source "${GEOMETRY_ROOT}/lib/time.zsh"
 source "${GEOMETRY_ROOT}/lib/color.zsh"
 source "${GEOMETRY_ROOT}/lib/title.zsh"
 
-(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_rustup geometry_status)
-(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hostname geometry_path)
+(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status geometry_path)
+(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
 function _geometry_source_functions {
   local cmd
