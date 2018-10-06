@@ -47,6 +47,9 @@ function _geometry_zle-line-init {
     zle reset-prompt
 }
 
+add-zsh-hook preexec _geometry_set_cmd_title
+add-zsh-hook precmd _geometry_set_title
+
 zmodload zsh/zleparameter
 zle -N zle-line-init _geometry_zle-line-init
 
