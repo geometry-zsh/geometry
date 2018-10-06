@@ -9,7 +9,7 @@ source "${GEOMETRY_ROOT}/lib/async.zsh"
 source "${GEOMETRY_ROOT}/lib/time.zsh"
 source "${GEOMETRY_ROOT}/lib/color.zsh"
 
-(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status)
+(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_rustup geometry_status)
 (($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hostname geometry_path)
 
 function _geometry_source_functions {
