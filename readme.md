@@ -131,8 +131,8 @@ You can find color configuration for specific plugins under the [functions](/fun
 ### Misc
 
 ```shell
-GEOMETRY_FUNCTION_SEPARATOR=" "       # use ' ' to separate right prompt parts
-GEOMETRY_GIT_GREP=""                  # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
+GEOMETRY_SEPARATOR=" "    # use ' ' to separate function output
+GEOMETRY_GIT_GREP=""      # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
 ```
 
 ### Features
