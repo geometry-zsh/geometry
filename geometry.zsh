@@ -52,14 +52,12 @@ function _geometry_wrap {
     #
     # See https://github.com/geometry-zsh/geometry/issues/3
 
-    #echo -n $joined$GEOMETRY_SEPARATOR
-
     #local width="${#${(S%%)joined//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
     #local fullwidth="${(m)#:-joined}"
     #local padwidth=$(( $fullwidth + $fullwidth - $width ))
     #local padded="${(r:$(($padwidth))::${GEOMETRY_SEPARATOR}:)joined}."
     #echo -n $padded
-    echo -n $joined
+    echo -n $joined$GEOMETRY_SEPARATOR
 }
 
 # capture exit status and reset prompt
@@ -68,34 +66,9 @@ function _geometry_zle-line-init {
     zle reset-prompt
 }
 
-# properly bind widgets
-# see: https://github.com/zsh-users/zsh-syntax-highlighting/blob/1f1e629290773bd6f9673f364303219d6da11129/zsh-syntax-highlighting.zsh#L292-L356
-function _geometry_bind_widgets() {
-    zmodload zsh/zleparameter
+zmodload zsh/zleparameter
+zle -N zle-line-init _geometry_zle-line-init
 
-    local -a to_bind
-    to_bind=(zle-line-init)
-
-    typeset -F SECONDS
-    local zle_wprefix=s$SECONDS-r$RANDOM
-
-    local cur_widget
-    for cur_widget in $to_bind; do
-        case "${widgets[$cur_widget]:-""}" in
-            user:_geometry_*);;
-            user:*)
-                zle -N $zle_wprefix-$cur_widget ${widgets[$cur_widget]#*:}
-                eval "_geometry_ww_${(q)zle_wprefix}-${(q)cur_widget}() { _geometry_${(q)cur_widget}; zle ${(q)zle_wprefix}-${(q)cur_widget} }"
-                zle -N $cur_widget _geometry_ww_$zle_wprefix-$cur_widget
-                ;;
-            *)
-                zle -N $cur_widget _geometry_$cur_widget
-                ;;
-        esac
-    done
-}
-
-# Setup
 autoload -U colors && colors
 setopt prompt_subst
 
@@ -104,5 +77,3 @@ _geometry_async_setup
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT)'
 RPROMPT=''
-
-_geometry_bind_widgets
