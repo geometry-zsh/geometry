@@ -7,6 +7,6 @@
 
 function geometry_hostname {
   local _host=${HOST:-$HOSTNAME}
-  [[ "$_host" = "$GEOMETRY_HOSTNAME_HIDE_ON" ]] && return 0
+  [[ "$_host" = "$GEOMETRY_HOSTNAME_HIDE_ON" ]] && return
   echo -n "${USER}${GEOMETRY_HOSTNAME_SEPARATOR}${_host}"
 }

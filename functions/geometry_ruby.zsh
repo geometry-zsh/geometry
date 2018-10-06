@@ -6,7 +6,7 @@
 : ${GEOMETRY_RUBY_SYMBOL:="◆"}       # symbol
 : ${GEOMETRY_RUBY_SHOW_GEMSET:=true} # Show the gemset name
 
-(( $+commands[ruby] )) || return 1
+(( $+commands[ruby] )) || return
 GEOMETRY_RUBY=$(color $GEOMETRY_RUBY_COLOR $GEOMETRY_RUBY_SYMBOL)
 
 _geometry_get_full_ruby_version() {

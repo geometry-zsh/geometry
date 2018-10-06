@@ -6,7 +6,7 @@
 : ${GEOMETRY_KUBE_SYMBOL:="⎈"} # Symbol
 : ${GEOMETRY_KUBE_PIN:=false}  # Always display?
 
-(( $+commands[kubectl] )) || return 1
+(( $+commands[kubectl] )) || return
 
 GEOMETRY_KUBE=$(color $GEOMETRY_KUBE_COLOR $GEOMETRY_KUBE_SYMBOL)
 

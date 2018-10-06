@@ -10,7 +10,7 @@
 : ${GEOMETRY_HG_SYMBOL_CLEAN:="⬢"}
 : ${GEOMETRY_HG_SYMBOL_SEPARATOR:="::"}
 
-(( $+commands['hg'] )) || return 1
+(( $+commands['hg'] )) || return
 
 GEOMETRY_HG_DIRTY=$(color $GEOMETRY_HG_COLOR_DIRTY $GEOMETRY_HG_SYMBOL_DIRTY)
 GEOMETRY_HG_CLEAN=$(color $GEOMETRY_HG_COLOR_CLEAN $GEOMETRY_HG_SYMBOL_CLEAN)
@@ -30,6 +30,6 @@ geometry_prompt_hg_status() {
 }
 
 function geometry_hg {
-  test -d .hg || return 1
+  test -d .hg || return
   echo "$(geometry_prompt_hg_branch) ${GEOMETRY_HG_SYMBOL_SEPARATOR} $(geometry_prompt_hg_status)"
 }

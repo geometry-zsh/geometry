@@ -2,7 +2,7 @@
 #
 # Please see geometry_git.md for the full readme
 
-(( $+commands[git] )) || return 1
+(( $+commands[git] )) || return
 
 # Color definitions
 : ${GEOMETRY_COLOR_GIT_DIRTY:=red}
@@ -166,7 +166,7 @@ _geometry_git_conflicts() {
 }
 
 function geometry_git {
-  git rev-parse --git-dir > /dev/null 2>&1 || return 1
+  git rev-parse --git-dir > /dev/null 2>&1 || return
   # Check if we are in a bare repo
   if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == "false" ]] ; then
     echo -n "$GEOMETRY_GIT_BARE"

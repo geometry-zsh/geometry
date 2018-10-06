@@ -6,12 +6,12 @@
 : ${GEOMETRY_NODE_SYMBOL:="⬡"}  # node symbol
 : ${GEOMETRY_NODE_PIN:=false}   # always display?
 
-(( $+commands[node] )) || (( $+commands[yarn] )) || return 1
+(( $+commands[node] )) || (( $+commands[yarn] )) || return
 
 GEOMETRY_NODE=$(color $GEOMETRY_NODE_COLOR $GEOMETRY_NODE_SYMBOL)
 
 function geometry_node {
-    test $GEOMETRY_NODE_PIN || test -f package.json || test -f yarn.lock || return 1
+    test $GEOMETRY_NODE_PIN || test -f package.json || test -f yarn.lock || return
 
     local package_manager=npm
 
