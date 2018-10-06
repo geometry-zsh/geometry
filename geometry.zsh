@@ -52,15 +52,14 @@ function _geometry_wrap {
     #
     # See https://github.com/geometry-zsh/geometry/issues/3
 
-    echo -n $joined$GEOMETRY_SEPARATOR
+    #echo -n $joined$GEOMETRY_SEPARATOR
 
     #local width="${#${(S%%)joined//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
-    #width=$(($width + 1))
-    #echo $joined
-    #local padded="$joined${(r.$width..$GEOMETRY_SEPARATOR.)joined}"
-    #echo $padded
-    #local spaced="%$width{%(?.$joined.$joined)%}$padded"
-    #echo -n $spaced
+    #local fullwidth="${(m)#:-joined}"
+    #local padwidth=$(( $fullwidth + $fullwidth - $width ))
+    #local padded="${(r:$(($padwidth))::${GEOMETRY_SEPARATOR}:)joined}."
+    #echo -n $padded
+    echo -n $joined
 }
 
 # capture exit status and reset prompt
