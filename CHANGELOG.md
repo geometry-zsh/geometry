@@ -8,6 +8,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Changed
 - Rebased on top of mnml
+- Simplified architecture to work on functions instead of plugins
+- Renamed a bunch of environment variables for functions to be
+  - `GEOMETRY_FUNCTION_NAME_COLOR/SYMBOL/ETC`
+
+### Removed
+- Root color for status symbol
+
+### Broke
+- Weird tab complete bug I think
 
 ## [Unreleased]
 
