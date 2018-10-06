@@ -38,7 +38,29 @@ function _geometry_wrap {
         fi
     done
 
-    echo -n "${(j:${GEOMETRY_SEPARATOR}:e)arr}"
+    local joined="${(ps.$GEOMETRY_SEPARATOR.)arr}"
+
+    # Getting the correct symbol width is not as simple as getting the variable length
+    # There are zero width characters that should not be accounted for.
+    # E.g: characters that change the symbol to bold.
+    #
+    # See https://github.com/geometry-zsh/geometry/pull/216 for context.
+    # Regex used is the one in the adam2 prompt.
+    #
+    # TODO: We do not account for utf-8 characters which differ in the number of bytes
+    # (which we calculate in the symbol_width) and in the number of columns they occupy on screen.
+    #
+    # See https://github.com/geometry-zsh/geometry/issues/3
+
+    echo -n $joined$GEOMETRY_SEPARATOR
+
+    #local width="${#${(S%%)joined//(\%([KF1]|)\{*\}|\%[Bbkf])}}"
+    #width=$(($width + 1))
+    #echo $joined
+    #local padded="$joined${(r.$width..$GEOMETRY_SEPARATOR.)joined}"
+    #echo $padded
+    #local spaced="%$width{%(?.$joined.$joined)%}$padded"
+    #echo -n $spaced
 }
 
 # capture exit status and reset prompt
@@ -53,7 +75,7 @@ function _geometry_bind_widgets() {
     zmodload zsh/zleparameter
 
     local -a to_bind
-    to_bind=(zle-line-init zle-keymap-select buffer-empty)
+    to_bind=(zle-line-init)
 
     typeset -F SECONDS
     local zle_wprefix=s$SECONDS-r$RANDOM
@@ -81,7 +103,7 @@ setopt prompt_subst
 _geometry_source_functions
 _geometry_async_setup
 
-PROMPT='$(_geometry_wrap GEOMETRY_PROMPT) '
+PROMPT='$(_geometry_wrap GEOMETRY_PROMPT)'
 RPROMPT=''
 
 _geometry_bind_widgets
