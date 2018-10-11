@@ -147,6 +147,56 @@ Your prompt symbol can change colors based on a simple hash of your hostname. To
 
 ![colorize](screenshots/colorize.png)
 
+### Git
+
+The git function is one of the most developed plugins in geometry, which is why we document it here.
+
+#### Elapsed time since last git commit
+
+By default, geometry shows you the time since a commit has been made in the current repository.
+This can be disabled by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
+
+We recommend doing this if the prompt is too slow on large repositories.
+
+#### Count git conflicts
+
+You can have the prompt display both the number of files with conflicts as well as the total number of conflicts by setting `PROMPT_GEOMETRY_GIT_CONFLICTS` to `true`.
+
+This option chooses between `rg`, `ag` or `grep`, depending on which is available. `rg` has the highest priority, followed by `ag` and finally defaulting to `grep`.
+
+**If you don't have `rg` or `ag` installed, this might slow down your prompt. Proceed with caution.**
+
+![git_conflicts](/screenshots/git_conflicts.png)
+
+#### Use long or short time format
+
+You can format the time since last commit. By default, it will only show either
+seconds (`12s`), minutes (`2m`), hours (`5h`) or days (`30d`).
+
+By setting `GEOMETRY_GIT_TIME_LONG_FORMAT` to `true` you can enhance its precision, displaying all of the previous settings, e.g: `12h 30m 53s`.
+
+#### 'No commits' message
+
+When you create a new repo, geometry can display a "no commits" message, where
+it would, usually, display the time since last commit. This behaviour can be
+unchecked by setting the `GEOMETRY_GIT_TIME_SHOW_EMPTY` to
+`false`.
+
+You can also customize the message by changing the
+`GIT_NO_COMMITS_MESSAGE` to whatever you would like the message to be.
+
+#### Hide stash indicator
+
+By default, we show an indicator if there are any git stashes `●`.
+
+If you would like to hide this indicator, set `GEOMETRY_GIT_SHOW_STASHES` to `false`.
+
+You can also change the symbol and color with `GEOMETRY_GIT_SYMBOL_STASHES`, and `GEOMETRY_GIT_COLOR_STASHES`.
+
+#### Full list of git features
+
+Check out the environment variables in [functions/geometry_git](functions/geometry_git) for the full list of options
+
 ## FAQs
 
 **I found a bug. What do I do?**
@@ -186,6 +236,7 @@ Sure. It's [Roboto Mono](https://fonts.google.com/specimen/Roboto+Mono). Don't f
 
 ## Maintainers
 
-geometry is currently maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
+geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
 
-A big thank you to those who have previously [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
+A big thank you to those who have [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
+
