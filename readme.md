@@ -13,7 +13,7 @@ geometry starts small, with good defaults, and allows you to customize it at you
 * [Installing](#installing)
 * [Dependencies](#dependencies)
 * [What it Does](#what-it-does)
-* [Plugins](#plugins)
+* [Functions](#functions)
 * [Configuration](#configuration)
 * [FAQs](#faqs)
 * [Maintainers](#maintainers)
@@ -78,17 +78,19 @@ We bundle a few useful functions to start out with, that can:
 
 The right side prompt is printed asynchronously, so you know it's going to be fast™.
 
-## Commands
+## Functions
 
-geometry has very little architecture. By default, we display a status symbol on the left, hostname and directory on the right. If you are in a git repository, we also display that information on the right.
+geometry has very little architecture. By default, we display a status symbol and path on the left, git/hg status and hostname on the right.
 
-These come from the `functions/` folder and are defined as `geometry_status`, `geometry_hostname`, `geometry_path`, and `geometry_git`.
+These come from the `functions/` folder and are defined as `geometry_status`, `geometry_path`, `geometry_hostname`, `geometry_git`, and `geometry_hg`.
+
+Most of these functions only render if it makes sense to (for example, if ssh'd to another computer or in a git directory).
 
 To add more functions, just source or define them, and add it to the `GEOMETRY_PROMPT` or `GEOMETRY_RPROMPT` environment variable
 
 ```sh
-GEOMETRY_PROMPT=(geometry_status geometry_path)
-GEOMETRY_RPROMPT+=(geometry_exec_time)
+GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
+GEOMETRY_RPROMPT+=(geometry_exec_time) # append exec_time to defaults
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*.
@@ -103,6 +105,8 @@ Pretty much everything in geometry can be changed by setting a variable **before
 
 The default options try to balance the theme in order to be both lightweight and contain useful features.
 
+Here we highlight some of the more commonly customized variables, but to see all of them, look at the header of each file in the [functions directory](/function).
+
 ### Symbols
 
 There are a set of symbols available which you can override with environment variables.
@@ -111,8 +115,6 @@ There are a set of symbols available which you can override with environment var
 GEOMETRY_STATUS_SYMBOL="▲"        # default prompt symbol
 GEOMETRY_STATUS_SYMBOL_ERROR="△"  # displayed when exit value is != 0
 ```
-
-You can find configuration for specific functions under the [functions directory](/functions).
 
 ### Colors
 
@@ -124,9 +126,6 @@ GEOMETRY_STATUS_COLOR="white"          # prompt symbol color
 GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
 GEOMETRY_PATH_COLOR="blue"             # current directory color
 ```
-
-You can find color configuration for specific plugins under the [functions](/functions) directory.
-
 
 ### Misc
 
@@ -201,7 +200,7 @@ Check out the environment variables in [functions/geometry_git](functions/geomet
 
 **I found a bug. What do I do?**
 
-Open an issue. There are probably more people with that very same problem so we like to keep everything documented in case someone else comes looking for a solution.
+[Open an issue][]. There are probably more people with that very same problem so we like to keep everything documented in case someone else comes looking for a solution.
 
 If you can provide info about your terminal, OS and zsh version it would be a great starting point. It would also be of great assistance if you are able to write steps to reproduce the issue.
 
@@ -240,3 +239,4 @@ geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr]
 
 A big thank you to those who have [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
+[Open an issue]: https://github.com/geometry-zsh/geometry/issues/new
