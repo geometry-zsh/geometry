@@ -1,6 +1,4 @@
-# Status
-#
-# Display a symbol with error/success and root/non-root information
+# geometry_status - show a symbol with error/success and root/non-root information
 
 : ${GEOMETRY_STATUS_COLOR:=white}         # Color when everything is ok
 : ${GEOMETRY_STATUS_COLOR_ERROR:=magenta} # Color if there was an error
