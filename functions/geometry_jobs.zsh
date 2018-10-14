@@ -1,6 +1,4 @@
-# Jobs
-#
-# Small plugin to display background jobs count.
+# geometry_jobs - show background jobs count
 
 : ${GEOMETRY_JOBS_COLOR:=blue}
 : ${GEOMETRY_JOBS_SYMBOL:="⚙"}
