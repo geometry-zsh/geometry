@@ -11,7 +11,7 @@
 (( $+commands[rustup] )) || return
 
 function geometry_rustup {
-    ( ${GEOMETRY_RUSTUP_PIN} ) || cargo locate-project --quiet || return
+    ( ! ${GEOMETRY_RUSTUP_PIN} ) && test ! `cargo locate-project --quiet` && return
     local toolchain="$(rustup show | tail -n 3 | head -n 1 |  cut -d '-' -f 1 2> /dev/null)"
     local rustup_color=${(e)toolchain:+\$GEOMETRY_RUSTUP_${toolchain:u}_COLOR}
     echo -n $(color $rustup_color $GEOMETRY_RUSTUP_SYMBOL)
