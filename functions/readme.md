@@ -1,31 +1,29 @@
 # Functions
 
-geometry works with functions. Any function that prints to stdout can be put in the left or right prompt. We are always happy to add new functions to the default collection.
-
-Available functions:
+With geometry, any function that prints to stdout can be put in the left or right prompt. We are always happy to add new functions to the collection. We currently ship:
 
 * [Status](/functions/geometry_status.zsh)
 * [Path](/functions/geometry_path.zsh)
-* [Git](/functions/geometry_git.zsh)
-* [Docker Machine](/functions/geometry_docker_machine.zsh)
 * [Exec Time](/functions/geometry_exec_time.zsh)
+* [Jobs](/functions/geometry_jobs.zsh)
+* [Git](/functions/geometry_git.zsh)
 * [Hg](/functions/geometry_hg.zsh)
-* [Kube](/functions/geometry_kube.zsh)
 * [Node](/functions/geometry_node.zsh)
 * [Ruby](/functions/geometry_ruby.zsh)
 * [Rustup](/functions/geometry_rustup.zsh)
 * [Virtualenv](/functions/geometry_virtualenv.zsh)
-* [Background jobs](/functions/geometry_jobs.zsh)
+* [Docker Machine](/functions/geometry_docker_machine.zsh)
+* [Kube](/functions/geometry_kube.zsh)
 
-## Default functions
+## Defaults
 
 By default, geometry uses `status` and `path` on the left prompt, and `exec_time`, `jobs`, `git` and `hg` for the right prompt.
 
 You can configure a different setup by changing the `GEOMETRY_PROMPT` and `GEOMETRY_RPROMPT` variables in your own configuration files.
 
 ```sh
-GEOMETRY_PROMPT=(status git)
-GEOMETRY_RPROMPT=(geometry_virtualenv docker_machine exec_time hg rustup)
+GEOMETRY_PROMPT=(geometry_status geometry_git)
+GEOMETRY_RPROMPT=(geometry_virtualenv geometry_docker_machine geometry_exec_time geometry_hg geometry_rustup)
 ```
 
 *Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
@@ -36,7 +34,17 @@ If you want to set up your own custom function, it's pretty straightforward to d
 so. All you need is to make sure it echos whatever you want printed to the prompt.
 
 Let's assume you want to add a plugin that prints `(☞ﾟ∀ﾟ)☞` when the git branch
-is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Let's call it `pretty_git`.
+is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Let's call it `pre`my_pretty_git`.
+
+```zsh
+# my_pretty_git - show emoticons if in a git directory
+```
+
+After writing our description, we should check that it even makes sense to load the plugin at all:
+
+```zsh
+(( $+commands[git] )) || return # only load if `git` is in our PATH
+```
 
 By convention we set up configuration variables at the top:
 
@@ -62,7 +70,7 @@ function my_pretty_git {
 }
 ```
 
-Now, rendering. Let's simply check the branch status and print accordingly:
+Now that we know we are in a useful context, let's check the branch status and print accordingly:
 
 ```sh
 function my_pretty_git {
@@ -83,7 +91,7 @@ encourage you to have this in mind.
 
 ### Full working example
 
-Save the following example as `pretty_git.zsh` somewhere in your `.dotfiles`
+Save the following example as `my_pretty_git.zsh` somewhere in your `.dotfiles`
 directory and source it _before_ sourcing geometry. Make sure to add it to `GEOMETRY_PROMPT` or `GEOMETRY_RPROMPT`, ex.:
 
 ```sh
@@ -94,7 +102,10 @@ source /path/to/geometry.zsh
 ```
 
 ```sh
-# pretty_git.zsh
+# my_pretty_git - show emoticons if in a git directory
+
+(( $+commands[git] )) || return # only load if `git` is in our PATH
+
 : ${MY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
 : ${MY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
 
