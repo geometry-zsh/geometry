@@ -1,6 +1,4 @@
-# Virtualenv
-#
-# Displays the current `virtualenv` or `conda` environment.
+# geometry_virtualenv - show the current `virtualenv` or `conda` environment
 
 DEFAULT_COLOR=${GEOMETRY_COLOR_PROMPT:-green}
 
