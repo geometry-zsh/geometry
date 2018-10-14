@@ -1,12 +1,10 @@
-# Exec time
-#
-# Show the elapsed time for long running commands
+# geometry_exec_time - show the elapsed time for long running commands
 #
 # See ![long_running](../screenshots/long_running.png) for an example
 
-: ${GEOMETRY_EXEC_TIME_PATIENCE:=5} # How many seconds to wait before showing
-
 zmodload zsh/datetime || return # required for `$EPOCHSECONDS`
+
+: ${GEOMETRY_EXEC_TIME_PATIENCE:=5} # How many seconds to wait before showing
 
 typeset -g _geometry_command_timestamp
 typeset -g _geometry_command_exec_time

@@ -1,6 +1,4 @@
-# Docker Machine
-#
-# Indicate the current docker machine name.
+# geometry_docker_machine - show the current docker machine name
 
 : ${GEOMETRY_DOCKER_MACHINE_COLOR:=blue}
 : ${GEOMETRY_DOCKER_MACHINE_SYMBOL:="⚓"}
