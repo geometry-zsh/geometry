@@ -1,6 +1,4 @@
-# Git
-#
-# Please see geometry_git.md for the full readme
+# geometry_git - please see geometry_git.md for the full readme
 
 (( $+commands[git] )) || return
 
