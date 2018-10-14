@@ -1,12 +1,10 @@
-# Node
-#
-# Display node and npm/yarm version when in a node project context
+# geometry_node - show node and npm/yarm version when in a node project context
+
+(( $+commands[node] )) || (( $+commands[yarn] )) || return
 
 : ${GEOMETRY_NODE_COLOR:=green} # node color
 : ${GEOMETRY_NODE_SYMBOL:="⬡"}  # node symbol
 : ${GEOMETRY_NODE_PIN:=false}   # always display?
-
-(( $+commands[node] )) || (( $+commands[yarn] )) || return
 
 GEOMETRY_NODE=$(color $GEOMETRY_NODE_COLOR $GEOMETRY_NODE_SYMBOL)
 
@@ -15,9 +13,7 @@ function geometry_node {
 
     local package_manager=npm
 
-    if [[ $+commands[yarn] && -f yarn.lock ]]; then
-        package_manager=yarn
-    fi
+    [[ $+commands[yarn] && -f yarn.lock ]] && package_manager=yarn
 
     local packager_version="$($package_manager --version 2>/dev/null)"
     local node_version="$(node -v 2>/dev/null)"
