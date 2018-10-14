@@ -1,6 +1,4 @@
-# Path
-#
-# Shows the current path
+# geometry_path - show the current path
 
 : ${GEOMETRY_PATH_COLOR:=blue}          # color
 : ${GEOMETRY_PATH_SYMBOL_HOME:="%3~"}   # symbol representing the home directory
@@ -8,9 +6,6 @@
 
 function geometry_path {
   local dir=$GEOMETRY_PATH_SYMBOL_HOME
-  if $GEOMETRY_PATH_SHOW_BASENAME; then
-    dir=$(basename $PWD)
-  fi
-
+  ( $GEOMETRY_PATH_SHOW_BASENAME ) && dir=$(basename $PWD)
   echo -n $(color $GEOMETRY_PATH_COLOR $dir)
 }
