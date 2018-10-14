@@ -41,17 +41,11 @@ function _geometry_wrap {
     echo -n ${(ps.$GEOMETRY_SEPARATOR.)arr}$GEOMETRY_SEPARATOR
 }
 
-# capture exit status and reset prompt
-function _geometry_zle-line-init {
-    GEOMETRY_LAST_ERROR="$?" # Capture this ASAP
-    zle reset-prompt
-}
+function _geometry_capture_error { GEOMETRY_LAST_ERROR="$?" }
 
 add-zsh-hook preexec _geometry_set_cmd_title
+add-zsh-hook precmd _geometry_capture_error
 add-zsh-hook precmd _geometry_set_title
-
-zmodload zsh/zleparameter
-zle -N zle-line-init _geometry_zle-line-init
 
 autoload -U colors && colors
 setopt prompt_subst
