@@ -15,16 +15,6 @@ source "${GEOMETRY_ROOT}/lib/title.zsh"
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
-function _geometry_source_functions {
-  local cmd
-  for context in GEOMETRY_PROMPT GEOMETRY_RPROMPT; do
-    for cmd in ${(P)context}; do
-      (( $+functions[$cmd] )) && return
-      source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
-    done
-  done
-}
-
 # join outputs of components
 function _geometry_wrap {
     local -a arr
@@ -32,10 +22,9 @@ function _geometry_wrap {
     local cmd_out=""
     local cmd
     for cmd in ${(P)1}; do
+        (( $+functions[$cmd] )) || source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
         cmd_out="$(eval "$cmd")"
-        if [ -n "$cmd_out" ]; then
-            arr+="$cmd_out"
-        fi
+        (( $? )) || arr+="$cmd_out"
     done
 
     echo -n ${(ps.$GEOMETRY_SEPARATOR.)arr}$GEOMETRY_SEPARATOR
@@ -50,7 +39,6 @@ add-zsh-hook precmd _geometry_set_title
 autoload -U colors && colors
 setopt prompt_subst
 
-_geometry_source_functions
 _geometry_async_setup
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT)'
