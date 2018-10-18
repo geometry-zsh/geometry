@@ -38,7 +38,7 @@ if $GEOMETRY_STATUS_SYMBOL_COLOR_HASH; then
 fi
 
 function geometry_status() {
-  if (( $GEOMETRY_LAST_ERROR )); then
+  if (( $GEOMETRY_LAST_STATUS )); then
     [[ $UID = 0 || $EUID = 0 ]] && echo -n $GEOMETRY_STATUS_ROOT_ERROR || echo -n $GEOMETRY_STATUS_ERROR
   else
     [[ $UID = 0 || $EUID = 0 ]] && echo -n $GEOMETRY_STATUS_ROOT_OKAY || echo -n $GEOMETRY_STATUS_OKAY

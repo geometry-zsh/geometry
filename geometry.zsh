@@ -17,23 +17,23 @@ source "${GEOMETRY_ROOT}/lib/title.zsh"
 
 # join outputs of components
 function _geometry_wrap {
-    local -a arr
-    arr=()
-    local cmd_out=""
+    local -a outputs
+    outputs=()
+    local out=""
     local cmd
     for cmd in ${(P)1}; do
         (( $+functions[$cmd] )) || source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
-        cmd_out="$(eval "$cmd")"
-        (( $? )) || arr+="$cmd_out"
+        out="$(eval "$cmd")"
+        (( $status )) || outputs+="$out"
     done
 
-    echo -n ${(ps.$GEOMETRY_SEPARATOR.)arr}$GEOMETRY_SEPARATOR
+    echo -n ${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR
 }
 
-function _geometry_capture_error { GEOMETRY_LAST_ERROR="$?" }
+function _geometry_capture_status { GEOMETRY_LAST_STATUS="$status" }
 
 add-zsh-hook preexec _geometry_set_cmd_title
-add-zsh-hook precmd _geometry_capture_error
+add-zsh-hook precmd _geometry_capture_status
 add-zsh-hook precmd _geometry_set_title
 
 autoload -U colors && colors
