@@ -4,13 +4,13 @@
 
 zmodload zsh/datetime || return # required for `$EPOCHSECONDS`
 
-: ${GEOMETRY_EXEC_TIME_PATIENCE:=5} # How many seconds to wait before showing
-
 typeset -g _geometry_command_timestamp
 typeset -g _geometry_command_exec_time
 
 # Stores (into _geometry_command_exec_time) the exec time of the last command if set threshold was exceeded
 _geometry_check_command_exec_time() {
+  : ${GEOMETRY_EXEC_TIME_PATIENCE:=5} # How many seconds to wait before showing
+
   integer elapsed
   # Default value for exec_time is an empty string (ie, it won't be rendered),
   # if we don't clear this up it may be rendered each time

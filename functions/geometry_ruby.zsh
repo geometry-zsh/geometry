@@ -2,12 +2,6 @@
 
 (( $+commands[ruby] )) || return
 
-: ${GEOMETRY_RUBY_COLOR:=white}      # color
-: ${GEOMETRY_RUBY_SYMBOL:="◆"}       # symbol
-: ${GEOMETRY_RUBY_SHOW_GEMSET:=true} # Show the gemset name
-
-GEOMETRY_RUBY=$(color $GEOMETRY_RUBY_COLOR $GEOMETRY_RUBY_SYMBOL)
-
 _geometry_ruby_version() {
   [[ $(ruby -v) =~ 'ruby ([0-9a-zA-Z.]+)' ]]
   echo -n $match[1]
@@ -25,6 +19,12 @@ _geometry_ruby_rvm_gemset_name() {
 }
 
 function geometry_ruby {
+  : ${GEOMETRY_RUBY_COLOR:=white}      # color
+  : ${GEOMETRY_RUBY_SYMBOL:="◆"}       # symbol
+  : ${GEOMETRY_RUBY_SHOW_GEMSET:=true} # Show the gemset name
+
+  GEOMETRY_RUBY=$(color $GEOMETRY_RUBY_COLOR $GEOMETRY_RUBY_SYMBOL)
+
   if (( $+commands[rvm] )); then
 
       GEOMETRY_RVM="(${(j: :):-$(_geometry_ruby_rvm_version) $(_geometry_ruby_rvm_gemset_name)})"

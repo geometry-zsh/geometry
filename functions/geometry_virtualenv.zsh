@@ -1,13 +1,14 @@
 # geometry_virtualenv - show the current `virtualenv` or `conda` environment
 
-DEFAULT_COLOR=${GEOMETRY_COLOR_PROMPT:-green}
-
-: ${GEOMETRY_VIRTUALENV_COLOR:=$DEFAULT_COLOR}
-: ${GEOMETRY_VIRTUALENV_CONDA_COLOR:=$DEFAULT_COLOR}
-: ${GEOMETRY_VIRTUALENV_CONDA_SEPARATOR:=:}
-
 function geometry_virtualenv {
     test  -n "${VIRTUAL_ENV}${CONDA_PREFIX}" || return
+
+    DEFAULT_COLOR=${GEOMETRY_COLOR_PROMPT:-green}
+
+    : ${GEOMETRY_VIRTUALENV_COLOR:=$DEFAULT_COLOR}
+    : ${GEOMETRY_VIRTUALENV_CONDA_COLOR:=$DEFAULT_COLOR}
+    : ${GEOMETRY_VIRTUALENV_CONDA_SEPARATOR:=:}
+
     local environment_str=""
 
     # Add virtualenv name if active

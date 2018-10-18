@@ -46,22 +46,6 @@ After writing our description, we should check that it even makes sense to load 
 (( $+commands[git] )) || return # only load if `git` is in our PATH
 ```
 
-By convention we set up configuration variables at the top:
-
-```sh
-: ${MY_PRETTY_GIT_CLEAN:="(☞ﾟ∀ﾟ)☞"}
-: ${MY_PRETTY_GIT_DIRTY:="(ノಠ益ಠ)ノ彡┻━┻"}
-```
-
-As a best practice, you should allow settings through environment variables.
-Now, the user is able to change the output simply by setting an environment
-variable in their `.zshrc` file:
-
-```sh
-# Overwrite default GEOMETRY_PRETTY_GIT_CLEAN
-MY_PRETTY_GIT_CLEAN="(ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
-```
-
 It's good practice to check if it makes sense to display the plugin in the current context before echoing out anything.
 
 ```sh
@@ -70,7 +54,18 @@ function my_pretty_git {
 }
 ```
 
-Now that we know we are in a useful context, let's check the branch status and print accordingly:
+Now that we know we are in a useful context, let's setup some environment variables for customization:
+
+```sh
+function my_pretty_git {
+  [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
+
+  : ${MY_PRETTY_GIT_CLEAN:="(☞ﾟ∀ﾟ)☞"}
+  : ${MY_PRETTY_GIT_DIRTY:="(ノಠ益ಠ)ノ彡┻━┻"}
+}
+```
+
+Finally we can check the branch status and print accordingly:
 
 ```sh
 function my_pretty_git {
@@ -106,11 +101,12 @@ source /path/to/geometry.zsh
 
 (( $+commands[git] )) || return # only load if `git` is in our PATH
 
-: ${MY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
-: ${MY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
-
 function my_pretty_git {
   [ -d $PWD/.git ] || return
+
+  : ${MY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
+  : ${MY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
+
   if test -z "$(git status --porcelain --ignore-submodules)"; then
     echo $MY_PRETTY_GIT_CLEAN
   else

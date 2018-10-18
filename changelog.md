@@ -16,6 +16,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Background-jobs plugin as builtin function
 - Support for left-prompt customization
 - Path and hostname as left prompt
+- Prompt functions can be added and removed dynamically
+- Function environment variables can be set dynamically
 - Git stash indicator (thanks [ev-agelos](https://github.com/ev-agelos)!)
 
 ### Removed
