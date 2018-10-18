@@ -1,3 +1,5 @@
+(($+functions[_geometry_async_setup])) && return
+
 source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
 
 # Callback handler to properly render RPROMPT with calculated output
@@ -25,7 +27,7 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
     async_start_worker geometry_async_worker -u -n # unique, notify through SIGWINCH
     async_register_callback geometry_async_worker -geometry-async-callback
 
-    async_flush_jobs geometry_async_worker 
+    async_flush_jobs geometry_async_worker
     async_job geometry_async_worker -geometry-async-prompt $PWD
 }
 
@@ -44,3 +46,5 @@ _geometry_async_setup() {
     # Submit a new job every precmd
     add-zsh-hook precmd -geometry-async-job
 }
+
+_geometry_async_setup

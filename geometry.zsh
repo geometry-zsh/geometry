@@ -7,13 +7,13 @@
 GEOMETRY_ROOT=${0:A:h}
 : ${GEOMETRY_SEPARATOR:=" "}
 
+(($+GEOMETRY_PROMPT))  || GEOMETRY_PROMPT=(geometry_status geometry_path)
+(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
+
 source "${GEOMETRY_ROOT}/lib/async.zsh"
 source "${GEOMETRY_ROOT}/lib/time.zsh"
 source "${GEOMETRY_ROOT}/lib/color.zsh"
 source "${GEOMETRY_ROOT}/lib/title.zsh"
-
-(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status geometry_path)
-(($+GEOMETRY_RPROMPT))|| GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
 # join outputs of components
 function _geometry_wrap {
@@ -38,8 +38,6 @@ add-zsh-hook precmd _geometry_set_title
 
 autoload -U colors && colors
 setopt prompt_subst
-
-_geometry_async_setup
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT)'
 RPROMPT=''
