@@ -54,38 +54,20 @@ _geometry_git_remote_check() {
   local_commit=$(git rev-parse "@" 2>/dev/null)
   remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
 
-  if [[ $local_commit == "@" || $local_commit == $remote_commit ]]; then
-    echo ""
+  [[ $local_commit == "@" || $local_commit == $remote_commit ]] && return
+
+  common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
+  if [[ $common_base == $remote_commit ]]; then
+    echo $GEOMETRY_GIT_UNPUSHED
+  elif [[ $common_base == $local_commit ]]; then
+    echo $GEOMETRY_GIT_UNPULLED
   else
-    common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
-    if [[ $common_base == $remote_commit ]]; then
-      echo $GEOMETRY_GIT_UNPUSHED
-    elif [[ $common_base == $local_commit ]]; then
-      echo $GEOMETRY_GIT_UNPULLED
-    else
-      echo "$GEOMETRY_GIT_UNPUSHED $GEOMETRY_GIT_UNPULLED"
-    fi
+    echo "$GEOMETRY_GIT_UNPUSHED $GEOMETRY_GIT_UNPULLED"
   fi
 }
 
 _geometry_git_symbol() {
-  local render=""
-  local git_rebase="$(_geometry_git_rebase_check)"
-  local git_remote="$(_geometry_git_remote_check)"
-
-  if [[ -n $git_rebase ]]; then
-    render+="$git_rebase"
-  fi
-
-  if [[ -n $git_rebase && -n $git_remote ]]; then
-    render+=" "
-  fi
-
-  if [[ -n $git_remote ]]; then
-    render+="$git_remote"
-  fi
-
-  echo -n $render
+  echo ${(j: :):-$(_geometry_git_rebase_check) $(_geometry_git_remote_check)}
 }
 
 _geometry_git_conflicts() {
