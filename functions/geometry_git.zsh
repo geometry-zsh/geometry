@@ -4,9 +4,9 @@
 
 # Choose best version of grep
 _geometry_set_grep() {
-  ( (($+commands[rg])) && echo "rg") \
-  || ( (($+commands[ag])) && echo "ag") \
-  || echo "grep"
+  (($+commands[rg])) && echo "rg" && return
+  (($+commands[ag])) && echo "ag" && return
+  echo "grep"
 }
 
 : ${GEOMETRY_GIT_GREP:=$(_geometry_set_grep)} # Which grep to use
@@ -38,23 +38,16 @@ _geometry_git_status() {
   if test -z "$(git status --porcelain --ignore-submodules HEAD)"; then
     if test -z "$(git ls-files --others --modified --exclude-standard)"; then
       echo $GEOMETRY_GIT_CLEAN
-    else
-      echo $GEOMETRY_GIT_DIRTY
+      return
     fi
-  else
-    echo $GEOMETRY_GIT_DIRTY
   fi
-}
-
-_geometry_is_rebasing() {
-  git_dir=$(git rev-parse --git-dir)
-  test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply"
+  echo $GEOMETRY_GIT_DIRTY
 }
 
 _geometry_git_rebase_check() {
-  if $(_geometry_is_rebasing); then
-    echo "$GEOMETRY_GIT_REBASE"
-  fi
+  git_dir=$(git rev-parse --git-dir)
+  test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply" || return
+  echo "$GEOMETRY_GIT_REBASE"
 }
 
 _geometry_git_remote_check() {
