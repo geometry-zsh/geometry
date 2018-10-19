@@ -2,39 +2,34 @@
 
 (( $+commands[git] )) || return
 
-# Choose best version of grep
-_geometry_set_grep() {
-  (($+commands[rg])) && echo "rg" && return
-  (($+commands[ag])) && echo "ag" && return
-  echo "grep"
+_stashes() {
+  git rev-parse --quiet --verify refs/stash >/dev/null && echo $GEOMETRY_GIT_STASHES
 }
 
-: ${GEOMETRY_GIT_GREP:=$(_geometry_set_grep)} # Which grep to use
-
-_geometry_git_time_since_commit() {
-  # Defaults to "", which would hide the git_time_since_commit block
-  local git_time_since_commit=""
+_time() {
+  # Defaults to "", which would hide the time_since_commit block
+  local time_since_commit=""
 
   # Get the last commit.
   local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
   if [[ -n $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
-      git_time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_LONG_FORMAT)
+      time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT)
   elif $GEOMETRY_GIT_TIME_SHOW_EMPTY; then
-      git_time_since_commit=$(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
+      time_since_commit=$(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
 
-  echo $git_time_since_commit
+  test -n "$time_since_commit" && echo $_
 }
 
-_geometry_git_branch() {
+_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
   echo "$(color $GEOMETRY_GIT_COLOR_BRANCH $ref)"
 }
 
-_geometry_git_status() {
+_status() {
   if test -z "$(git status --porcelain --ignore-submodules HEAD)"; then
     if test -z "$(git ls-files --others --modified --exclude-standard)"; then
       echo $GEOMETRY_GIT_CLEAN
@@ -44,13 +39,13 @@ _geometry_git_status() {
   echo $GEOMETRY_GIT_DIRTY
 }
 
-_geometry_git_rebase_check() {
+_rebase() {
   git_dir=$(git rev-parse --git-dir)
   test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply" || return
   echo "$GEOMETRY_GIT_REBASE"
 }
 
-_geometry_git_remote_check() {
+_remote() {
   local_commit=$(git rev-parse "@" 2>/dev/null)
   remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
 
@@ -66,16 +61,21 @@ _geometry_git_remote_check() {
   fi
 }
 
-_geometry_git_symbol() {
-  echo ${(j: :):-$(_geometry_git_rebase_check) $(_geometry_git_remote_check)}
+_symbol() {
+  echo ${(j: :):-$(_rebase) $(_remote)}
 }
 
-_geometry_git_conflicts() {
+_conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
   if [[ ! -z $conflicts ]]; then
     pushd -q $(git rev-parse --show-toplevel)
-    conflict_list=$($GEOMETRY_GREP -cH '^=======$' $(echo $conflicts))
+
+    local _grep="grep"
+    (($+commands[ag])) && _grep="ag"
+    (($+commands[rg])) && _grep="rg"
+
+    conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $(echo $conflicts))
     popd -q
 
     raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
@@ -122,8 +122,8 @@ function geometry_git {
   : ${GEOMETRY_GIT_SYMBOL_STASHES:="●"}
 
   # Flags
-  : ${GEOMETRY_GIT_CONFLICTS:=false}
-  : ${GEOMETRY_GIT_TIME:=true}
+  : ${GEOMETRY_GIT_SHOW_CONFLICTS:=false}
+  : ${GEOMETRY_GIT_SHOW_TIME:=true}
   : ${GEOMETRY_GIT_TIME_LONG_FORMAT:=false}
   : ${GEOMETRY_GIT_TIME_SHOW_EMPTY:=true}
   : ${GEOMETRY_GIT_SHOW_STASHES:=true}
@@ -141,28 +141,17 @@ function geometry_git {
   GEOMETRY_GIT_UNPULLED=$GEOMETRY_GIT_SYMBOL_UNPULLED
   GEOMETRY_GIT_UNPUSHED=$GEOMETRY_GIT_SYMBOL_UNPUSHED
 
-  # Check if we are in a bare repo
-  if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == "false" ]] ; then
-    echo -n "$GEOMETRY_GIT_BARE"
-    return
-  fi
+  $(command git rev-parse --is-bare-repository 2>/dev/null) && echo "$GEOMETRY_GIT_BARE" && return
 
-  local render=(${(j: :):-$(_geometry_git_symbol) $(_geometry_git_branch)})
+  local render=(${(j: :):-$(_symbol) $(_branch)})
 
-  if $GEOMETRY_GIT_CONFLICTS ; then
-    render[0]+=" $(_geometry_git_conflicts)"
-  fi
+  $GEOMETRY_GIT_SHOW_CONFLICTS && render[0]+=" $(_conflicts)"
 
-  if $GEOMETRY_GIT_TIME; then
-    local git_time_since_commit=$(_geometry_git_time_since_commit)
-    [[ -n $git_time_since_commit ]] && render+=("$git_time_since_commit")
-  fi
+  $GEOMETRY_GIT_SHOW_TIME && render+=$(_time)
 
-  if $GEOMETRY_GIT_SHOW_STASHES && git rev-parse --quiet --verify refs/stash >/dev/null; then
-      render+="$GEOMETRY_GIT_STASHES"
-  fi
+  $GEOMETRY_GIT_SHOW_STASHES && render+=$(_stashes)
 
-  render+=$(_geometry_git_status)
+  render+=$(_status)
 
   echo ${(pj.$GEOMETRY_GIT_SEPARATOR.)render}
 }
