@@ -20,8 +20,8 @@ _geometry_git_time_since_commit() {
   if [[ -n $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
-      git_time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT)
-  elif $PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY; then
+      git_time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_LONG_FORMAT)
+  elif $GEOMETRY_GIT_TIME_SHOW_EMPTY; then
       git_time_since_commit=$(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
 
@@ -31,7 +31,7 @@ _geometry_git_time_since_commit() {
 _geometry_git_branch() {
   ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
   ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$(color $GEOMETRY_COLOR_GIT_BRANCH $ref)"
+  echo "$(color $GEOMETRY_GIT_COLOR_BRANCH $ref)"
 }
 
 _geometry_git_status() {
@@ -85,11 +85,11 @@ _geometry_git_conflicts() {
     total=${raw_total##*(  )}
 
     if [[ -z $total ]]; then
-      text=$GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED
-      highlight=$GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED
+      text=$GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED
+      highlight=$GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED
     else
-      text="$GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
-      highlight=$GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED
+      text="$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
+      highlight=$GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED
     fi
 
     echo "$(color $highlight $text) "
@@ -102,44 +102,44 @@ function geometry_git {
   command git rev-parse --git-dir > /dev/null 2>&1 || return
 
   # Color definitions
-  : ${GEOMETRY_COLOR_GIT_DIRTY:=red}
-  : ${GEOMETRY_COLOR_GIT_CLEAN:=green}
-  : ${GEOMETRY_COLOR_GIT_BARE:=blue}
-  : ${GEOMETRY_COLOR_GIT_CONFLICTS_UNSOLVED:=red}
-  : ${GEOMETRY_COLOR_GIT_CONFLICTS_SOLVED:=green}
-  : ${GEOMETRY_COLOR_GIT_BRANCH:=242}
-  : ${GEOMETRY_COLOR_GIT_STASHES:="144"}
+  : ${GEOMETRY_GIT_COLOR_DIRTY:=red}
+  : ${GEOMETRY_GIT_COLOR_CLEAN:=green}
+  : ${GEOMETRY_GIT_COLOR_BARE:=blue}
+  : ${GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED:=red}
+  : ${GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED:=green}
+  : ${GEOMETRY_GIT_COLOR_BRANCH:=242}
+  : ${GEOMETRY_GIT_COLOR_STASHES:="144"}
 
   # Symbol definitions
-  : ${GEOMETRY_SYMBOL_GIT_DIRTY:="⬡"}
-  : ${GEOMETRY_SYMBOL_GIT_CLEAN:="⬢"}
-  : ${GEOMETRY_SYMBOL_GIT_BARE:="⬢"}
-  : ${GEOMETRY_SYMBOL_GIT_REBASE:="\uE0A0"}
-  : ${GEOMETRY_SYMBOL_GIT_UNPULLED:="⇣"}
-  : ${GEOMETRY_SYMBOL_GIT_UNPUSHED:="⇡"}
-  : ${GEOMETRY_SYMBOL_GIT_CONFLICTS_SOLVED:="◆"}
-  : ${GEOMETRY_SYMBOL_GIT_CONFLICTS_UNSOLVED:="◈"}
-  : ${GEOMETRY_SYMBOL_GIT_STASHES:="●"}
+  : ${GEOMETRY_GIT_SYMBOL_DIRTY:="⬡"}
+  : ${GEOMETRY_GIT_SYMBOL_CLEAN:="⬢"}
+  : ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"}
+  : ${GEOMETRY_GIT_SYMBOL_REBASE:="\uE0A0"}
+  : ${GEOMETRY_GIT_SYMBOL_UNPUSHED:="⇡"}
+  : ${GEOMETRY_GIT_SYMBOL_UNPULLED:="⇣"}
+  : ${GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED:="◆"}
+  : ${GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED:="◈"}
+  : ${GEOMETRY_GIT_SYMBOL_STASHES:="●"}
 
   # Flags
-  : ${PROMPT_GEOMETRY_GIT_CONFLICTS:=false}
-  : ${PROMPT_GEOMETRY_GIT_TIME:=true}
-  : ${PROMPT_GEOMETRY_GIT_TIME_LONG_FORMAT:=false}
-  : ${PROMPT_GEOMETRY_GIT_TIME_SHOW_EMPTY:=true}
-  : ${PROMPT_GEOMETRY_GIT_SHOW_STASHES:=true}
+  : ${GEOMETRY_GIT_CONFLICTS:=false}
+  : ${GEOMETRY_GIT_TIME:=true}
+  : ${GEOMETRY_GIT_TIME_LONG_FORMAT:=false}
+  : ${GEOMETRY_GIT_TIME_SHOW_EMPTY:=true}
+  : ${GEOMETRY_GIT_SHOW_STASHES:=true}
 
   # Misc configurations
   : ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:="no commits"}
   : ${GEOMETRY_GIT_SEPARATOR:="::"}
 
   # Combine color and symbols
-  GEOMETRY_GIT_DIRTY=$(color $GEOMETRY_COLOR_GIT_DIRTY $GEOMETRY_SYMBOL_GIT_DIRTY)
-  GEOMETRY_GIT_CLEAN=$(color $GEOMETRY_COLOR_GIT_CLEAN $GEOMETRY_SYMBOL_GIT_CLEAN)
-  GEOMETRY_GIT_BARE=$(color $GEOMETRY_COLOR_GIT_BARE $GEOMETRY_SYMBOL_GIT_BARE)
-  GEOMETRY_GIT_STASHES=$(color $GEOMETRY_COLOR_GIT_STASHES $GEOMETRY_SYMBOL_GIT_STASHES)
-  GEOMETRY_GIT_REBASE=$GEOMETRY_SYMBOL_GIT_REBASE
-  GEOMETRY_GIT_UNPULLED=$GEOMETRY_SYMBOL_GIT_UNPULLED
-  GEOMETRY_GIT_UNPUSHED=$GEOMETRY_SYMBOL_GIT_UNPUSHED
+  GEOMETRY_GIT_DIRTY=$(color $GEOMETRY_GIT_COLOR_DIRTY $GEOMETRY_GIT_SYMBOL_DIRTY)
+  GEOMETRY_GIT_CLEAN=$(color $GEOMETRY_GIT_COLOR_CLEAN $GEOMETRY_GIT_SYMBOL_CLEAN)
+  GEOMETRY_GIT_BARE=$(color $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE)
+  GEOMETRY_GIT_STASHES=$(color $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES)
+  GEOMETRY_GIT_REBASE=$GEOMETRY_GIT_SYMBOL_REBASE
+  GEOMETRY_GIT_UNPULLED=$GEOMETRY_GIT_SYMBOL_UNPULLED
+  GEOMETRY_GIT_UNPUSHED=$GEOMETRY_GIT_SYMBOL_UNPUSHED
 
   # Check if we are in a bare repo
   if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) == "false" ]] ; then
@@ -149,16 +149,16 @@ function geometry_git {
 
   local render=(${(j: :):-$(_geometry_git_symbol) $(_geometry_git_branch)})
 
-  if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
+  if $GEOMETRY_GIT_CONFLICTS ; then
     render[0]+=" $(_geometry_git_conflicts)"
   fi
 
-  if $PROMPT_GEOMETRY_GIT_TIME; then
+  if $GEOMETRY_GIT_TIME; then
     local git_time_since_commit=$(_geometry_git_time_since_commit)
     [[ -n $git_time_since_commit ]] && render+=("$git_time_since_commit")
   fi
 
-  if $PROMPT_GEOMETRY_GIT_SHOW_STASHES && git rev-parse --quiet --verify refs/stash >/dev/null; then
+  if $GEOMETRY_GIT_SHOW_STASHES && git rev-parse --quiet --verify refs/stash >/dev/null; then
       render+="$GEOMETRY_GIT_STASHES"
   fi
 
