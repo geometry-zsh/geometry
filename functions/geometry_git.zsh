@@ -147,20 +147,22 @@ function geometry_git {
     return
   fi
 
+  local render=(${(j: :):-$(_geometry_git_symbol) $(_geometry_git_branch)})
+
   if $PROMPT_GEOMETRY_GIT_CONFLICTS ; then
-    conflicts="$(_geometry_git_conflicts)"
+    render[0]+=" $(_geometry_git_conflicts)"
   fi
 
   if $PROMPT_GEOMETRY_GIT_TIME; then
     local git_time_since_commit=$(_geometry_git_time_since_commit)
-    if [[ -n $git_time_since_commit ]]; then
-        time=" $git_time_since_commit $GEOMETRY_GIT_SEPARATOR"
-    fi
+    [[ -n $git_time_since_commit ]] && render+=("$git_time_since_commit")
   fi
 
   if $PROMPT_GEOMETRY_GIT_SHOW_STASHES && git rev-parse --quiet --verify refs/stash >/dev/null; then
-      stashes=" $GEOMETRY_GIT_STASHES $GEOMETRY_GIT_SEPARATOR";
+      render+="$GEOMETRY_GIT_STASHES"
   fi
 
-  echo ${(j/$GEOMETRY_GIT_SEPARATOR/):-$(_geometry_git_symbol) $(_geometry_git_branch) ${conflicts} ${time} ${stashes} $(_geometry_git_status)}
+  render+=$(_geometry_git_status)
+
+  echo ${(pj.$GEOMETRY_GIT_SEPARATOR.)render}
 }
