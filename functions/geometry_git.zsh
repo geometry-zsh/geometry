@@ -162,13 +162,5 @@ function geometry_git {
       stashes=" $GEOMETRY_GIT_STASHES $GEOMETRY_GIT_SEPARATOR";
   fi
 
-  local render="$(_geometry_git_symbol)"
-
-  if [[ -n $render ]]; then
-    render+=" "
-  fi
-
-  render+="$(_geometry_git_branch) ${conflicts}${GEOMETRY_GIT_SEPARATOR}${time}${stashes} $(_geometry_git_status)"
-
-  echo -n $render
+  echo ${(j/$GEOMETRY_GIT_SEPARATOR/):-$(_geometry_git_symbol) $(_geometry_git_branch) ${conflicts} ${time} ${stashes} $(_geometry_git_status)}
 }
