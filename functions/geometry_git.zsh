@@ -63,13 +63,13 @@ _conflicts() {
   conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $conflicts)
   popd -q
 
-  raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
+  raw_file_count="${#${(@f)conflict_list}}"
   file_count=${raw_file_count##*( )}
 
   raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
   total=${raw_total##*(  )}
 
-  [[ -z "$total" ]] && ansi $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED && return
+  test -z "$total" && ansi $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED && return
 
   ansi $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
 }
