@@ -7,5 +7,5 @@ function geometry_path {
 
   local dir=$GEOMETRY_PATH_SYMBOL_HOME
   ( $GEOMETRY_PATH_SHOW_BASENAME ) && dir=$(basename $PWD)
-  echo -n $(ansi $GEOMETRY_PATH_COLOR $dir)
+  ansi $GEOMETRY_PATH_COLOR $dir
 }

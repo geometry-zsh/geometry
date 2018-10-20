@@ -15,5 +15,5 @@ function geometry_rustup {
 
     local toolchain="$(rustup show | tail -n 3 | head -n 1 |  cut -d '-' -f 1 2> /dev/null)"
     local rustup_color=${(e)toolchain:+\$GEOMETRY_RUSTUP_${toolchain:u}_COLOR}
-    echo -n $(ansi $rustup_color $GEOMETRY_RUSTUP_SYMBOL)
+    ansi $rustup_color $GEOMETRY_RUSTUP_SYMBOL
 }
