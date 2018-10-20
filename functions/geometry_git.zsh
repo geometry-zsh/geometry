@@ -7,35 +7,25 @@ _stashes() {
 }
 
 _time() {
-  # Defaults to "", which would hide the time_since_commit block
-  local time_since_commit=""
-
   # Get the last commit.
   local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
   if [[ -n $last_commit ]]; then
       now=$(date +%s)
       seconds_since_last_commit=$((now - last_commit))
-      time_since_commit=$(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT)
+      echo $(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT)
   elif $GEOMETRY_GIT_TIME_SHOW_EMPTY; then
-      time_since_commit=$(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
+      echo $(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
   fi
-
-  test -n "$time_since_commit" && echo $_
 }
 
 _branch() {
-  ref=$(git symbolic-ref --short HEAD 2> /dev/null) || \
-  ref=$(git rev-parse --short HEAD 2> /dev/null) || return
-  echo "$(color $GEOMETRY_GIT_COLOR_BRANCH $ref)"
+  echo $(color $GEOMETRY_GIT_COLOR_BRANCH $(git symbolic-ref --short HEAD || git rev-parse --short HEAD))
 }
 
 _status() {
-  if test -z "$(git status --porcelain --ignore-submodules HEAD)"; then
-    if test -z "$(git ls-files --others --modified --exclude-standard)"; then
-      echo $GEOMETRY_GIT_CLEAN
-      return
-    fi
-  fi
+  [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && \
+  [[ -z "$(git ls-files --others --modified --exclude-standard)" ]] && \
+  echo $GEOMETRY_GIT_CLEAN && return
   echo $GEOMETRY_GIT_DIRTY
 }
 
