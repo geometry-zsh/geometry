@@ -6,5 +6,5 @@
 }
 
 function color {
-  echo "%F{$1}$2%f"
+  (($# - 2)) || echo "%F{$1}$2%f"
 }
