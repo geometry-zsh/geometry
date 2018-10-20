@@ -10,13 +10,11 @@ _stashes() {
 _time() {
   # Get the last commit.
   local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
-  if [[ -n $last_commit ]]; then
-      now=$(date +%s)
-      seconds_since_last_commit=$((now - last_commit))
-      echo $(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT)
-  elif $GEOMETRY_GIT_TIME_SHOW_EMPTY; then
-      echo $(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE)
-  fi
+  [[ -z "$last_commit" ]] && $GEOMETRY_GIT_SHOW_EMPTY && echo $(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE) && return
+
+  now=$(date +%s)
+  seconds_since_last_commit=$((now - last_commit))
+  echo $(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT)
 }
 
 _branch() {
