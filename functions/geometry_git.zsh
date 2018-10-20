@@ -3,7 +3,8 @@
 (( $+commands[git] )) || return
 
 _stashes() {
-  git rev-parse --quiet --verify refs/stash >/dev/null && echo $GEOMETRY_GIT_STASHES
+  git rev-parse --quiet --verify refs/stash >/dev/null \
+  && echo $(color $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES)
 }
 
 _time() {
@@ -23,10 +24,11 @@ _branch() {
 }
 
 _status() {
-  [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && \
-  [[ -z "$(git ls-files --others --modified --exclude-standard)" ]] && \
-  echo $GEOMETRY_GIT_CLEAN && return
-  echo $GEOMETRY_GIT_DIRTY
+  [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] \
+  && [[ -z "$(git ls-files --others --modified --exclude-standard)" ]] \
+  && echo $(color $GEOMETRY_GIT_COLOR_CLEAN $GEOMETRY_GIT_SYMBOL_CLEAN) \
+  && return
+  echo $(color $GEOMETRY_GIT_COLOR_DIRTY $GEOMETRY_GIT_SYMBOL_DIRTY)
 }
 
 _rebase() {
@@ -113,13 +115,9 @@ function geometry_git {
   : ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:="no commits"}
   : ${GEOMETRY_GIT_SEPARATOR:="::"}
 
-  # Combine color and symbols
-  GEOMETRY_GIT_DIRTY=$(color $GEOMETRY_GIT_COLOR_DIRTY $GEOMETRY_GIT_SYMBOL_DIRTY)
-  GEOMETRY_GIT_CLEAN=$(color $GEOMETRY_GIT_COLOR_CLEAN $GEOMETRY_GIT_SYMBOL_CLEAN)
-  GEOMETRY_GIT_BARE=$(color $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE)
-  GEOMETRY_GIT_STASHES=$(color $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES)
-
-  $(command git rev-parse --is-bare-repository 2>/dev/null) && echo "$GEOMETRY_GIT_BARE" && return
+  $(command git rev-parse --is-bare-repository 2>/dev/null) \
+  && echo $(color $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE) \
+  && return
 
   local render=(${(j: :):-$(_symbol) $(_branch)})
 
