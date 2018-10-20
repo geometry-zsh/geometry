@@ -57,7 +57,7 @@ Then add it to your `.zshrc` configuration:
 
 The symbol for rebasing comes from a [Powerline patched font](https://github.com/powerline/fonts). If you want to use it, you're going to need to install one from the font repo. The font used in the screenshots is [Roboto Mono](https://github.com/powerline/fonts/tree/master/RobotoMono). You can also try to [patch it yourself](https://github.com/powerline/fontpatcher).
 
-You can also change the rebase symbol by setting the `GEOMETRY_SYMBOL_GIT_REBASE` variable.
+You can also change the rebase symbol by setting the `GEOMETRY_GIT_SYMBOL_REBASE` variable.
 
 ## What it does
 
@@ -101,7 +101,7 @@ Please check out and share third-party functions on our [Functions wiki page](ht
 
 ## Configuration
 
-Pretty much everything in geometry can be changed by setting a variable **before you load the theme**.
+Pretty much everything in geometry can be changed by setting a variable.
 
 The default options try to balance the theme in order to be both lightweight and contain useful features.
 
@@ -153,7 +153,7 @@ The git function is one of the most developed plugins in geometry, which is why 
 #### Elapsed time since last git commit
 
 By default, geometry shows you the time since a commit has been made in the current repository.
-This can be disabled by setting `PROMPT_GEOMETRY_GIT_TIME` to `false`.
+This can be disabled by setting `GEOMETRY_GIT_SHOW_TIME` to `false`.
 
 We recommend doing this if the prompt is too slow on large repositories.
 
@@ -163,7 +163,7 @@ You can have the prompt display both the number of files with conflicts as well 
 
 This option chooses between `rg`, `ag` or `grep`, depending on which is available. `rg` has the highest priority, followed by `ag` and finally defaulting to `grep`.
 
-**If you don't have `rg` or `ag` installed, this might slow down your prompt. Proceed with caution.**
+**We recommend installing `rg` or `ag` for the best performance with `geometry_git`**
 
 ![git_conflicts](/screenshots/git_conflicts.png)
 
@@ -172,7 +172,7 @@ This option chooses between `rg`, `ag` or `grep`, depending on which is availabl
 You can format the time since last commit. By default, it will only show either
 seconds (`12s`), minutes (`2m`), hours (`5h`) or days (`30d`).
 
-By setting `GEOMETRY_GIT_TIME_LONG_FORMAT` to `true` you can enhance its precision, displaying all of the previous settings, e.g: `12h 30m 53s`.
+By setting `GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT` to `true` you can enhance its precision, displaying all of the previous settings, e.g: `12h 30m 53s`.
 
 #### 'No commits' message
 
@@ -181,8 +181,7 @@ it would, usually, display the time since last commit. This behaviour can be
 unchecked by setting the `GEOMETRY_GIT_TIME_SHOW_EMPTY` to
 `false`.
 
-You can also customize the message by changing the
-`GIT_NO_COMMITS_MESSAGE` to whatever you would like the message to be.
+You can also customize the message by changing the `GEOMETRY_GIT_NO_COMMITS_MESSAGE` to whatever you would like the message to be.
 
 #### Hide stash indicator
 
@@ -206,28 +205,19 @@ If you can provide info about your terminal, OS and zsh version it would be a gr
 
 **I have an idea for a feature, can I submit a PR?**
 
-Please do. geometry is a work in progress, so if you want to help improve it, your
-idea is welcome. We're not looking to add a lot of default features to not
-overload the theme. However, plugins are a great way of extending geometry
-without overloading it. If you have an idea for a plugin, feel free to
-submit it and we'll always give our best to provide constructive feedback and
-help you improve.
+Please do! geometry is a work in progress, so if you want to help improve it, your idea is welcome.
+We want to keep the theme clean, so default features/functions should be minimal and context-aware.
+If you have an idea for a function, feel free to submit it and we'll always give our best to provide constructive feedback and help you improve.
 
 **Is there anything specific I can do to help?**
 
 There are always things we would like to improve. Feel free to jump in on any issue to tackle it or just to provide your feedback.
-
-As for PRs, we are currently looking to improve performance.
 
 **Why doesn't my prompt look like the screenshots?**
 
 Well, I use [`z`](https://github.com/rupa/z) for jumping around and
 [`zsh-syntax-highlighting`](https://github.com/zsh-users/zsh-syntax-highlighting/)
 for those pretty command colors. You might also want to look into [base16](https://github.com/chriskempson/base16) to get similar colors.
-
-**Where do I put my geometry configuration files?**
-
-Well, anywhere in your `.zshrc` file should be fine, **as long as you define variables before geometry is loaded**.
 
 **That's a neat font you have there. Can I have it?**
 
