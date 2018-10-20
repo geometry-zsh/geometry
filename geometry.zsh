@@ -1,8 +1,8 @@
-# Geometry
-# Based on Avit, Pure, and MNML
+# geometry - simple customizable prompt based on avit, pure, and mnml
+#
 # avit: https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/avit.zsh-theme
 # pure: https://github.com/sindresorhus/pure
-# mnml: https://github.com/subnixr/minimal/
+# mnml: https://github.com/subnixr/minimal
 
 GEOMETRY_ROOT=${0:A:h}
 : ${GEOMETRY_SEPARATOR:=" "}
