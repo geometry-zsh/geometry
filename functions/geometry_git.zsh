@@ -85,7 +85,7 @@ _conflicts() {
   raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
   total=${raw_total##*(  )}
 
-  if [[ test -z "$total" ]]; then
+  if [[ -z "$total" ]]; then
     echo $(color $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED)
   else
     echo $(color $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)")
