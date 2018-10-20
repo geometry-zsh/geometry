@@ -1,22 +1,26 @@
-(($+functions[_geometry_async_setup])) && return
+(($functions[(I)-geometry-async-job])) && return
 
-source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
+# Initialize zsh-async and creates a worker
+async=$GEOMETRY_ROOT/lib/zsh-async/async.zsh
+(( $+functions[async_init] )) || { test -f $async && source $_ }
+(( $+functions[async_init] )) || { # checkout zsh-async if not found
+    builtin pushd -q $GEOMETRY_ROOT > /dev/null
+    command git submodule update --init > /dev/null
+    builtin popd -q > /dev/null
+    source $async 2> /dev/null
+}
+(( $+functions[async_init] )) || { >&2 echo "Error: Could not load zsh-async library." && exit -1}
 
-# Callback handler to properly render RPROMPT with calculated output
+# Callback handler
 -geometry-async-callback() {
-    local job="$1" code="$2" output="$3" exec_time="$4" stderr="$5"
-    RPROMPT="${(j/::/)output}"
+    RPROMPT="${(j/::/)3}" # job=$1 code=$2 output=$3 exec_time=$4 stderr=$5
     zle && zle reset-prompt
-
-    # Explicitely stop async worker
     async_stop_worker geometry_async_worker
 }
 
 # Wrapper to call rprompt renderer, needed to set up workers status
 -geometry-async-prompt() {
-    # In order to work with zsh-async we need to set workers in
-    # the proper directory.
-    cd -q $1 > /dev/null
+    cd -q $1 > /dev/null # zsh-async needs workers to be in the proper directory
     _geometry_wrap GEOMETRY_RPROMPT
 }
 
@@ -31,20 +35,5 @@ source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null
     async_job geometry_async_worker -geometry-async-prompt $PWD
 }
 
-# Initialize zsh-async and creates a worker
-_geometry_async_setup() {
-    # Workaround for missing zsh-async lib
-    if (( ! $+functions[async_init] )); then
-      builtin pushd -q $GEOMETRY_ROOT > /dev/null
-      command git submodule update --init > /dev/null
-      builtin popd -q > /dev/null
-      source $GEOMETRY_ROOT/lib/zsh-async/async.zsh 2> /dev/null || { echo "Error: Could not load zsh-async library." >&2; return 1 }
-    fi
-
-    async_init
-
-    # Submit a new job every precmd
-    add-zsh-hook precmd -geometry-async-job
-}
-
-_geometry_async_setup
+async_init
+add-zsh-hook precmd -geometry-async-job
