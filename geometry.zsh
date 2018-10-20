@@ -10,10 +10,7 @@ GEOMETRY_ROOT=${0:A:h}
 (($+GEOMETRY_PROMPT))  || GEOMETRY_PROMPT=(geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
-source "${GEOMETRY_ROOT}/lib/async.zsh"
-source "${GEOMETRY_ROOT}/lib/time.zsh"
-source "${GEOMETRY_ROOT}/lib/color.zsh"
-source "${GEOMETRY_ROOT}/lib/title.zsh"
+for lib in ${GEOMETRY_ROOT}/lib/*.zsh; do source $lib; done
 
 # join outputs of components
 function _geometry_wrap {
