@@ -32,7 +32,7 @@ _status() {
 _rebase() {
   git_dir=$(git rev-parse --git-dir)
   test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply" || return
-  echo "$GEOMETRY_GIT_REBASE"
+  echo "$GEOMETRY_GIT_SYMBOL_REBASE"
 }
 
 _remote() {
@@ -42,13 +42,10 @@ _remote() {
   [[ $local_commit == "@" || $local_commit == $remote_commit ]] && return
 
   common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
-  if [[ $common_base == $remote_commit ]]; then
-    echo $GEOMETRY_GIT_UNPUSHED
-  elif [[ $common_base == $local_commit ]]; then
-    echo $GEOMETRY_GIT_UNPULLED
-  else
-    echo "$GEOMETRY_GIT_UNPUSHED $GEOMETRY_GIT_UNPULLED"
-  fi
+  [[ $common_base == $remote_commit ]] && echo $GEOMETRY_GIT_SYMBOL_UNPUSHED && return
+  [[ $common_base == $local_commit ]]  && echo $GEOMETRY_GIT_SYMBOL_UNPULLED && return
+
+  echo "$GEOMETRY_GIT_SYMBOL_UNPUSHED $GEOMETRY_GIT_SYMBOL_UNPULLED"
 }
 
 _symbol() {
@@ -121,9 +118,6 @@ function geometry_git {
   GEOMETRY_GIT_CLEAN=$(color $GEOMETRY_GIT_COLOR_CLEAN $GEOMETRY_GIT_SYMBOL_CLEAN)
   GEOMETRY_GIT_BARE=$(color $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE)
   GEOMETRY_GIT_STASHES=$(color $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES)
-  GEOMETRY_GIT_REBASE=$GEOMETRY_GIT_SYMBOL_REBASE
-  GEOMETRY_GIT_UNPULLED=$GEOMETRY_GIT_SYMBOL_UNPULLED
-  GEOMETRY_GIT_UNPUSHED=$GEOMETRY_GIT_SYMBOL_UNPUSHED
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) && echo "$GEOMETRY_GIT_BARE" && return
 
