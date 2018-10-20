@@ -14,7 +14,7 @@ _time() {
 
   now=$(date +%s)
   seconds_since_last_commit=$((now - last_commit))
-  echo $(_geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT)
+  _geometry_seconds_to_human_time $seconds_since_last_commit $GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT
 }
 
 _branch() {
@@ -60,7 +60,7 @@ _conflicts() {
   (($+commands[ag])) && _grep="ag"
   (($+commands[rg])) && _grep="rg"
 
-  conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $(echo $conflicts))
+  conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $conflicts)
   popd -q
 
   raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
