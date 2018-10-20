@@ -22,8 +22,9 @@ _branch() {
 }
 
 _status() {
-  _status=$([[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard)" ]] && echo CLEAN || echo DIRTY)
-  echo -n $(ansi ${(e)_status:+\$GEOMETRY_GIT_COLOR_${_status}} ${(e)_status:+\$GEOMETRY_GIT_SYMBOL_${_status}})
+  [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard)" ]]
+  _status=$($? && echo CLEAN || echo DIRTY)
+  echo -n $(ansi ${(e):-\$GEOMETRY_GIT_COLOR_${_status}} ${(e):-\$GEOMETRY_GIT_SYMBOL_${_status}})
 }
 
 _rebase() {
