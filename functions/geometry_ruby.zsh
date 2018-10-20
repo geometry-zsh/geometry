@@ -23,7 +23,7 @@ function geometry_ruby {
   : ${GEOMETRY_RUBY_SYMBOL:="◆"}       # symbol
   : ${GEOMETRY_RUBY_SHOW_GEMSET:=true} # Show the gemset name
 
-  GEOMETRY_RUBY=$(color $GEOMETRY_RUBY_COLOR $GEOMETRY_RUBY_SYMBOL)
+  GEOMETRY_RUBY=$(ansi $GEOMETRY_RUBY_COLOR $GEOMETRY_RUBY_SYMBOL)
 
   if (( $+commands[rvm] )); then
 

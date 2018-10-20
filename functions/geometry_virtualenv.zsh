@@ -14,7 +14,7 @@ function geometry_virtualenv {
     # Add virtualenv name if active
     if [[ -n "${VIRTUAL_ENV}" ]]; then
         local virtualenv_ref=$(basename $VIRTUAL_ENV)
-        environment_str="$(color $GEOMETRY_VIRTUALENV_COLOR ${virtualenv_ref})"
+        environment_str="$(ansi $GEOMETRY_VIRTUALENV_COLOR ${virtualenv_ref})"
     fi
 
     # Add separator if both active
@@ -25,7 +25,7 @@ function geometry_virtualenv {
     # Add conda environment name if active
     if [[ -n "${CONDA_PREFIX}" ]]; then
         local conda_ref="$(basename $CONDA_PREFIX)"
-        environment_str="${environment_str}$(color $GEOMETRY_VIRUALENV_CONDA_COLOR ${conda_ref})"
+        environment_str="${environment_str}$(ansi $GEOMETRY_VIRUALENV_CONDA_COLOR ${conda_ref})"
     fi
 
     echo -n "${environment_str}"

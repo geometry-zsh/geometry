@@ -9,7 +9,7 @@ function geometry_node {
     : ${GEOMETRY_NODE_SYMBOL:="⬡"}  # node symbol
     : ${GEOMETRY_NODE_PIN:=false}   # always display?
 
-    GEOMETRY_NODE=$(color $GEOMETRY_NODE_COLOR $GEOMETRY_NODE_SYMBOL)
+    GEOMETRY_NODE=$(ansi $GEOMETRY_NODE_COLOR $GEOMETRY_NODE_SYMBOL)
 
     local package_manager=npm
 

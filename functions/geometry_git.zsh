@@ -4,13 +4,13 @@
 
 _stashes() {
   git rev-parse --quiet --verify refs/stash >/dev/null \
-  && echo $(color $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES)
+  && echo $(ansi $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES)
 }
 
 _time() {
   # Get the last commit.
   local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
-  [[ -z "$last_commit" ]] && $GEOMETRY_GIT_SHOW_EMPTY && echo $(color $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE) && return
+  [[ -z "$last_commit" ]] && $GEOMETRY_GIT_SHOW_EMPTY && echo $(ansi $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE) && return
 
   now=$(date +%s)
   seconds_since_last_commit=$((now - last_commit))
@@ -18,15 +18,15 @@ _time() {
 }
 
 _branch() {
-  echo $(color $GEOMETRY_GIT_COLOR_BRANCH $(git symbolic-ref --short HEAD || git rev-parse --short HEAD))
+  echo $(ansi $GEOMETRY_GIT_COLOR_BRANCH $(git symbolic-ref --short HEAD || git rev-parse --short HEAD))
 }
 
 _status() {
   [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] \
   && [[ -z "$(git ls-files --others --modified --exclude-standard)" ]] \
-  && echo $(color $GEOMETRY_GIT_COLOR_CLEAN $GEOMETRY_GIT_SYMBOL_CLEAN) \
+  && echo $(ansi $GEOMETRY_GIT_COLOR_CLEAN $GEOMETRY_GIT_SYMBOL_CLEAN) \
   && return
-  echo $(color $GEOMETRY_GIT_COLOR_DIRTY $GEOMETRY_GIT_SYMBOL_DIRTY)
+  echo $(ansi $GEOMETRY_GIT_COLOR_DIRTY $GEOMETRY_GIT_SYMBOL_DIRTY)
 }
 
 _rebase() {
@@ -73,9 +73,9 @@ _conflicts() {
   total=${raw_total##*(  )}
 
   if [[ -z "$total" ]]; then
-    echo $(color $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED)
+    echo $(ansi $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED)
   else
-    echo $(color $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)")
+    echo $(ansi $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)")
   fi
 }
 
@@ -114,7 +114,7 @@ function geometry_git {
   : ${GEOMETRY_GIT_SEPARATOR:="::"}
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) \
-  && echo $(color $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE) \
+  && echo $(ansi $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE) \
   && return
 
   local render=(${(j: :):-$(_symbol) $(_branch)})

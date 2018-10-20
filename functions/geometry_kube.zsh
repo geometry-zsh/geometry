@@ -9,7 +9,7 @@ function geometry_kube {
   : ${GEOMETRY_KUBE_SYMBOL:="⎈"} # Symbol
   : ${GEOMETRY_KUBE_PIN:=false}  # Always display?
 
-  GEOMETRY_KUBE=$(color $GEOMETRY_KUBE_COLOR $GEOMETRY_KUBE_SYMBOL)
+  GEOMETRY_KUBE=$(ansi $GEOMETRY_KUBE_COLOR $GEOMETRY_KUBE_SYMBOL)
 
   [[ $(kubectl version --client --short) =~ 'Client Version: ([0-9a-zA-Z.]+)' ]]
   local version=$match[1]
