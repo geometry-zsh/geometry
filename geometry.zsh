@@ -10,6 +10,7 @@ GEOMETRY_ROOT=${0:A:h}
 (($+GEOMETRY_PROMPT))  || GEOMETRY_PROMPT=(geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
+(( $+functions[ansi] )) || function ansi { (($# - 2)) || echo "%F{$1}$2%f" }
 for lib in ${GEOMETRY_ROOT}/lib/*.zsh; do source $lib; done
 
 # join outputs of components
