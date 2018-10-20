@@ -68,33 +68,27 @@ _symbol() {
 _conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
-  if [[ ! -z $conflicts ]]; then
-    pushd -q $(git rev-parse --show-toplevel)
+  test -n "$conflicts" && return
 
-    local _grep="grep"
-    (($+commands[ag])) && _grep="ag"
-    (($+commands[rg])) && _grep="rg"
+  pushd -q $(git rev-parse --show-toplevel)
 
-    conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $(echo $conflicts))
-    popd -q
+  local _grep="grep"
+  (($+commands[ag])) && _grep="ag"
+  (($+commands[rg])) && _grep="rg"
 
-    raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
-    file_count=${raw_file_count##*( )}
+  conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $(echo $conflicts))
+  popd -q
 
-    raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
-    total=${raw_total##*(  )}
+  raw_file_count=$(echo $conflict_list | cut -d ':' -f1 | wc -l)
+  file_count=${raw_file_count##*( )}
 
-    if [[ -z $total ]]; then
-      text=$GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED
-      highlight=$GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED
-    else
-      text="$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
-      highlight=$GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED
-    fi
+  raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
+  total=${raw_total##*(  )}
 
-    echo "$(color $highlight $text) "
+  if [[ test -z "$total" ]]; then
+    echo $(color $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED)
   else
-    echo ""
+    echo $(color $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)")
   fi
 }
 
