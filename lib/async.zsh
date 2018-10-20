@@ -1,4 +1,4 @@
-(($functions[(I)-geometry-async-job])) && return
+(($precmd_functions[(I)-geometry-async-job])) && return
 
 # Initialize zsh-async and creates a worker
 async=$GEOMETRY_ROOT/lib/zsh-async/async.zsh
