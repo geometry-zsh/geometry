@@ -8,7 +8,6 @@ _stashes() {
 }
 
 _time() {
-  # Get the last commit.
   local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
   [[ -z "$last_commit" ]] && $GEOMETRY_GIT_SHOW_EMPTY && ansi $GEOMETRY_COLOR_NO_TIME $GEOMETRY_GIT_NO_COMMITS_MESSAGE && return
 
@@ -45,9 +44,7 @@ _remote() {
   echo "$GEOMETRY_GIT_SYMBOL_UNPUSHED $GEOMETRY_GIT_SYMBOL_UNPULLED"
 }
 
-_symbol() {
-  echo ${(j: :):-$(_rebase) $(_remote)}
-}
+_symbol() { echo ${(j: :):-$(_rebase) $(_remote)} }
 
 _conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
