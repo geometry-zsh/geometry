@@ -31,7 +31,6 @@ add-zsh-hook preexec _geometry_set_cmd_title
 add-zsh-hook precmd _geometry_capture_status
 add-zsh-hook precmd _geometry_set_title
 
-autoload -U colors && colors
 setopt prompt_subst
 
 PROMPT='$(_geometry_wrap GEOMETRY_PROMPT)'
