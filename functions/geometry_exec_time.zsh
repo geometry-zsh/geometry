@@ -18,23 +18,17 @@ _geometry_check_command_exec_time() {
 
   # Check if elapsed time is above the configured threshold
   (( elapsed = EPOCHSECONDS - ${_geometry_command_timestamp:-$EPOCHSECONDS} ))
-  if (( elapsed > $GEOMETRY_EXEC_TIME_PATIENCE )); then
-    _geometry_command_exec_time="$(_geometry_seconds_to_human_time $elapsed)"
-  fi
+  (( elapsed > $GEOMETRY_EXEC_TIME_PATIENCE )) && _geometry_command_exec_time="$(_geometry_seconds_to_human_time $elapsed)"
 
   # Clear timestamp after we're done calculating exec_time
   _geometry_command_timestamp=
 }
 
-_geometry_set_command_timestamp() {
-  _geometry_command_timestamp=$EPOCHSECONDS
-}
+_geometry_set_command_timestamp() { _geometry_command_timestamp=$EPOCHSECONDS }
 
 # Begin to track the EPOCHSECONDS since this command is executed
 add-zsh-hook preexec _geometry_set_command_timestamp
 # Check if we need to display execution time
 add-zsh-hook precmd _geometry_check_command_exec_time
 
-function geometry_exec_time {
-  echo -n "$_geometry_command_exec_time"
-}
+function geometry_exec_time { echo -n "$_geometry_command_exec_time" }
