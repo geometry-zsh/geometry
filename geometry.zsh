@@ -16,9 +16,6 @@ for lib (${GEOMETRY_ROOT}/lib/*.zsh) source $lib
 # join outputs of components
 function _geometry_wrap {
     local -a outputs
-    outputs=()
-    local out=""
-    local cmd
     for cmd in ${(P)1}; do
         (( $+functions[$cmd] )) || source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
         out="$(eval "$cmd")"
