@@ -13,8 +13,7 @@ GEOMETRY_ROOT=${0:A:h}
 (( $+functions[ansi] )) || function ansi { (($# - 2)) || echo "%F{$1}$2%f" }
 for lib (${GEOMETRY_ROOT}/lib/*.zsh) source $lib
 
-# join outputs of components
-function _geometry_wrap {
+function _geometry_wrap { # join outputs of functions
     local -a outputs
     for cmd in ${(P)1}; do
         (( $+functions[$cmd] )) || source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
