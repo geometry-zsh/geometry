@@ -13,7 +13,7 @@ GEOMETRY_ROOT=${0:A:h}
 (( $+functions[ansi] )) || function ansi { (($# - 2)) || echo "%F{$1}$2%f" }
 for lib (${GEOMETRY_ROOT}/lib/*.zsh) source $lib
 
-function _geometry_wrap { # join outputs of functions
+_geometry_wrap() { # join outputs of functions
     local -a outputs
     for cmd in ${(P)1}; do
         (( $+functions[$cmd] )) || source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
@@ -25,7 +25,7 @@ function _geometry_wrap { # join outputs of functions
 }
 
 # capture status of last output asap
-function _geometry_capture_status { GEOMETRY_LAST_STATUS="$status" }
+_geometry_capture_status() { GEOMETRY_LAST_STATUS="$status" }
 add-zsh-hook precmd _geometry_capture_status
 
 # Show current command in title
