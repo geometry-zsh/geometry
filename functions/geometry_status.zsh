@@ -2,12 +2,11 @@
 
 # Helper function to colorize based off a string
 _geometry_hash_color() {
-  colors=({1..9})
+  local colors=({1..9})
 
   (($(echotc Co) == 256)) && colors+=({17..230})
 
-  local sum=0
-  for c (${(s::)1}) ((sum += $(printf '%d' "'%c")))
+  local sum=0; for c (${(s::)^1}) ((sum += $(printf '%d' "'$c")))
 
   echo ${colors[$(($sum % ${#colors}))]}
 }
