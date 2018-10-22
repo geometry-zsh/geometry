@@ -24,10 +24,27 @@ function _geometry_wrap { # join outputs of functions
     echo -n ${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR
 }
 
+# capture status of last output asap
 function _geometry_capture_status { GEOMETRY_LAST_STATUS="$status" }
-
-add-zsh-hook preexec _geometry_set_cmd_title
 add-zsh-hook precmd _geometry_capture_status
+
+# Show current command in title
+_geometry_set_cmd_title() {
+  local COMMAND="${2}"
+  local CURR_DIR="${PWD##*/}"
+  setopt localoptions no_prompt_subst
+  print -n '\e]0;'
+  print -rn "$COMMAND @ $CURR_DIR"
+  print -n '\a'
+}
+add-zsh-hook preexec _geometry_set_cmd_title
+
+# Prevent command showing on title after ending
+_geometry_set_title() {
+  print -n '\e]0;'
+  print -Pn '%~'
+  print -n '\a'
+}
 add-zsh-hook precmd _geometry_set_title
 
 setopt prompt_subst
