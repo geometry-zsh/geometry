@@ -23,5 +23,5 @@ function geometry_virtualenv {
     [[ -n "${CONDA_PREFIX}" ]] \
       && environment_str+="$(ansi $GEOMETRY_VIRUALENV_CONDA_COLOR ${CONDA_PREFIX:t})"
 
-    echo -n "${environment_str}"
+    echo "${environment_str}"
 }
