@@ -21,7 +21,7 @@ _geometry_wrap() { # join outputs of functions
         (( $status )) || outputs+="$out"
     done
 
-    echo -n ${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR
+    echo ${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR
 }
 
 # capture status of last output asap

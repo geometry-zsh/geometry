@@ -1,9 +1,9 @@
 # geometry_node - show node and npm/yarm version when in a node project context
 
-(( $+commands[node] )) || (( $+commands[yarn] )) || return
+(( $+commands[node] )) || return
 
 function geometry_node {
-    test $GEOMETRY_NODE_PIN || test -f package.json || test -f yarn.lock || return
+    (( $GEOMETRY_NODE_PIN )) || [[ -f package.json ]] || [[ -f yarn.lock ]] || return
 
     : ${GEOMETRY_NODE_COLOR:=green} # node color
     : ${GEOMETRY_NODE_SYMBOL:="⬡"}  # node symbol
@@ -13,9 +13,9 @@ function geometry_node {
 
     local package_manager=npm
 
-    [[ $+commands[yarn] && -f yarn.lock ]] && package_manager=yarn
+    (( $+commands[yarn] )) && [[ -f yarn.lock ]] && package_manager=yarn
 
     local packager_version="$($package_manager --version 2>/dev/null)"
     local node_version="$(node -v 2>/dev/null)"
-    echo -n "$GEOEMETRY_NODE $node_version ($package_manager:$packager_version)"
+    echo "$GEOEMETRY_NODE $node_version ($package_manager:$packager_version)"
 }

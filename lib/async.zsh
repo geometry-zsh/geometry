@@ -2,14 +2,14 @@
 
 # Initialize zsh-async and creates a worker
 async=$GEOMETRY_ROOT/lib/zsh-async/async.zsh
-(( $+functions[async_init] )) || { test -f $async && source $_ }
-(( $+functions[async_init] )) || { # checkout zsh-async if not found
+(( $+functions[async_init] )) || {
+  [[ -f $async ]] || { # checkout zsh-async if not found
     builtin pushd -q $GEOMETRY_ROOT > /dev/null
     command git submodule update --init > /dev/null
     builtin popd -q > /dev/null
-    source $async 2> /dev/null
+  }
+  source $async || { >&2 echo "Error: Could not load zsh-async library." && exit -1}
 }
-(( $+functions[async_init] )) || { >&2 echo "Error: Could not load zsh-async library." && exit -1}
 
 # Callback handler
 -geometry-async-callback() {

@@ -71,10 +71,10 @@ Finally we can check the branch status and print accordingly:
 function my_pretty_git {
   [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
 
-  if test -z "$(git status --porcelain --ignore-submodules)"; then
-    echo -n $MY_PRETTY_GIT_CLEAN # make sure to use "-n" with your echo!
+  if [[ -z "$(git status --porcelain --ignore-submodules)" ]]; then
+    echo $MY_PRETTY_GIT_CLEAN # make sure to use "-n" with your echo!
   else
-    echo -n $MY_PRETTY_GIT_DIRTY
+    echo $MY_PRETTY_GIT_DIRTY
   fi
 }
 ```
@@ -102,12 +102,12 @@ source /path/to/geometry.zsh
 (( $+commands[git] )) || return # only load if `git` is in our PATH
 
 function my_pretty_git {
-  [ -d $PWD/.git ] || return
+  [[ -d $PWD/.git ]] || return
 
   : ${MY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
   : ${MY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
 
-  if test -z "$(git status --porcelain --ignore-submodules)"; then
+  if [[ -z "$(git status --porcelain --ignore-submodules)" ]]; then
     echo $MY_PRETTY_GIT_CLEAN
   else
     echo $MY_PRETTY_GIT_DIRTY

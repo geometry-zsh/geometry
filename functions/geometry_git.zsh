@@ -4,7 +4,7 @@
 
 _stashes() {
   git rev-parse --quiet --verify refs/stash >/dev/null \
-  && ansi $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES
+    && ansi $GEOMETRY_GIT_COLOR_STASHES $GEOMETRY_GIT_SYMBOL_STASHES
 }
 
 _time() {
@@ -27,7 +27,7 @@ _status() {
 
 _rebase() {
   git_dir=$(git rev-parse --git-dir)
-  test -d "$git_dir/rebase-merge" -o -d "$git_dir/rebase-apply" || return
+  [[ -d "$git_dir/rebase-merge" ]] || [[ -d "$git_dir/rebase-apply" ]] || return
   echo "$GEOMETRY_GIT_SYMBOL_REBASE"
 }
 
@@ -49,7 +49,7 @@ _symbol() { echo ${(j: :):-$(_rebase) $(_remote)} }
 _conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
-  test -n "$conflicts" && return
+  [[ -n "$conflicts" ]] && return
 
   pushd -q $(git rev-parse --show-toplevel)
 
@@ -66,7 +66,7 @@ _conflicts() {
   raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
   total=${raw_total##*(  )}
 
-  test -z "$total" && ansi $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED && return
+  [[ -z "$total" ]] && ansi $GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED $GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED && return
 
   ansi $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
 }
@@ -106,8 +106,8 @@ function geometry_git {
   : ${GEOMETRY_GIT_SEPARATOR:="::"}
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) \
-  && ansi $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE \
-  && return
+    && ansi $GEOMETRY_GIT_COLOR_BARE $GEOMETRY_GIT_SYMBOL_BARE \
+    && return
 
   local render=(${(j: :):-$(_symbol) $(_branch)})
 

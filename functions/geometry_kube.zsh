@@ -3,11 +3,9 @@
 (( $+commands[kubectl] )) || return
 
 function geometry_kube {
-  { test $GEOMETRY_KUBE_PIN || test -f ~/.kube/config } || return
-
+  (( $GEOMETRY_KUBE_PIN )) || [[ -f ~/.kube/config ]] || return
   : ${GEOMETRY_KUBE_COLOR:=blue} # Color
   : ${GEOMETRY_KUBE_SYMBOL:="⎈"} # Symbol
-  : ${GEOMETRY_KUBE_PIN:=false}  # Always display?
 
   GEOMETRY_KUBE=$(ansi $GEOMETRY_KUBE_COLOR $GEOMETRY_KUBE_SYMBOL)
 
@@ -17,5 +15,5 @@ function geometry_kube {
   local context="$(kubectl config current-context 2> /dev/null)"
   local namespace="$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"$context\")].context.namespace}" 2> /dev/null)"
 
-  echo -n "$GEOMETRY_KUBE $version ($context:${namespace:=default})"
+  echo "$GEOMETRY_KUBE $version ($context:${namespace:=default})"
 }
