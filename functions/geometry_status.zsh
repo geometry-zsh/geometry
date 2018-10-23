@@ -6,7 +6,7 @@ _geometry_hash_color() {
 
   (($(echotc Co) == 256)) && colors+=({17..230})
 
-  local sum=0; for c (${(s::)^1}) ((sum += $(printf '%d' "'$c")))
+  local sum=0; for c (${(s::)^1}) ((sum += $(print -f '%d' "'$c")))
 
   echo ${colors[$(($sum % ${#colors}))]}
 }
