@@ -10,7 +10,7 @@ GEOMETRY_ROOT=${0:A:h}
 (($+GEOMETRY_PROMPT))  || GEOMETRY_PROMPT=(geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
-(( $+functions[ansi] )) || function ansi { (($# - 2)) || echo "%F{$1}$2%f" }
+(( $+functions[ansi] )) || ansi() { (($# - 2)) || echo "%F{$1}$2%f" }
 for lib (${GEOMETRY_ROOT}/lib/*.zsh) source $lib
 
 _geometry_wrap() { # join outputs of functions

@@ -71,7 +71,7 @@ _conflicts() {
   ansi $GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED "$GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED (${file_count}f|${total}c)"
 }
 
-function geometry_git {
+geometry_git() {
   command git rev-parse --git-dir > /dev/null 2>&1 || return
 
   # Color definitions

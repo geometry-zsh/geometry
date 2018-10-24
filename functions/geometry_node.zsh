@@ -2,7 +2,7 @@
 
 (( $+commands[node] )) || return
 
-function geometry_node {
+geometry_node() {
     (( $GEOMETRY_NODE_PIN )) || [[ -f package.json ]] || [[ -f yarn.lock ]] || return
 
     : ${GEOMETRY_NODE_COLOR:=green} # node color

@@ -2,7 +2,7 @@
 
 (( $+commands[rustup] )) || return
 
-function geometry_rustup {
+geometry_rustup() {
     (( $GEOMETRY_RUSTUP_PIN )) || cargo locate-project 2>/dev/null || return
 
     : ${GEOMETRY_RUSTUP_SYMBOL:="⚙"}

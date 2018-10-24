@@ -2,7 +2,7 @@
 
 (( $+commands[kubectl] )) || return
 
-function geometry_kube {
+geometry_kube() {
   (( $GEOMETRY_KUBE_PIN )) || [[ -f ~/.kube/config ]] || return
   : ${GEOMETRY_KUBE_COLOR:=blue} # Color
   : ${GEOMETRY_KUBE_SYMBOL:="⎈"} # Symbol

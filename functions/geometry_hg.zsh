@@ -2,7 +2,7 @@
 
 (( $+commands['hg'] )) || return
 
-function geometry_hg {
+geometry_hg() {
   [[ -d .hg ]] || return
   : ${GEOMETRY_HG_COLOR_DIRTY:=red}
   : ${GEOMETRY_HG_COLOR_CLEAN:=green}

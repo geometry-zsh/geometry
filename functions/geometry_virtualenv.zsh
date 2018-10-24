@@ -1,6 +1,6 @@
 # geometry_virtualenv - show the current `virtualenv` or `conda` environment
 
-function geometry_virtualenv {
+geometry_virtualenv() {
     [[ -n "${VIRTUAL_ENV}${CONDA_PREFIX}" ]] || return
 
     DEFAULT_COLOR=${GEOMETRY_COLOR_PROMPT:-green}

@@ -1,6 +1,6 @@
 # geometry_hostname - show user@hostname
 
-function geometry_hostname {
+geometry_hostname() {
   : ${GEOMETRY_HOSTNAME_SEPARATOR:=@}       # separator between user and hostname
   : ${GEOMETRY_HOSTNAME_HIDE_ON:=localhost} # hide plugin on this hostname
 
