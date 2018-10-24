@@ -49,7 +49,7 @@ After writing our description, we should check that it even makes sense to load 
 It's good practice to check if it makes sense to display the plugin in the current context before echoing out anything.
 
 ```sh
-function my_pretty_git {
+my_pretty_git() {
   [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
 }
 ```
@@ -57,7 +57,7 @@ function my_pretty_git {
 Now that we know we are in a useful context, let's setup some environment variables for customization:
 
 ```sh
-function my_pretty_git {
+my_pretty_git() {
   [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
 
   : ${MY_PRETTY_GIT_CLEAN:="(☞ﾟ∀ﾟ)☞"}
@@ -68,7 +68,7 @@ function my_pretty_git {
 Finally we can check the branch status and print accordingly:
 
 ```sh
-function my_pretty_git {
+my_pretty_git() {
   [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
 
   if [[ -z "$(git status --porcelain --ignore-submodules)" ]]; then
@@ -101,7 +101,7 @@ source /path/to/geometry.zsh
 
 (( $+commands[git] )) || return # only load if `git` is in our PATH
 
-function my_pretty_git {
+my_pretty_git() {
   [[ -d $PWD/.git ]] || return
 
   : ${MY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
