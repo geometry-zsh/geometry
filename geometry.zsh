@@ -8,7 +8,7 @@ GEOMETRY_ROOT=${0:A:h}
 : ${GEOMETRY_SEPARATOR:=" "}
 
 (($+GEOMETRY_PROMPT))  || GEOMETRY_PROMPT=(geometry_status geometry_path)
-(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time)
+(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo "%F{$1}$2%f" }
 for lib (${GEOMETRY_ROOT}/lib/*.zsh) source $lib
