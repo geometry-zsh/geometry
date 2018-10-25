@@ -1,56 +1,53 @@
-# Geometry
-# Based on Avit and Pure
+# geometry - simple customizable prompt based on avit, pure, and mnml
+#
 # avit: https://github.com/robbyrussell/oh-my-zsh/blob/master/themes/avit.zsh-theme
 # pure: https://github.com/sindresorhus/pure
+# mnml: https://github.com/subnixr/minimal
+
 GEOMETRY_ROOT=${0:A:h}
-source "$GEOMETRY_ROOT/lib/async.zsh"
-source "$GEOMETRY_ROOT/lib/color.zsh"
-source "$GEOMETRY_ROOT/lib/grep.zsh"
-source "$GEOMETRY_ROOT/lib/plugin.zsh"
-source "$GEOMETRY_ROOT/lib/time.zsh"
-source "$GEOMETRY_ROOT/lib/title.zsh"
+: ${GEOMETRY_SEPARATOR:=" "}
 
-# Flags
-PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
-PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
-PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
-PROMPT_GEOMETRY_PRIMARY_SUFFIX=${PROMPT_GEOMETRY_PRIMARY_SUFFIX:-" "}
+(($+GEOMETRY_PROMPT))  || GEOMETRY_PROMPT=(geometry_status geometry_path)
+(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time)
 
-prompt_geometry_render() {
-  PROMPT="$(geometry_plugin_render primary)$PROMPT_GEOMETRY_PRIMARY_SUFFIX"
+(( $+functions[ansi] )) || ansi() { (($# - 2)) || echo "%F{$1}$2%f" }
+for lib (${GEOMETRY_ROOT}/lib/*.zsh) source $lib
 
-  PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
+_geometry_wrap() { # join outputs of functions
+    local -a outputs
+    for cmd in ${(P)1}; do
+        (( $+functions[$cmd] )) || source ${GEOMETRY_ROOT}/functions/${cmd}.zsh
+        out="$(eval "$cmd")"
+        (( $status )) || outputs+="$out"
+    done
 
-  if $PROMPT_GEOMETRY_SHOW_RPROMPT; then
-    if $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
-        # On render we reset rprompt until async process
-        # comes with newer git info
-        RPROMPT=""
-    else
-        setopt localoptions no_prompt_subst
-        RPROMPT="$(geometry_plugin_render secondary)"
-    fi
-  fi
+    echo ${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR
 }
 
-prompt_geometry_setup() {
-  zmodload zsh/datetime
-  autoload -U add-zsh-hook
+# capture status of last output asap
+_geometry_capture_status() { GEOMETRY_LAST_STATUS="$status" }
+add-zsh-hook precmd _geometry_capture_status
 
-  if $PROMPT_GEOMETRY_ENABLE_PLUGINS; then
-    geometry_plugin_setup
-  fi
-
-  # Helper functions from lib/title.zsh
-  add-zsh-hook preexec prompt_geometry_set_cmd_title
-  add-zsh-hook precmd prompt_geometry_set_title
-
-  add-zsh-hook precmd prompt_geometry_render
-
-  if $PROMPT_GEOMETRY_SHOW_RPROMPT && $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
-    geometry_async_setup
-  fi
+# Show current command in title
+_geometry_set_cmd_title() {
+  local COMMAND="${2}"
+  local CURR_DIR="${PWD##*/}"
+  setopt localoptions no_prompt_subst
+  print -n '\e]0;'
+  print -rn "$COMMAND @ $CURR_DIR"
+  print -n '\a'
 }
+add-zsh-hook preexec _geometry_set_cmd_title
 
-# Setup and initialize geometry
-prompt_geometry_setup
+# Prevent command showing on title after ending
+_geometry_set_title() {
+  print -n '\e]0;'
+  print -Pn '%~'
+  print -n '\a'
+}
+add-zsh-hook precmd _geometry_set_title
+
+setopt prompt_subst
+
+PROMPT='$(_geometry_wrap GEOMETRY_PROMPT)'
+RPROMPT=''
