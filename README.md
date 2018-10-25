@@ -37,6 +37,10 @@ Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `
 
 Add `zplug "geometry-zsh/geometry"` to your `.zshrc`.
 
+### Install using zr
+
+Add `geometry-zsh/geometry` to your `zr load` command.
+
 ### Manual install
 
 Clone this repository as follows:
@@ -53,7 +57,7 @@ Then add it to your `.zshrc` configuration:
 
 The symbol for rebasing comes from a [Powerline patched font](https://github.com/powerline/fonts). If you want to use it, you're going to need to install one from the font repo. The font used in the screenshots is [Roboto Mono](https://github.com/powerline/fonts/tree/master/RobotoMono). You can also try to [patch it yourself](https://github.com/powerline/fontpatcher).
 
-You can also change the rebase symbol by setting the `GEOMETRY_SYMBOL_GIT_REBASE` variable.
+You can also change the rebase symbol by setting the `GEOMETRY_GIT_SYMBOL_REBASE` variable.
 
 ## What it does
 
@@ -142,27 +146,54 @@ Your prompt symbol can change colors based on a simple hash of your hostname. To
 
 ![colorize](screenshots/colorize.png)
 
+### Git
 
+The git function is one of the most developed plugins in geometry, which is why we document it here.
 
+#### Elapsed time since last git commit
 
+By default, geometry shows you the time since a commit has been made in the current repository.
+This can be disabled by setting `GEOMETRY_GIT_SHOW_TIME` to `false`.
 
+We recommend doing this if the prompt is too slow on large repositories.
 
+#### Count git conflicts
 
+You can have the prompt display both the number of files with conflicts as well as the total number of conflicts by setting `PROMPT_GEOMETRY_GIT_CONFLICTS` to `true`.
 
+This option chooses between `rg`, `ag` or `grep`, depending on which is available. `rg` has the highest priority, followed by `ag` and finally defaulting to `grep`.
 
+**We recommend installing `rg` or `ag` for the best performance with `geometry_git`**
 
+![git_conflicts](/screenshots/git_conflicts.png)
 
+#### Use long or short time format
 
+You can format the time since last commit. By default, it will only show either
+seconds (`12s`), minutes (`2m`), hours (`5h`) or days (`30d`).
 
+By setting `GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT` to `true` you can enhance its precision, displaying all of the previous settings, e.g: `12h 30m 53s`.
 
+#### 'No commits' message
 
+When you create a new repo, geometry can display a "no commits" message, where
+it would, usually, display the time since last commit. This behaviour can be
+unchecked by setting the `GEOMETRY_GIT_TIME_SHOW_EMPTY` to
+`false`.
 
+You can also customize the message by changing the `GEOMETRY_GIT_NO_COMMITS_MESSAGE` to whatever you would like the message to be.
 
+#### Hide stash indicator
 
+By default, we show an indicator if there are any git stashes `●`.
 
+If you would like to hide this indicator, set `GEOMETRY_GIT_SHOW_STASHES` to `false`.
 
+You can also change the symbol and color with `GEOMETRY_GIT_SYMBOL_STASHES`, and `GEOMETRY_GIT_COLOR_STASHES`.
 
+#### Full list of git features
 
+Check out the environment variables in [functions/geometry_git](functions/geometry_git) for the full list of options
 
 ## FAQs
 
