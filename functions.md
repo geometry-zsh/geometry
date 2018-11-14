@@ -92,7 +92,7 @@ directory and source it _before_ sourcing geometry. Make sure to add it to `GEOM
 ```sh
 # .zshrc
 source /path/to/pretty_git.zsh
-GEOMETRY_RPROMPT=(my_pretty_git)
+GEOMETRY_RPROMPT+=(my_pretty_git)
 source /path/to/geometry.zsh
 ```
 

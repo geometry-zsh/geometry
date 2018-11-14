@@ -22,46 +22,21 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 *K, I'm sold. Beam me up, Scotty.*
 
+Any commands should be addede to your `.zshrc`
 
-### Install using antigen
+[antigen][] `antigen theme geometry-zsh/geometry`
 
-Just add `antigen theme geometry-zsh/geometry` to your `.zshrc`.
+[oh-my-zsh][] Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, then set `ZSH_THEME="geometry/geometry"`
 
+[zplug][] `zplug "geometry-zsh/geometry"`
 
-### Install using oh-my-zsh
+[zr][] `zr load geometry-zsh/geometry`
 
-Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, and set `ZSH_THEME="geometry/geometry"` in your `.zshrc`.
-
-
-### Install using zplug
-
-Add `zplug "geometry-zsh/geometry"` to your `.zshrc`.
-
-### Install using zr
-
-Add `geometry-zsh/geometry` to your `zr load` command.
-
-### Manual install
-
-Clone this repository as follows:
-
-    git clone https://github.com/geometry-zsh/geometry
-    cd geometry
-    git submodule update --init --recursive
-
-Then add it to your `.zshrc` configuration:
-
-    source /path/to/geometry/geometry.zsh
-
-## Dependencies
-
-The symbol for rebasing comes from a [Powerline patched font](https://github.com/powerline/fonts). If you want to use it, you're going to need to install one from the font repo. The font used in the screenshots is [Roboto Mono](https://github.com/powerline/fonts/tree/master/RobotoMono). You can also try to [patch it yourself](https://github.com/powerline/fontpatcher).
-
-You can also change the rebase symbol by setting the `GEOMETRY_GIT_SYMBOL_REBASE` variable.
+**manually** Clone with `git clone https://github.com/geometry-zsh/geometry`, then `source geometry/geometry.zsh`
 
 ## What it does
 
-All geometry does is run simple functions to customize the left and write prompts.
+All geometry does is run simple functions to customize the left and right prompts.
 
 We bundle a few useful functions to start out with, that can:
 
@@ -78,11 +53,13 @@ We bundle a few useful functions to start out with, that can:
 
 The right side prompt is printed asynchronously, so you know it's going to be fast™.
 
+Geometry also has a secondary prompt that shows up when pressing enter with an empty command, which can be customized with `GEOMETRY_INFO`.
+
 ## Functions
 
-geometry has very little architecture. By default, we display a status symbol and path on the left, git/hg status and hostname on the right.
+geometry has very little architecture. By default, we display a status symbol and path on the left, command execution time, git/hg status, and hostname on the right.
 
-These come from the `functions/` folder and are defined as `geometry_status`, `geometry_path`, `geometry_hostname`, `geometry_git`, and `geometry_hg`.
+These come from the `functions/` folder and are defined as `geometry_status`, `geometry_path`, `geometry_exec_time`, `geometry_git`, `geometry_hg`, and `geometry_hostname`.
 
 Most of these functions only render if it makes sense to (for example, if ssh'd to another computer or in a git directory).
 
@@ -92,8 +69,6 @@ To add more functions, just source or define them, and add it to the `GEOMETRY_P
 GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
 GEOMETRY_RPROMPT+=(geometry_exec_time) # append exec_time to defaults
 ```
-
-*Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*.
 
 Its worth looking into the [functions directory](/functions) to see if there are environment variables to make common customizations.
 
@@ -107,93 +82,44 @@ The default options try to balance the theme in order to be both lightweight and
 
 Here we highlight some of the more commonly customized variables, but to see all of them, look at the header of each file in the [functions directory](/function).
 
-### Symbols
+### general
+```shell
+GEOMETRY_SEPARATOR=" "    # use ' ' to separate function output
+```
+
+### geometry_status
 
 There are a set of symbols available which you can override with environment variables.
 
 ```shell
-GEOMETRY_STATUS_SYMBOL="▲"        # default prompt symbol
-GEOMETRY_STATUS_SYMBOL_ERROR="△"  # displayed when exit value is != 0
-```
-
-### Colors
-
-The following color definitions are available for configuration:
-
-```shell
+GEOMETRY_STATUS_SYMBOL="▲"             # default prompt symbol
+GEOMETRY_STATUS_SYMBOL_ERROR="△"       # displayed when exit value is != 0
 GEOMETRY_STATUS_COLOR_ERROR="magenta"  # prompt symbol color when exit value is != 0
 GEOMETRY_STATUS_COLOR="white"          # prompt symbol color
 GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
-GEOMETRY_PATH_COLOR="blue"             # current directory color
+GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 ```
-
-### Misc
-
-```shell
-GEOMETRY_SEPARATOR=" "    # use ' ' to separate function output
-GEOMETRY_GIT_GREP=""      # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
-```
-
-### Features
-
-#### Async `RPROMPT`
-
-geometry runs `RPROMPT` asynchronously to avoid blocking on costly operations.
-
-#### Randomly colorize prompt symbol
-
-Your prompt symbol can change colors based on a simple hash of your hostname. To enable this, set `GEOMETRY_STATUS_COLOR_HASH` to `true`.
 
 ![colorize](screenshots/colorize.png)
 
-### Git
+### geometry_git
 
-The git function is one of the most developed plugins in geometry, which is why we document it here.
-
-#### Elapsed time since last git commit
-
-By default, geometry shows you the time since a commit has been made in the current repository.
-This can be disabled by setting `GEOMETRY_GIT_SHOW_TIME` to `false`.
-
-We recommend doing this if the prompt is too slow on large repositories.
-
-#### Count git conflicts
-
-You can have the prompt display both the number of files with conflicts as well as the total number of conflicts by setting `PROMPT_GEOMETRY_GIT_CONFLICTS` to `true`.
-
-This option chooses between `rg`, `ag` or `grep`, depending on which is available. `rg` has the highest priority, followed by `ag` and finally defaulting to `grep`.
-
+The git function is one of the most developed plugins in geometry. Here we show overrides and what they do.
 **We recommend installing `rg` or `ag` for the best performance with `geometry_git`**
 
+```shell
+GEOMETRY_GIT_SYMBOL_REBASE="\uE0A0" # set the default rebase symbol to the powerline symbol 
+GEOMETRY_GIT_GREP=ack               # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
+GEOMETRY_GIT_SHOW_TIME=false        # disable showing the time since a commit has been made in the current repository (can be slow on large repos)
+GEOMETRY_GIT_CONFLICTS=true         # display both the number of files with conflicts as well as the total number of conflicts
+GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instead of the coarsest interval (e.g. `12h`)
+GEOMETRY_GIT_NO_COMMITS_MESSAGE=""  # hide the 'no commits' message in new repositories
+GEOMETRY_GIT_SHOW_STASHES=false     # hide the `●` git stash indicator
+GEOMETRY_GIT_SYMBOL_STASHES=x       # change the git stash indicator to `x`
+GEOMETRY_GIT_COLOR_STASHES=blue     # change the git stash color to blue
+```
+
 ![git_conflicts](/screenshots/git_conflicts.png)
-
-#### Use long or short time format
-
-You can format the time since last commit. By default, it will only show either
-seconds (`12s`), minutes (`2m`), hours (`5h`) or days (`30d`).
-
-By setting `GEOMETRY_GIT_TIME_SHOW_LONG_FORMAT` to `true` you can enhance its precision, displaying all of the previous settings, e.g: `12h 30m 53s`.
-
-#### 'No commits' message
-
-When you create a new repo, geometry can display a "no commits" message, where
-it would, usually, display the time since last commit. This behaviour can be
-unchecked by setting the `GEOMETRY_GIT_TIME_SHOW_EMPTY` to
-`false`.
-
-You can also customize the message by changing the `GEOMETRY_GIT_NO_COMMITS_MESSAGE` to whatever you would like the message to be.
-
-#### Hide stash indicator
-
-By default, we show an indicator if there are any git stashes `●`.
-
-If you would like to hide this indicator, set `GEOMETRY_GIT_SHOW_STASHES` to `false`.
-
-You can also change the symbol and color with `GEOMETRY_GIT_SYMBOL_STASHES`, and `GEOMETRY_GIT_COLOR_STASHES`.
-
-#### Full list of git features
-
-Check out the environment variables in [functions/geometry_git](functions/geometry_git) for the full list of options
 
 ## FAQs
 
@@ -230,3 +156,7 @@ geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr]
 A big thank you to those who have [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
 [Open an issue]: https://github.com/geometry-zsh/geometry/issues/new
+[antigen]: https://github.com/zsh-users/antigen
+[oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
+[zplug]: https://github.com/zplug/zplug
+[zr]: https://github.com/jedahan/zr
