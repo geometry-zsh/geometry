@@ -1,34 +1,44 @@
-# Functions
+# Contributing
 
-With geometry, any function that prints to stdout can be put in the left or right prompt. We are always happy to add new functions to the collection. We currently ship:
+We are happy to accept new contributions. The earlier you share your ideas, the quicker we can collaborate.
+Don't worry if you are stuck, or your pull request is incomplete or broken. We are here to help!
 
-* [Status](/functions/geometry_status.zsh)
-* [Path](/functions/geometry_path.zsh)
-* [Exec Time](/functions/geometry_exec_time.zsh)
-* [Jobs](/functions/geometry_jobs.zsh)
-* [Git](/functions/geometry_git.zsh)
-* [Hg](/functions/geometry_hg.zsh)
-* [Node](/functions/geometry_node.zsh)
-* [Ruby](/functions/geometry_ruby.zsh)
-* [Rustup](/functions/geometry_rustup.zsh)
-* [Virtualenv](/functions/geometry_virtualenv.zsh)
-* [Docker Machine](/functions/geometry_docker_machine.zsh)
-* [Kube](/functions/geometry_kube.zsh)
+## Creating a new function
 
-## Defaults
+Details about creating a new function are listed [in the readme][].
 
-By default, geometry uses `status` and `path` on the left prompt, and `exec_time`, `jobs`, `git` and `hg` for the right prompt.
+You can visit [the functions wiki page][] for inspiration and examples.
 
-You can configure a different setup by changing the `GEOMETRY_PROMPT` and `GEOMETRY_RPROMPT` variables in your own configuration files.
+See below for a common template that can be followed while creating a new function.
 
-```sh
-GEOMETRY_PROMPT=(geometry_status geometry_git)
-GEOMETRY_RPROMPT=(geometry_virtualenv geometry_docker_machine geometry_exec_time geometry_hg geometry_rustup)
+We love it when new functions:
+
+* are prefixed with `geometry_`
+* are located in [geometry/functions/](geometry/functions)
+* document their customization options [in the readme][]
+* share screenshots or screencasts in the pull request
+
+## A sample function template
+
+``` zsh
+# Step 1: Define defaults for all environment variables
+: ${GEOMETRY_<PLUGIN_NAME>_VAR1:="VALUE1"}
+: ${GEOMETRY_<PLUGIN_NAME>_VAR2:="VALUE2"}
+
+# Step 2: Do any load-time setup
+(( $+commands[command_i_need_to_work] )) || return
+
+# Step 3: Define the function
+geometry_<plugin_name>() {
+  # Test that it makes sense to render this function
+  test -n "$SOME_ENV_THING_FOR_MY_PLUGIN" || return
+  # Rendering code here
+  command_i_need_to_work --version
+}
+
 ```
 
-*Note: if you're not sure where to put geometry configs, just add them to your `.zshrc`*
-
-## Custom functions
+## New function tutorial
 
 If you want to set up your own custom function, it's pretty straightforward to do
 so. All you need is to make sure it echos whatever you want printed to the prompt.
@@ -114,3 +124,6 @@ my_pretty_git() {
   fi
 }
 ```
+
+[in the readme]: https://github.com/geometry-zsh/geometry/blob/master/plugins/readme.md
+[the functions wiki page]: https://github.com/geometry-zsh/geometry/wiki/functions
