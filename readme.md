@@ -7,7 +7,7 @@ geometry is a minimalistic, fully customizable zsh prompt theme.
 geometry starts small, with good defaults, and allows you to customize it at your own will.
 It can be as simple or complex as you like.
 
-If you have a question, suggestion, or request please [open an issue][]
+If you have a question, suggestion, or request please [open an issue][] and be sure to check out [our contribution guide][]
 
 * [Installing](#installing)
 * [What it Does](#what-it-does)
@@ -62,6 +62,8 @@ GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time to defaults
 ```
 
 Please check out and share third-party functions on our [Functions wiki page](https://github.com/geometry-zsh/geometry/wiki/Functions).
+
+For more details on how to create a function, check out [our contribution guide][]
 
 ## Configuration
 
@@ -120,3 +122,4 @@ A big thank you to those who have [contributed](https://github.com/geometry-zsh/
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen
 [oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
+[our contribution guide]: contributing.md
