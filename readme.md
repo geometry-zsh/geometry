@@ -13,19 +13,19 @@ If you have a question, suggestion, or request please [open an issue][] and be s
 * [What it Does](#what-it-does)
 * [Functions](#functions)
 * [Configuration](#configuration)
-* [Maintainers](#maintainers)
+* [Thanks](#thanks)
 
 ## Installing
 
 *K, I'm sold. Beam me up, Scotty.*
 
-tool          | add to `.zshrc` | dependency
---------------|----------|----------------------------
+tool          | add to `.zshrc`
+--------------|--------------------------------------
 [zr][]        | `zr load geometry-zsh/geometry`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
-**manually**  | `source geometry/geometry.zsh`  | `git clone https://github.com/geometry-zsh/geometry`
-[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` | `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`
+**manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
+[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
 
 ## What it does
 
@@ -111,11 +111,11 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 
 ![git_conflicts](/screenshots/git_conflicts.png)
 
-## Maintainers
+## Thanks
 
 geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
 
-A big thank you to those who have [contributed](https://github.com/geometry-zsh/geometry/graphs/contributors).
+A big thank you to the dozens of [additional contributors](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
 [open an issue]: https://github.com/geometry-zsh/geometry/issues/new
 [zr]: https://github.com/jedahan/zr
