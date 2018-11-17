@@ -1,17 +1,13 @@
 # geometry
 
-[![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/geometry-zsh/Lobby)
-[![Trello](https://img.shields.io/badge/trello-board-blue.svg)](https://trello.com/b/GfM4e6Ro/geometry)
-[![GitHub release](https://img.shields.io/github/release/geometry-zsh/geometry.svg)](https://github.com/geometry-zsh/geometry/releases/latest)
-
 geometry is a minimalistic, fully customizable zsh prompt theme.
 
 ![geometry](screenshots/screencast.gif)
 
-geometry starts small, with good defaults, and allows you to customize it at your own will. It can be as simple or complex as you like.
+geometry starts small, with good defaults, and allows you to customize it at your own will.
+It can be as simple or complex as you like.
 
 * [Installing](#installing)
-* [Dependencies](#dependencies)
 * [What it Does](#what-it-does)
 * [Functions](#functions)
 * [Configuration](#configuration)
@@ -22,17 +18,15 @@ geometry starts small, with good defaults, and allows you to customize it at you
 
 *K, I'm sold. Beam me up, Scotty.*
 
-Any commands should be addede to your `.zshrc`
+Any commands should be added to your `.zshrc`
 
-[antigen][] `antigen theme geometry-zsh/geometry`
-
-[oh-my-zsh][] Move the entire `geometry` folder to `$HOME/.oh-my-zsh/custom/themes`, then set `ZSH_THEME="geometry/geometry"`
-
-[zplug][] `zplug "geometry-zsh/geometry"`
-
-[zr][] `zr load geometry-zsh/geometry`
-
-**manually** Clone with `git clone https://github.com/geometry-zsh/geometry`, then `source geometry/geometry.zsh`
+plugin manager| `.zshrc` | one-time command [optional]
+--------------|----------|----------------------------
+[zr][]        | `zr load geometry-zsh/geometry`
+[zplug][]     | `zplug "geometry-zsh/geometry"`
+[antigen][]   | `antigen theme geometry-zsh/geometry`
+**manually**  | `source geometry/geometry.zsh`  | `git clone https://github.com/geometry-zsh/geometry`
+[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` | `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes`
 
 ## What it does
 
