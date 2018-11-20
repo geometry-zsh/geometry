@@ -13,7 +13,7 @@ geometry_status() {
 
     (($(echotc Co) == 256)) && colors+=({17..230})
 
-    local sum=0; for c (${(s::)^HOST}) ((sum += $(print -f '%d' "'$c")))
+    local sum=0; for c in ${(s::)^HOST}; do ((sum += $(print -f '%d' "'$c"))); done
 
     GEOMETRY_STATUS_COLOR=${colors[$(($sum % ${#colors}))]}
   }

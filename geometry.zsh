@@ -11,7 +11,7 @@ GEOMETRY_ROOT=${0:A:h}
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=(geometry_hostname geometry_jobs)
 
-for fun ("${GEOMETRY_ROOT}"/functions/geometry_*(.)) . $fun
+for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
 
 (( $+functions[ansi] )) \
   && { >&2 echo "ansi function already defined, cannot use geometry"; exit -1 } \
@@ -54,7 +54,7 @@ geometry::wrap() {
     GEOMETRY_LAST_STATUS="$status"
     local -a outputs
     cd ${2:-$PWD}
-    for cmd (${(P)1}) outputs+=$($cmd)
+    for cmd in ${(P)1}; do outputs+=$($cmd); done
     echo -n "${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR"
 }
 
