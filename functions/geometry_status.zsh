@@ -2,7 +2,7 @@
 
 geometry_status() {
   : ${GEOMETRY_STATUS_COLOR:=white}
-  : ${GEOMETRY_STATUS_COLOR_ROOT:=red}
+  : ${GEOMETRY_STATUS_COLOR_ERROR:=red}
   : ${GEOMETRY_STATUS_SYMBOL:=▲}
   : ${GEOMETRY_STATUS_SYMBOL_ERROR:=△}
   : ${GEOMETRY_STATUS_SYMBOL_ROOT:=▼}
@@ -19,8 +19,8 @@ geometry_status() {
   }
 
   local color=GEOMETRY_STATUS_COLOR symbol=GEOMETRY_STATUS_SYMBOL
-  [[ $UID = 0 || $EUID = 0 ]] && symbol+=_ROOT && color+=_ROOT
-  (( $GEOMETRY_LAST_STATUS )) && symbol+=_ERROR
+  [[ $UID = 0 || $EUID = 0 ]] && symbol+=_ROOT
+  (( $GEOMETRY_LAST_STATUS )) && symbol+=_ERROR && color+=_ERROR
 
   ansi ${(P)color} ${(P)symbol}
 }

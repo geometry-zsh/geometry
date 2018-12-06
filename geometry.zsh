@@ -13,9 +13,7 @@ GEOMETRY_ROOT=${0:A:h}
 
 for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
 
-(( $+functions[ansi] )) \
-  && { >&2 echo "ansi function already defined, cannot use geometry"; exit -1 } \
-  || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f" }
+(( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f" }
 
 : ${GEOMETRY_TIME_COLOR_SHORT:=green}
 : ${GEOMETRY_TIME_COLOR_NEUTRAL:=white}
@@ -40,6 +38,8 @@ geometry::time() {
 
   $detailed && ansi $color ${(j: :)human} || ansi $color $human[0,1]
 }
+
+autoload -U add-zsh-hook
 
 # set title to COMMAND @ CURRENT_DIRECTORY
 geometry::set_title() { print -Pn '\e]0;${2} @ ${PWD##*/}\a' }
@@ -76,6 +76,7 @@ geometry::prompt() {
   async_register_callback geometry geometry::rprompt
   async_job geometry geometry::wrap GEOMETRY_RPROMPT $PWD
 }
+
 add-zsh-hook precmd geometry::prompt
 
 geometry::info() { # draw info if no command is given

@@ -35,7 +35,6 @@ geometry_<plugin_name>() {
   # Rendering code here
   command_i_need_to_work --version
 }
-
 ```
 
 ## New function tutorial
@@ -125,5 +124,5 @@ my_pretty_git() {
 }
 ```
 
-[in the readme]: https://github.com/geometry-zsh/geometry/blob/master/plugins/readme.md
+[in the readme]: https://github.com/geometry-zsh/geometry/blob/master/readme.md
 [the functions wiki page]: https://github.com/geometry-zsh/geometry/wiki/functions
