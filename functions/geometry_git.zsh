@@ -49,7 +49,7 @@ _symbol() { echo ${(j: :):-$(_rebase) $(_remote)} }
 _conflicts() {
   conflicts=$(git diff --name-only --diff-filter=U)
 
-  [[ -n "$conflicts" ]] && return
+  [[ -z "$conflicts" ]] && return
 
   pushd -q $(git rev-parse --show-toplevel)
 
