@@ -53,7 +53,7 @@ add-zsh-hook precmd geometry::clear_title
 geometry::wrap() {
     GEOMETRY_LAST_STATUS="$status"
     local -a outputs
-    cd ${2:-$PWD}
+    setopt localoptions noautopushd; builtin cd -q "${2:-$PWD}"
     for cmd in ${(P)1}; do outputs+=$($cmd); done
     echo -n "${(ps.$GEOMETRY_SEPARATOR.)outputs}$GEOMETRY_SEPARATOR"
 }
