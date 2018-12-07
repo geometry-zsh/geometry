@@ -85,7 +85,7 @@ geometry::info() { # draw info if no command is given
     echo "${(%)info}" && zle redisplay
 }
 zle -N buffer-empty geometry::info
-bindkey -M main "^M" buffer-empty
+bindkey '^M' buffer-empty
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=buffer-empty
 
 geometry::rprompt
