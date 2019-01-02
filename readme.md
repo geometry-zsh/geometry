@@ -95,7 +95,8 @@ GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 ### geometry_git
 
 The git function is one of the most developed plugins in geometry.
-**We recommend installing `rg` or `ag` for the best performance with `geometry_git`**
+**We recommend installing `rg` or `ag` for the best performance with `geometry_git`**.
+If you want to customize what is shown, instead of using `geometry_git`, feel free to use the helper functions `geometry_git_{symbol,branch,conflicts,time,stashes,status}`. You may also want to use `geometry::git_wrapper` to have the nice `::` joining.
 
 ```shell
 GEOMETRY_GIT_SYMBOL_REBASE="\uE0A0" # set the default rebase symbol to the powerline symbol 
@@ -103,9 +104,6 @@ GEOMETRY_GIT_SYMBOL_STASHES=x       # change the git stash indicator to `x`
 GEOMETRY_GIT_COLOR_STASHES=blue     # change the git stash color to blue
 GEOMETRY_GIT_GREP=ack               # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
 GEOMETRY_GIT_NO_COMMITS_MESSAGE=""  # hide the 'no commits' message in new repositories
-GEOMETRY_GIT_SHOW_CONFLICTS=true    # display both the number of files with conflicts as well as the total number of conflicts
-GEOMETRY_GIT_SHOW_STASHES=false     # hide the `●` git stash indicator
-GEOMETRY_GIT_SHOW_TIME=false        # disable showing the time since a commit has been made in the current repository (can be slow on large repos)
 GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instead of the coarsest interval (e.g. `12h`)
 ```
 

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - GEOMETRY_PLUGINS{,SECONDARY} are now GEOMETRY_PROMPT and GEOMETRY_RPROMPT
 - `GEOMETRY_[COLOR|SYMBOL]_PLUGIN_NAME` and most other environment variables
   - See the readme or `grep GEOMETRY_ functions/*`
+- GEOMETRY_GIT_SHOW_{CONFLICTS/TIME/STASHES} no longer exist
 
 ### Removed
 - Root color for status symbol
