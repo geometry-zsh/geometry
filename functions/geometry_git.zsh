@@ -27,7 +27,7 @@ geometry_git_status() {
   : ${GEOMETRY_GIT_SYMBOL_DIRTY:="⬡"}
   : ${GEOMETRY_GIT_SYMBOL_CLEAN:="⬢"}
   command git rev-parse --git-dir > /dev/null 2>&1 || return
-  _status=$([[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard)" ]] && echo CLEAN || echo DIRTY)
+  _status=$([[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard $(git rev-parse --show-toplevel))" ]] && echo CLEAN || echo DIRTY)
   ansi ${(e):-\$GEOMETRY_GIT_COLOR_${_status}} ${(e):-\$GEOMETRY_GIT_SYMBOL_${_status}}
 }
 
