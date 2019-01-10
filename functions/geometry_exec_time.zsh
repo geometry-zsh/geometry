@@ -2,6 +2,7 @@
 #
 # See ![long_running](../screenshots/long_running.png) for an example
 
+autoload -U add-zsh-hook
 zmodload zsh/datetime zsh/stat
 
 : ${GEOMETRY_EXEC_TIME_FILE:=${TMPDIR:=/tmp}/geometry_exec_time}
