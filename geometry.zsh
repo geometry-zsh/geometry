@@ -11,6 +11,8 @@ GEOMETRY_ROOT=${0:A:h}
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=(geometry_hostname geometry_jobs)
 
+autoload -U add-zsh-hook
+
 for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f" }
@@ -38,8 +40,6 @@ geometry::time() {
 
   $detailed && ansi $color ${(j: :)human} || ansi $color $human[0,1]
 }
-
-autoload -U add-zsh-hook
 
 # set title to COMMAND @ CURRENT_DIRECTORY
 geometry::set_title() { print -Pn '\e]0;${2} @ ${PWD##*/}\a' }
