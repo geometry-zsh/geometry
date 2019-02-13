@@ -59,9 +59,9 @@ geometry::wrap() {
 }
 
 # download and source latest async library if not found
-(( $+functions[async_init] )) || {
+(( ASYNC_INIT_DONE )) || {
     [[ -f $GEOMETRY_ROOT/async.zsh ]] || curl -sL https://raw.githubusercontent.com/mafredri/zsh-async/master/async.zsh -o $GEOMETRY_ROOT/async.zsh
-    source $GEOMETRY_ROOT/async.zsh || { >&2 echo "Error: Could not load zsh-async library." && exit -1}
+    source $GEOMETRY_ROOT/async.zsh
 }
 
 geometry::rprompt() {
