@@ -42,7 +42,7 @@ geometry::time() {
 }
 
 # set title to COMMAND @ CURRENT_DIRECTORY
-geometry::set_title() { print -Pn '\e]0;${2} @ ${PWD##*/}\a' }
+geometry::set_title() { print -Pn "\e]0;${2} @ ${PWD##*/}\a" }
 add-zsh-hook preexec geometry::set_title
 
 # clear title after command ends
