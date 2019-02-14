@@ -68,6 +68,7 @@ geometry::rprompt() {
   RPROMPT="${(j/::/)3}"
   zle && zle reset-prompt
   async_stop_worker geometry
+  [[ "$GEOMETRY_DEBUG" ]] && echo $@
 }
 
 geometry::prompt() {
