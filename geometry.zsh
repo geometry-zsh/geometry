@@ -70,7 +70,7 @@ geometry::rprompt() {
   (( ${#ASYNC_PTYS} )) \
   && (( ${ASYNC_PTYS[(I)geometry]} )) \
   && async_stop_worker geometry
-  [[ "$GEOMETRY_DEBUG" ]] && echo $@
+  [[ "$GEOMETRY_DEBUG" ]] && echo $@ || return 0
 }
 
 geometry::prompt() {
