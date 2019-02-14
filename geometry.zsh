@@ -67,7 +67,9 @@ geometry::wrap() {
 geometry::rprompt() {
   RPROMPT="${(j/::/)3}"
   zle && zle reset-prompt
-  async_stop_worker geometry 2>/dev/null
+  (( ${#ASYNC_PTYS} )) \
+  && (( ${ASYNC_PTYS[(I)geometry]} )) \
+  && async_stop_worker geometry
   [[ "$GEOMETRY_DEBUG" ]] && echo $@
 }
 
