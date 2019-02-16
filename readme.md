@@ -62,7 +62,7 @@ To customize the prompt, just add any function to any of the `GEOMETRY_PROMPT`, 
 
 ```sh
 GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
-GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time to defaults
+GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time and pwd right prompt
 ```
 
 Please check out and share third-party functions on our [Functions wiki page](https://github.com/geometry-zsh/geometry/wiki/Functions).
