@@ -4,16 +4,20 @@ geometry is a minimalistic, fully customizable zsh prompt theme.
 
 ![geometry](screenshots/screencast.gif)
 
-geometry starts small, with good defaults, and allows you to customize it at your own will.
+geometry starts small, with reasonable defaults, and allows you to customize it at your own will.
 It can be as simple or complex as you like.
 
 If you have a question, suggestion, or request please [open an issue][] and be sure to check out [our contribution guide][]
 
-* [Installing](#installing)
-* [What it Does](#what-it-does)
-* [Functions](#functions)
-* [Configuration](#configuration)
-* [Thanks](#thanks)
+- [geometry](#geometry)
+  - [Installing](#installing)
+  - [What it does](#what-it-does)
+  - [Functions](#functions)
+  - [Configuration](#configuration)
+    - [general](#general)
+    - [geometry_status](#geometrystatus)
+    - [geometry_git](#geometrygit)
+  - [Thanks](#thanks)
 
 ## Installing
 
@@ -31,26 +35,26 @@ tool          | add to `.zshrc`
 
 All geometry does is run simple functions to customize the left and right prompts.
 
-We bundle a few useful functions to start out with, that can:
+We bundle a few useful functions to start with, that can:
 
-- give you a custom, colorizable prompt symbol
+- give you a custom colored prompt symbol
 - change the prompt symbol color according to the last command exit status
 - make the prompt symbol color change with your hostname
-- display current git branch, state and time since last commit
+- display current git branch, state and time since latest commit
 - tell you whether you need to pull, push or if you're mid-rebase
-- display the number of conflicting files and total number of conflicts
+- display the number of conflicting files and the total number of conflicts
 - display if there is a stash
-- display the running time of long running commands
+- display the running time of long-running commands
 - set the terminal title to current command and directory
 - make you the coolest hacker in the whole Starbucks
 
-The right side prompt is printed asynchronously, so you know it's going to be fast™.
+The right side prompt prints asynchronously, so you know it's going to be fast™.
 
-Geometry also has a secondary prompt that shows up when pressing enter with an empty command, which can be customized with `GEOMETRY_INFO`.
+Geometry also has a secondary prompt that shows up when pressing enter with an empty command, which you can configure with `GEOMETRY_INFO`.
 
 ## Functions
 
-geometry has very little architecture. There are three environment variables that define what is shown on the left, right, and on enter - `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, and `GEOMETRY_INFO`.
+Geometry has very little architecture. Three environment variables define what is shown on the left, right, and on enter - `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, and `GEOMETRY_INFO`.
 
 Most of these functions only show up if it makes sense to (for example, `geometry_git` only shows up if in a git repository).
 
@@ -67,9 +71,9 @@ For more details on how to create a function, check out [our contribution guide]
 
 ## Configuration
 
-Everything in geometry can be changed by setting a variable.
+You can configure everything in geometry by defining a variable.
 
-The default options try to balance the theme in order to be both lightweight and contain useful features.
+The default configuration tries to balance the theme to be both lightweight and contain useful features.
 
 Here we highlight some of the more commonly customized variables, but to see all of them, look in the function definitions inside the [functions directory](/function).
 
@@ -96,7 +100,7 @@ GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 
 The git function is one of the most developed plugins in geometry.
 **We recommend installing `rg` or `ag` for the best performance with `geometry_git`**.
-If you want to customize what is shown, instead of using `geometry_git`, feel free to use the helper functions `geometry_git_{symbol,branch,conflicts,time,stashes,status}`. You may also want to use `geometry::git_wrapper` to have the nice `::` joining.
+If you want to customize what is shown, instead of using `geometry_git`, feel free to use the helper functions `geometry_git_{symbol, branch, conflicts, time, stashes & status}`. You may also want to use `geometry::git_wrapper` to have the nice `::` joining.
 
 ```shell
 GEOMETRY_GIT_SYMBOL_REBASE="\uE0A0" # set the default rebase symbol to the powerline symbol 
