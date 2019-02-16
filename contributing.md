@@ -21,18 +21,20 @@ We love it when new functions:
 ## A sample function template
 
 ``` zsh
-# Step 1: Define defaults for all environment variables
+# Define defaults for all environment variables
 : ${GEOMETRY_<PLUGIN_NAME>_VAR1:="VALUE1"}
 : ${GEOMETRY_<PLUGIN_NAME>_VAR2:="VALUE2"}
 
-# Step 2: Do any load-time setup
-(( $+commands[command_i_need_to_work] )) || return
-
-# Step 3: Define the function
+# Define the function
 geometry_<plugin_name>() {
+
+  # check if command exists for function to be useful
+  (( $+commands[command_i_need_to_work] )) || return
+
   # Test that it makes sense to render this function
   test -n "$SOME_ENV_THING_FOR_MY_PLUGIN" || return
-  # Rendering code here
+
+  # Print something
   command_i_need_to_work --version
 }
 ```
@@ -49,17 +51,12 @@ is clean and `(ノಠ益ಠ)ノ彡┻━┻` when it's dirty. Let's call it `pre
 # my_pretty_git - show emoticons if in a git directory
 ```
 
-After writing our description, we should check that it even makes sense to load the plugin at all:
-
-```zsh
-(( $+commands[git] )) || return # only load if `git` is in our PATH
-```
-
 It's good practice to check if it makes sense to display the plugin in the current context before echoing out anything.
 
 ```sh
 my_pretty_git() {
-  [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
+  (( $+commands[git] )) || return # return if `git` doesn't exist
+  [ -d $PWD/.git ] || return      # return if we are not in a git repository
 }
 ```
 
@@ -67,7 +64,8 @@ Now that we know we are in a useful context, let's setup some environment variab
 
 ```sh
 my_pretty_git() {
-  [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
+  (( $+commands[git] )) || return # return if `git` doesn't exist
+  [ -d $PWD/.git ] || return      # return if we are not in a git repository
 
   : ${MY_PRETTY_GIT_CLEAN:="(☞ﾟ∀ﾟ)☞"}
   : ${MY_PRETTY_GIT_DIRTY:="(ノಠ益ಠ)ノ彡┻━┻"}
@@ -78,40 +76,33 @@ Finally we can check the branch status and print accordingly:
 
 ```sh
 my_pretty_git() {
-  [ -d $PWD/.git ] || return # Do nothing if we're not in a repository
+  (( $+commands[git] )) || return # return if `git` doesn't exist
+  [ -d $PWD/.git ] || return      # return if we are not in a git repository
 
   if [[ -z "$(git status --porcelain --ignore-submodules)" ]]; then
-    echo $MY_PRETTY_GIT_CLEAN # make sure to use "-n" with your echo!
+    echo -n $MY_PRETTY_GIT_CLEAN # make sure to use "-n" with your echo!
   else
-    echo $MY_PRETTY_GIT_DIRTY
+    echo -n $MY_PRETTY_GIT_DIRTY
   fi
 }
 ```
 
-As a convention plugins should only be rendered when sitting on a valid context,
-for example the `node` built-in plugin will only be displayed when sitting on a
-npm/yarn-based project. This is done in order to have an uncluttered prompt, we
-encourage you to have this in mind.
+To help maintain an uncluttered prompt, functions should only render when in a
+context where it makes sense. For example, the `geometry_node` function
+will only be display when in a npm or yarn-based project.
 
 ### Full working example
 
-Save the following example as `my_pretty_git.zsh` somewhere in your `.dotfiles`
-directory and source it _before_ sourcing geometry. Make sure to add it to `GEOMETRY_PROMPT` or `GEOMETRY_RPROMPT`, ex.:
+Save the following example as `my_pretty_git.zsh` anywhere.
+Then just source the function and add it to `GEOMETRY_PROMPT` or `GEOMETRY_RPROMPT`.
 
 ```sh
-# .zshrc
-source /path/to/pretty_git.zsh
-GEOMETRY_RPROMPT+=(my_pretty_git)
-source /path/to/geometry.zsh
-```
-
-```sh
+cat <<EOF > my_pretty_git.zsh
 # my_pretty_git - show emoticons if in a git directory
 
-(( $+commands[git] )) || return # only load if `git` is in our PATH
-
 my_pretty_git() {
-  [[ -d $PWD/.git ]] || return
+  (( $+commands[git] )) || return
+  [ -d $PWD/.git ] || return
 
   : ${MY_PRETTY_GIT_CLEAN:-"(☞ﾟ∀ﾟ)☞"}
   : ${MY_PRETTY_GIT_DIRTY:-"(ノಠ益ಠ)ノ彡┻━┻"}
@@ -122,6 +113,10 @@ my_pretty_git() {
     echo $MY_PRETTY_GIT_DIRTY
   fi
 }
+EOF
+
+source pretty_git.zsh
+GEOMETRY_RPROMPT+=(my_pretty_git)
 ```
 
 [in the readme]: https://github.com/geometry-zsh/geometry/blob/master/readme.md
