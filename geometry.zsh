@@ -49,12 +49,14 @@ add-zsh-hook preexec geometry::set_title
 geometry::clear_title() { print -Pn '\e]0;%~\a' }
 add-zsh-hook precmd geometry::clear_title
 
-# join outputs of functions
+# join outputs of functions - pwd first
 geometry::wrap() {
     GEOMETRY_LAST_STATUS="$status"
     local -a outputs
-    setopt localoptions noautopushd; builtin cd -q "${2:-$PWD}"
-    for cmd in ${(P)1}; do outputs+=$($cmd); done
+    local pwd=$1
+    setopt localoptions noautopushd; builtin cd -q $pwd
+    shift
+    for cmd in $@; do outputs+=$($cmd); done
     echo -n "${(ps.${GEOMETRY_SEPARATOR}.)outputs}$GEOMETRY_SEPARATOR"
 }
 
@@ -74,17 +76,17 @@ geometry::rprompt() {
 }
 
 geometry::prompt() {
-  PROMPT=$(geometry::wrap GEOMETRY_PROMPT)
+  PROMPT=$(geometry::wrap $PWD $GEOMETRY_PROMPT)
   async_start_worker geometry -n
   async_register_callback geometry geometry::rprompt
-  async_job geometry geometry::wrap GEOMETRY_RPROMPT $PWD
+  async_job geometry geometry::wrap $PWD $GEOMETRY_RPROMPT
 }
 
 add-zsh-hook precmd geometry::prompt
 
 geometry::info() { # draw info if no command is given
     [[ -n "$BUFFER" ]] && { zle accept-line && return }
-    info="$(geometry::wrap GEOMETRY_INFO $PWD)"
+    info="$(geometry::wrap $PWD $GEOMETRY_INFO)"
     echo "${(%)info}" && geometry::prompt
 }
 zle -N buffer-empty geometry::info

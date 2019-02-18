@@ -27,7 +27,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Root color for status symbol
-- 407 lines of code (from 676 to 269)
+- 405 lines of code (from 676 to 271)
 
 ### Fixed
 - Fix conflict count on non top-level directory
