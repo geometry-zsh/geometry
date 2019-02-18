@@ -1,12 +1,13 @@
 # geometry_virtualenv - show the current `virtualenv` or `conda` environment
 
 geometry_virtualenv() {
-    [[ -n "${VIRTUAL_ENV}${CONDA_PREFIX}" ]] || { echo -n "" && return }
+    [[ -n "${VIRTUAL_ENV}${CONDA_PREFIX}" ]] || return 0
 
-    DEFAULT_COLOR=${GEOMETRY_COLOR_PROMPT:-green}
+    : ${GEOMETRY_VIRTUALENV_COLOR:=green}
+    : ${GEOMETRY_VIRTUALENV_CONDA_COLOR:=green}
+    : ${GEOMETRY_VIRTUALENV_CONDA_SEPARATOR:=:}
 
-    echo -n ${(pj.${GEOMETRY_VIRTUALENV_CONDA_SEPARATOR:=:}.)$(print -r \
-      "${VIRTUAL_ENV:+$(ansi ${GEOMETRY_VIRTUALENV_COLOR:=$DEFAULT_COLOR} ${VIRTUAL_ENV:t})}" \
-      "${CONDA_PREFIX:+$(ansi ${GEOMETRY_VIRUALENV_CONDA_COLOR:=$DEFAULT_COLOR} ${CONDA_PREFIX:t})}" \
-    )}
+    VENV=${VIRTUAL_ENV:+$(ansi ${GEOMETRY_VIRTUALENV_COLOR} ${VIRTUAL_ENV:t})}
+    CNDA=${CONDA_PREFIX:+$(ansi ${GEOMETRY_VIRTUALENV_CONDA_COLOR} ${CONDA_PREFIX:t})}
+    echo -n ${(pj.$GEOMETRY_VIRTUALENV_CONDA_SEPARATOR.)$(print "$VENV" "$CNDA")}
 }
