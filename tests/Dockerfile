@@ -16,7 +16,7 @@ ENV LANG=en_US.UTF-8
 ENV TERM=xterm-256color
 ENV DEFUALT_USER=geometry
 
-COPY . geometry
+COPY ../ geometry
 COPY zshrc .zshrc
 
 USER root
