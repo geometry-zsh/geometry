@@ -1,6 +1,6 @@
-![geometry](images/branding/readme-logo.png)
-
 # geometry
+
+![geometry](images/branding/readme-logo.png)
 
 > a minimalistic, fully customizable zsh prompt theme
 
