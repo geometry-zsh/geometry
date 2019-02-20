@@ -1,8 +1,8 @@
 # geometry
 
-geometry is a minimalistic, fully customizable zsh prompt theme.
+![geometry](images/branding/readme-logo.png)
 
-![geometry](screenshots/screencast.gif)
+> a minimalistic, fully customizable zsh prompt theme
 
 geometry starts small, with reasonable defaults, and allows you to customize it at your own will.
 It can be as simple or complex as you like.
@@ -32,6 +32,8 @@ tool          | add to `.zshrc`
 [oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
 
 ## What it does
+
+![geometry](screenshots/screencast.gif)
 
 All geometry does is run simple functions to customize the left and right prompts.
 
