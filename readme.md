@@ -33,7 +33,7 @@ tool          | add to `.zshrc`
 
 ## What it does
 
-![geometry](screenshots/screencast.gif)
+![geometry](/images/screenshots/screencast.gif)
 
 All geometry does is run simple functions to customize the left and right prompts.
 
@@ -96,7 +96,7 @@ GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
 GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 ```
 
-![colorize](screenshots/colorize.png)
+![colorize](/images/screenshots/colorize.png)
 
 ### geometry_git
 
@@ -113,7 +113,7 @@ GEOMETRY_GIT_NO_COMMITS_MESSAGE=""  # hide the 'no commits' message in new repos
 GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instead of the coarsest interval (e.g. `12h`)
 ```
 
-![git_conflicts](/screenshots/git_conflicts.png)
+![git_conflicts](/images/screenshots/git_conflicts.png)
 
 ## Thanks
 
