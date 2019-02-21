@@ -259,8 +259,8 @@ Show a symbol with error/success and root/non-root information.
 
 Show the current `virtualenv` or `conda` environment.
 
-| Variable                              | Description      | Defaults |
-| ------------------------------------- | ---------------- | -------- |
-| `GEOMETRY_VIRTUALENV_CONDA_SEPARATOR` | Text sdeparator. | `:`      |
-| `GEOMETRY_VIRTUALENV_COLOR`           | Text color.      | `green`  |
-| `GEOMETRY_VIRUALENV_CONDA_COLOR`      | Text color.      | `green`  |
+| Variable                              | Description     | Defaults |
+| ------------------------------------- | --------------- | -------- |
+| `GEOMETRY_VIRTUALENV_CONDA_SEPARATOR` | Text separator. | `:`      |
+| `GEOMETRY_VIRTUALENV_COLOR`           | Text color.     | `green`  |
+| `GEOMETRY_VIRUALENV_CONDA_COLOR`      | Text color.     | `green`  |
