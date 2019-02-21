@@ -1,7 +1,7 @@
 # geometry_virtualenv - show the current `virtualenv` or `conda` environment
 
 geometry_virtualenv() {
-    [[ -n "${VIRTUAL_ENV}${CONDA_PREFIX}" ]] || return 0
+    [[ -n "${VIRTUAL_ENV}${CONDA_PREFIX}" ]] || return 1
 
     : ${GEOMETRY_VIRTUALENV_COLOR:=green}
     : ${GEOMETRY_VIRTUALENV_CONDA_COLOR:=green}

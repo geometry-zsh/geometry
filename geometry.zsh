@@ -7,8 +7,8 @@
 GEOMETRY_ROOT=${0:A:h}
 : ${GEOMETRY_SEPARATOR:=" "}
 
-(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_status geometry_path)
-(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg)
+(($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
+(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=(geometry_hostname geometry_jobs)
 
 autoload -U add-zsh-hook
@@ -56,8 +56,8 @@ geometry::wrap() {
     local pwd=$1
     setopt localoptions noautopushd; builtin cd -q $pwd
     shift
-    for cmd in $@; do outputs+=$($cmd); done
-    echo -n "${(ps.${GEOMETRY_SEPARATOR}.)outputs}$GEOMETRY_SEPARATOR"
+    for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
+    echo -n "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
 }
 
 # download and source latest async library if not found
@@ -76,7 +76,7 @@ geometry::rprompt() {
 }
 
 geometry::prompt() {
-  PROMPT=$(geometry::wrap $PWD $GEOMETRY_PROMPT)
+  PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT)$GEOMETRY_SEPARATOR"
   async_start_worker geometry -n
   async_register_callback geometry geometry::rprompt
   async_job geometry geometry::wrap $PWD $GEOMETRY_RPROMPT

@@ -1,8 +1,8 @@
 # geometry_hg - display current mercurial branch and status
 
 geometry_hg() {
-  (( $+commands[hg] )) || return
-  [[ -d .hg ]] || return -1
+  (( $+commands[hg] )) || return 1
+  [[ -d .hg ]] || return 2
 
   local branch="$(ansi ${GEOMETRY_HG_COLOR_BRANCH:=242} $(hg branch 2> /dev/null))"
 

@@ -3,7 +3,7 @@
 (( $+commands[node] )) || return
 
 geometry_node() {
-    test -n "$GEOMETRY_NODE_PIN" || test -f package.json || test -f yarn.lock || return 0
+    test -n "$GEOMETRY_NODE_PIN" || test -f package.json || test -f yarn.lock || return 1
 
     GEOMETRY_NODE=$(ansi ${GEOMETRY_NODE_COLOR:=green} ${GEOMETRY_NODE_SYMBOL="⬡"})
 
