@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - `geometry_npm_package_version`: function showing npm/yarn package version (thanks @drager!)
 - `geometry_rust_version`: function showing rustc version (thanks @drager!)
 - GEOMETRY_DEBUG which helped hunt down lots of errors (thanks @MarioRicalde!)
+- New logo and branding by @MarioRicalde!
 
 ### Changed
 - Right prompt renders asynchronously via `zsh-async`
