@@ -102,6 +102,6 @@ geometry_git() {
 }
 
 geometry::git_wrapper() {
-  : ${GEOMETRY_GIT_SEPARATOR:="::"}
+  : ${GEOMETRY_GIT_SEPARATOR:=" :: "}
   echo -n ${(pj.$GEOMETRY_GIT_SEPARATOR.)$(print -r "$@")}
 }
