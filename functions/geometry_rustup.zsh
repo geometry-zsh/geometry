@@ -3,7 +3,7 @@
 (( $+commands[rustup] )) || return
 
 geometry_rustup() {
-    (( $GEOMETRY_RUSTUP_PIN )) || { cargo locate-project 2>/dev/null || { echo -n '' && return } }
+    (( $GEOMETRY_RUSTUP_PIN )) || { cargo locate-project 2>/dev/null || { echo -n '' && return; } }
 
     : ${GEOMETRY_RUSTUP_STABLE_COLOR:=green}
     : ${GEOMETRY_RUSTUP_BETA_COLOR:=yellow}

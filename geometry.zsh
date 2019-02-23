@@ -15,7 +15,7 @@ autoload -U add-zsh-hook
 
 for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
 
-(( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f" }
+(( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 
 : ${GEOMETRY_TIME_COLOR_SHORT:=green}
 : ${GEOMETRY_TIME_COLOR_NEUTRAL:=white}
@@ -42,11 +42,11 @@ geometry::time() {
 }
 
 # set title to COMMAND @ CURRENT_DIRECTORY
-geometry::set_title() { print -Pn "\e]0;${2} @ ${PWD##*/}\a" }
+geometry::set_title() { print -Pn "\e]0;${2} @ ${PWD##*/}\a"; }
 add-zsh-hook preexec geometry::set_title
 
 # clear title after command ends
-geometry::clear_title() { print -Pn '\e]0;%~\a' }
+geometry::clear_title() { print -Pn '\e]0;%~\a'; }
 add-zsh-hook precmd geometry::clear_title
 
 # join outputs of functions - pwd first
@@ -85,7 +85,7 @@ geometry::prompt() {
 add-zsh-hook precmd geometry::prompt
 
 geometry::info() { # draw info if no command is given
-    [[ -n "$BUFFER" ]] && { zle accept-line && return }
+    [[ -n "$BUFFER" ]] && { zle accept-line && return; }
     info="$(geometry::wrap $PWD $GEOMETRY_INFO)"
     echo "${(%)info}" && geometry::prompt
 }

@@ -56,7 +56,7 @@ geometry_git_remote() {
   echo "$GEOMETRY_GIT_SYMBOL_UNPUSHED $GEOMETRY_GIT_SYMBOL_UNPULLED"
 }
 
-geometry_git_symbol() { echo ${(j: :):-$(geometry_git_rebase) $(geometry_git_remote)} }
+geometry_git_symbol() { echo ${(j: :):-$(geometry_git_rebase) $(geometry_git_remote)}; }
 
 geometry_git_conflicts() {
   : ${GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED:=red}
