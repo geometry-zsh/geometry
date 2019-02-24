@@ -60,11 +60,7 @@ geometry::wrap() {
     echo -n "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
 }
 
-# download and source latest async library if not found
-(( ASYNC_INIT_DONE )) || {
-    [[ -f $GEOMETRY_ROOT/async.zsh ]] || curl -sL https://raw.githubusercontent.com/mafredri/zsh-async/master/async.zsh -o $GEOMETRY_ROOT/async.zsh
-    source $GEOMETRY_ROOT/async.zsh
-}
+(( ASYNC_INIT_DONE )) || source $GEOMETRY_ROOT/async.zsh
 
 geometry::rprompt() {
   RPROMPT="${(j/::/)3}"
