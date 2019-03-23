@@ -13,9 +13,17 @@ mnml_status() {
 
     (($(echotc Co) == 256)) && colors+=({17..230})
 
+    if (( ${+MNML_STATUS_SYMBOL_COLOR_HASH_COLORS} )); then
+      colors=(${MNML_STATUS_SYMBOL_COLOR_HASH_COLORS})
+    fi
+
     local sum=0; for c in ${(s::)^HOST}; do ((sum += $(print -f '%d' "'$c"))); done
 
-    MNML_STATUS_COLOR=${colors[$(($sum % ${#colors}))]}
+    local index=$(($sum % ${#colors}))
+
+    [[ "$index" -eq 0 ]] && index=1
+
+    MNML_STATUS_COLOR=${colors[${index}]}
   }
 
   local color=MNML_STATUS_COLOR symbol=MNML_STATUS_SYMBOL
