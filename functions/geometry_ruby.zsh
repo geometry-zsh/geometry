@@ -13,7 +13,7 @@ geometry_ruby() {
     local rvm_version=$match[1]
 
 
-    (( ${GEOMETRY_RUBY_RVM_SHOW_GEMSET:=true} )) && {
+    ( ${GEOMETRY_RUBY_RVM_SHOW_GEMSET:=true} ) && {
       [[ $(rvm current) =~ 'ruby-[0-9.]+@?(.*)' ]]
       local gemset=${match[1]:-"default"}
     }

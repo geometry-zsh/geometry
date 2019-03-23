@@ -8,7 +8,7 @@ geometry_status() {
   : ${GEOMETRY_STATUS_SYMBOL_ROOT:=▼}
   : ${GEOMETRY_STATUS_SYMBOL_ROOT_ERROR:=▽}
 
-  (( ${GEOMETRY_STATUS_SYMBOL_COLOR_HASH:=false} )) && {
+  ( ${GEOMETRY_STATUS_SYMBOL_COLOR_HASH:=false} ) && {
     local colors=({1..9})
 
     (($(echotc Co) == 256)) && colors+=({17..230})
