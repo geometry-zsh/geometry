@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - New logo and branding by @MarioRicalde!
 
 ### Changed
-- Right prompt renders asynchronously via `zsh-async`
+- Right prompt renders asynchronously via file descriptors
 - Left prompt supports customization via `GEOMETRY_PROMPT`
 - Functions read environment variables dynamically
 - `geometry_git`: Git stash indicator (thanks @ev-agelos!)
@@ -28,7 +28,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Removed
 - Root color for status symbol
-- 407 lines of code (from 676 to 269)
+- 409 lines of code (60% smaller, from 676 to 267)
 
 ### Fixed
 - Fix conflict count on non top-level directory

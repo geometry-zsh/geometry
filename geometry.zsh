@@ -57,25 +57,24 @@ geometry::wrap() {
     setopt localoptions noautopushd; builtin cd -q $pwd
     shift
     for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
-    echo -n "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
+    echo "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
 }
 
-(( ASYNC_INIT_DONE )) || source $GEOMETRY_ROOT/async.zsh
+geometry::rprompt::set() {
+  read -r -u "$PCFD" RPROMPT
+  zle reset-prompt
+  exec {PCFD}<&-
+}
 
 geometry::rprompt() {
-  RPROMPT="${(j/::/)3}"
-  zle && zle reset-prompt
-  (( ${#ASYNC_PTYS} )) \
-  && (( ${ASYNC_PTYS[(I)geometry]} )) \
-  && async_stop_worker geometry
-  [[ "$GEOMETRY_DEBUG" ]] && echo $@ || return 0
+  zle -F ${PCFD}
+  exec {PCFD}< <(geometry::wrap $PWD $GEOMETRY_RPROMPT)
+  zle -F ${PCFD} geometry::rprompt::set
 }
 
 geometry::prompt() {
   PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT)$GEOMETRY_SEPARATOR"
-  async_start_worker geometry -n
-  async_register_callback geometry geometry::rprompt
-  async_job geometry geometry::wrap $PWD $GEOMETRY_RPROMPT
+  geometry::rprompt
 }
 
 add-zsh-hook precmd geometry::prompt
@@ -88,5 +87,3 @@ geometry::info() { # draw info if no command is given
 zle -N buffer-empty geometry::info
 bindkey '^M' buffer-empty
 ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=buffer-empty
-
-geometry::rprompt
