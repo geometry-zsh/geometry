@@ -61,15 +61,18 @@ geometry::wrap() {
 }
 
 geometry::rprompt::set() {
-  read -r -u "$PCFD" RPROMPT
-  zle reset-prompt
-  exec {PCFD}<&-
+  emulate -L zsh
+  if [[ -z "$2" || "$2" == "hup" ]]; then
+    read -r -u "$PCFD" RPROMPT
+    zle reset-prompt
+    exec {PCFD}<&-
+  fi
+  zle -F "$PCFD"
 }
 
 geometry::rprompt() {
-  zle -F ${PCFD}
   exec {PCFD}< <(geometry::wrap $PWD $GEOMETRY_RPROMPT)
-  zle -F ${PCFD} geometry::rprompt::set
+  zle -F "$PCFD" geometry::rprompt::set
 }
 
 geometry::prompt() {
