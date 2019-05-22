@@ -15,13 +15,19 @@ PROMPT_GEOMETRY_SHOW_RPROMPT=${PROMPT_GEOMETRY_SHOW_RPROMPT:-true}
 PROMPT_GEOMETRY_RPROMPT_ASYNC=${PROMPT_GEOMETRY_RPROMPT_ASYNC:-true}
 PROMPT_GEOMETRY_ENABLE_PLUGINS=${PROMPT_GEOMETRY_ENABLE_PLUGINS:-true}
 PROMPT_GEOMETRY_PRIMARY_SUFFIX=${PROMPT_GEOMETRY_PRIMARY_SUFFIX:-" "}
+PROMPT_GEOMETRY_MULTILINE=${PROMPT_GEOMETRY_MULTILINE:-false}
 
 prompt_geometry_render() {
-  PROMPT="$(geometry_plugin_render primary)$PROMPT_GEOMETRY_PRIMARY_SUFFIX"
+  PROMPT="$(geometry_plugin_render primary)"
 
   PROMPT2=" $GEOMETRY_SYMBOL_RPROMPT "
 
-  if $PROMPT_GEOMETRY_SHOW_RPROMPT; then
+  if $PROMPT_GEOMETRY_MULTILINE; then
+    # Render prompt on multiple lines. This means that
+    # RPROMPT must be set to "".
+    RPROMPT=""
+    PROMPT="$PROMPT$(geometry_plugin_render secondary)"
+  elif $PROMPT_GEOMETRY_SHOW_RPROMPT; then
     if $PROMPT_GEOMETRY_RPROMPT_ASYNC; then
         # On render we reset rprompt until async process
         # comes with newer git info
@@ -31,6 +37,8 @@ prompt_geometry_render() {
         RPROMPT="$(geometry_plugin_render secondary)"
     fi
   fi
+
+  PROMPT="$PROMPT$PROMPT_GEOMETRY_PRIMARY_SUFFIX"
 }
 
 prompt_geometry_setup() {
