@@ -153,6 +153,12 @@ GEOMETRY_PLUGIN_SEPARATOR=" "               # use ' ' to separate right prompt p
 GEOMETRY_GREP=""                            # define which grep-like tool to use (By default it looks for rg, ag and finally grep)
 ```
 
+### Multiline
+
+To make geometry render in two lines instead of one you can set the value of `PROMPT_GEOMETRY_MULTLINE` to `true`. This is how it'll look:
+
+![multiline](screenshots/multiline.png)
+
 ### Features
 
 #### Async `RPROMPT`
