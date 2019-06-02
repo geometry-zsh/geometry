@@ -16,7 +16,7 @@ geometry_exec_time() {
   [[ -z "$GEOMETRY_EXEC_TIME_FILE" ]] && return
   [[ -f "$GEOMETRY_EXEC_TIME_FILE" ]] || return
   local atime=$(zstat +atime $GEOMETRY_EXEC_TIME_FILE)
-  (( elapsed = $EPOCHSECONDS - $atime ))
+  command rm -f $GEOMETRY_EXEC_TIME_FILE
+  (( elapsed = $EPOCHSECONDS - $atime )) && true
   (( elapsed > $GEOMETRY_EXEC_TIME_PATIENCE )) && geometry::time $elapsed
-  rm $GEOMETRY_EXEC_TIME_FILE 2>/dev/null
 }
