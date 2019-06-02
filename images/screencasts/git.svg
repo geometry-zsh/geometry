@@ -21,7 +21,7 @@
             /* gjm8 color theme (source: https://terminal.sexy/) */
             .foreground {fill: #c5c5c5;}
             .background {fill: #1c1c1c;}
-            .color0 {fill: #1c1c1c;}
+            .color0 {fill: #4c4c4c;}
             .color1 {fill: #ff005b;}
             .color2 {fill: #cee318;}
             .color3 {fill: #ffe755;}
@@ -29,7 +29,7 @@
             .color5 {fill: #833c9f;}
             .color6 {fill: #0ac1cd;}
             .color7 {fill: #e5e5e5;}
-            .color8 {fill: #1c1c1c;}
+            .color8 {fill: #4c4c4c;}
             .color9 {fill: #ff005b;}
             .color10 {fill: #cee318;}
             .color11 {fill: #ffe755;}
