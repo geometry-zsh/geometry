@@ -9,31 +9,9 @@ It can be as simple or complex as you like.
 
 If you have a question, suggestion, or request please [open an issue][] and be sure to check out [our contribution guide][]
 
-- [geometry](#geometry)
-  - [Installing](#installing)
-  - [What it does](#what-it-does)
-  - [Functions](#functions)
-  - [Configuration](#configuration)
-    - [general](#general)
-    - [geometry_status](#geometrystatus)
-    - [geometry_git](#geometrygit)
-  - [Thanks](#thanks)
-
-## Installing
-
-*K, I'm sold. Beam me up, Scotty.*
-
-tool          | add to `.zshrc`
---------------|--------------------------------------
-[zr][]        | `zr load geometry-zsh/geometry`
-[zplug][]     | `zplug "geometry-zsh/geometry"`
-[antigen][]   | `antigen theme geometry-zsh/geometry`
-**manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
-[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
-
 ## What it does
 
-![geometry](/images/screenshots/screencast.gif)
+![animation of git features](./images/screencasts/git.svg)
 
 All geometry does is run simple functions to customize the left and right prompts.
 
@@ -54,7 +32,19 @@ The right side prompt prints asynchronously, so you know it's going to be fastâ„
 
 Geometry also has a secondary prompt that shows up when pressing enter with an empty command, which you can configure with `GEOMETRY_INFO`.
 
+## Installing
+
+tool          | add to `.zshrc`
+--------------|--------------------------------------
+[zr][]        | `zr load geometry-zsh/geometry`
+[zplug][]     | `zplug "geometry-zsh/geometry"`
+[antigen][]   | `antigen theme geometry-zsh/geometry`
+**manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
+[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
+
 ## Functions
+
+![animation of prompt customization](./images/screencasts/functions.svg)
 
 Geometry has very little architecture. Three environment variables define what is shown on the left, right, and on enter - `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, and `GEOMETRY_INFO`.
 
