@@ -13,8 +13,8 @@ See below for a common template that can be followed while creating a new functi
 
 We love it when new functions:
 
-* are prefixed with `geometry_`
-* are located in [geometry/functions/](geometry/functions)
+* are prefixed with `mnml_`
+* are located in [mnml/functions/](mnml/functions)
 * document their customization options [in the readme][]
 * share screenshots or screencasts in the pull request
 
@@ -22,11 +22,11 @@ We love it when new functions:
 
 ``` zsh
 # Define defaults for all environment variables
-: ${GEOMETRY_<PLUGIN_NAME>_VAR1:="VALUE1"}
-: ${GEOMETRY_<PLUGIN_NAME>_VAR2:="VALUE2"}
+: ${MNML_<PLUGIN_NAME>_VAR1:="VALUE1"}
+: ${MNML_<PLUGIN_NAME>_VAR2:="VALUE2"}
 
 # Define the function
-geometry_<plugin_name>() {
+mnml_<plugin_name>() {
 
   # check if command exists for function to be useful
   (( $+commands[command_i_need_to_work] )) || return
@@ -88,13 +88,13 @@ my_pretty_git() {
 ```
 
 To help maintain an uncluttered prompt, functions should only render when in a
-context where it makes sense. For example, the `geometry_node` function
+context where it makes sense. For example, the `mnml_node` function
 will only be display when in a npm or yarn-based project.
 
 ### Full working example
 
 Save the following example as `my_pretty_git.zsh` anywhere.
-Then just source the function and add it to `GEOMETRY_PROMPT` or `GEOMETRY_RPROMPT`.
+Then just source the function and add it to `MNML_PROMPT` or `MNML_RPROMPT`.
 
 ```sh
 cat <<EOF > my_pretty_git.zsh
@@ -116,8 +116,8 @@ my_pretty_git() {
 EOF
 
 source pretty_git.zsh
-GEOMETRY_RPROMPT+=(my_pretty_git)
+MNML_RPROMPT+=(my_pretty_git)
 ```
 
-[in the readme]: https://github.com/geometry-zsh/geometry/blob/master/readme.md
-[the functions wiki page]: https://github.com/geometry-zsh/geometry/wiki/functions
+[in the readme]: https://github.com/mnml-zsh/mnml/blob/master/readme.md
+[the functions wiki page]: https://github.com/mnml-zsh/mnml/wiki/functions

@@ -1,10 +1,10 @@
-# geometry
+# mnml
 
-![geometry](images/branding/readme-logo.png)
+![mnml](images/branding/thumbnail-solo.png)
 
 > a minimalistic, fully customizable zsh prompt theme
 
-geometry starts small, with reasonable defaults, and allows you to customize it at your own will.
+mnml starts small, with reasonable defaults, and allows you to customize it at your own will.
 It can be as simple or complex as you like.
 
 If you have a question, suggestion, or request please [open an issue][] and be sure to check out [our contribution guide][]
@@ -13,7 +13,7 @@ If you have a question, suggestion, or request please [open an issue][] and be s
 
 ![animation of git features](./images/screencasts/git.svg)
 
-All geometry does is run simple functions to customize the left and right prompts.
+All mnml does is run simple functions to customize the left and right prompts.
 
 We bundle a few useful functions to start with, that can:
 
@@ -30,40 +30,39 @@ We bundle a few useful functions to start with, that can:
 
 The right side prompt prints asynchronously, so you know it's going to be fast™.
 
-Geometry also has a secondary prompt that shows up when pressing enter with an empty command, which you can configure with `GEOMETRY_INFO`.
+mnml also has a secondary prompt that shows up when pressing enter with an empty command, which you can configure with `MNML_INFO`.
 
 ## Installing
 
 tool          | add to `.zshrc`
 --------------|--------------------------------------
-[zr][]        | `zr load geometry-zsh/geometry`
-[zplug][]     | `zplug "geometry-zsh/geometry"`
-[antigen][]   | `antigen theme geometry-zsh/geometry`
-**manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
-[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
+[zr][]        | `zr load jedahan/mnml`
+[zplug][]     | `zplug "jedahan/mnml"`
+[antigen][]   | `antigen theme jedahan/mnml`
+**manually**  | `source mnml/mnml.zsh` (after `git clone https://github.com/jedahan/mnml`)
 
 ## Functions
 
 ![animation of prompt customization](./images/screencasts/functions.svg)
 
-Geometry has very little architecture. Three environment variables define what is shown on the left, right, and on enter - `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, and `GEOMETRY_INFO`.
+mnml has very little architecture. Three environment variables define what is shown on the left, right, and on enter - `MNML_PROMPT`, `MNML_RPROMPT`, and `MNML_INFO`.
 
-Most of these functions only show up if it makes sense to (for example, `geometry_git` only shows up if in a git repository).
+Most of these functions only show up if it makes sense to (for example, `mnml_git` only shows up if in a git repository).
 
 To customize the prompt, just add any function to any of the `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, or `GEOMETRY_INFO` variables:
 
 ```sh
-GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
-GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time and pwd right prompt
+GEOMETRY_PROMPT=(mnml_status mnml_path) # redefine left prompt
+GEOMETRY_RPROMPT+=(mnml_exec_time pwd)      # append exec_time and pwd right prompt
 ```
 
-Please check out and share third-party functions on our [Functions wiki page](https://github.com/geometry-zsh/geometry/wiki/Functions).
+Please check out and share third-party functions on our [Functions wiki page](https://github.com/mnml-zsh/mnml/wiki/Functions).
 
 For more details on how to create a function, check out [our contribution guide][]
 
 ## Configuration
 
-You can configure everything in geometry by defining a variable.
+You can configure everything in mnml by defining a variable.
 
 The default configuration tries to balance the theme to be both lightweight and contain useful features.
 
@@ -75,7 +74,7 @@ Here we highlight some of the more commonly customized variables, but to see all
 GEOMETRY_SEPARATOR=" "    # use ' ' to separate function output
 ```
 
-### geometry_status
+### mnml_status
 
 ```shell
 GEOMETRY_STATUS_SYMBOL="▲"             # default prompt symbol
@@ -88,11 +87,11 @@ GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 
 ![colorize](/images/screenshots/colorize.png)
 
-### geometry_git
+### mnml_git
 
-The git function is one of the most developed plugins in geometry.
-**We recommend installing `rg` or `ag` for the best performance with `geometry_git`**.
-If you want to customize what is shown, instead of using `geometry_git`, feel free to use the helper functions `geometry_git_{symbol, branch, conflicts, time, stashes & status}`. You may also want to use `geometry::git_wrapper` to have the nice `::` joining.
+The git function is one of the most developed plugins in mnml.
+**We recommend installing `rg` or `ag` for the best performance with `mnml_git`**.
+If you want to customize what is shown, instead of using `mnml_git`, feel free to use the helper functions `mnml_git_{symbol, branch, conflicts, time, stashes & status}`. You may also want to use `mnml::git_wrapper` to have the nice `::` joining.
 
 ```shell
 GEOMETRY_GIT_SYMBOL_REBASE="\uE0A0" # set the default rebase symbol to the powerline symbol 
@@ -107,11 +106,11 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 
 ## Thanks
 
-geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
+mnml was created by [fribmendes](https://github.com/fribmendes) and [desyncr](https://github.com/desyncr), and is now maintained by [jedahan](https://github.com/jedahan)
 
-A big thank you to the dozens of [additional contributors](https://github.com/geometry-zsh/geometry/graphs/contributors).
+A big thank you to the dozens of [additional contributors](https://github.com/mnml-zsh/mnml/graphs/contributors).
 
-[open an issue]: https://github.com/geometry-zsh/geometry/issues/new
+[open an issue]: https://github.com/mnml-zsh/mnml/issues/new
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen

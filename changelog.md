@@ -1,9 +1,11 @@
-# geometry changelog
+# mnml changelog
 
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.0 - [Unreleased]
+## 2.0.0 - mnml
+
+Renamed from geometry to mnml
 
 ### Added
 - GEOMETRY_INFO array for running functions on enter
