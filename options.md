@@ -231,14 +231,15 @@ Display a symbol colored with the currently selected rustup toolchain.
 Show a symbol with error/success and root/non-root information.
 
 | Variable                            | Description                                            | Defaults |
-| ------------------------------- | ------------------------------------------------------ | -------- |
-| `MNML_STATUS_SYMBOL`            | Non-root indicator.                                    | `▲`      |
-| `MNML_STATUS_SYMBOL_ERROR`      | Non-root indicator on error.                           | `△`      |
-| `MNML_STATUS_SYMBOL_ROOT`       | Root indicator.                                        | `▼`      |
-| `MNML_STATUS_SYMBOL_ROOT_ERROR` | root indicator on error.                               | `▽`      |
-| `MNML_STATUS_COLOR`             | Indicator color.                                       | `white`  |
-| `MNML_STATUS_COLOR_ERROR`       | Indicator color on error.                              | `red`    |
-| `MNML_STATUS_SYMBOL_COLOR_HASH` | Automatically pick a color based on the hostname hash. | `false`  |
+| -------------------------------------- | ------------------------------------------------------ | -------- |
+| `MNML_STATUS_SYMBOL`                   | Non-root indicator.                                    | `▲`      |
+| `MNML_STATUS_SYMBOL_ERROR`             | Non-root indicator on error.                           | `△`      |
+| `MNML_STATUS_SYMBOL_ROOT`              | Root indicator.                                        | `▼`      |
+| `MNML_STATUS_SYMBOL_ROOT_ERROR`        | Root indicator on error.                               | `▽`      |
+| `MNML_STATUS_COLOR`                    | Indicator color.                                       | `white`  |
+| `MNML_STATUS_COLOR_ERROR`              | Indicator color on error.                              | `red`    |
+| `MNML_STATUS_SYMBOL_COLOR_HASH`        | Automatically pick a color based on the hostname hash. | `false`  |
+| `MNML_STATUS_SYMBOL_COLOR_HASH_COLORS` | Automatically pick a color based on the hostname hash. | `false`  |
 
 ## `mnml_virtualenv.zsh`
 
