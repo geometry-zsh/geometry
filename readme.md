@@ -106,13 +106,16 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 
 ## Thanks
 
-mnml was created by [fribmendes](https://github.com/fribmendes) and [desyncr](https://github.com/desyncr), and is now maintained by [jedahan](https://github.com/jedahan)
+mnml (née geometry) was created by [fribmendes][] and [desyncr][], and is now maintained by [jedahan][].
 
-A big thank you to the dozens of [additional contributors](https://github.com/mnml-zsh/mnml/graphs/contributors).
+A big thank you to the dozens of [contributors][].
 
-[open an issue]: https://github.com/mnml-zsh/mnml/issues/new
+[open an issue]: https://github.com/jedahan/mnml/issues/new
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen
-[oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
 [our contribution guide]: contributing.md
+[fribmendes]: https://github.com/fribmendes
+[desyncr]: https://github.com/desyncr
+[jedahan]: https://github.com/jedahan
+[contributors]: https://github.com/jedahan/mnml/graphs/contributors
