@@ -12,8 +12,8 @@ mnml_git_time() {
 
   [[ -z "$last_commit" ]] && ansi ${MNML_COLOR_NO_TIME:="white"} ${MNML_GIT_NO_COMMITS_MESSAGE:="no-commits"} && return
 
-  now=$(date +%s)
-  seconds_since_last_commit=$((now - last_commit))
+  local now=$(date +%s)
+  local seconds_since_last_commit=$((now - last_commit))
   mnml::time $seconds_since_last_commit ${MNML_GIT_TIME_DETAILED:=false}
 }
 
@@ -27,13 +27,13 @@ mnml_git_status() {
   : ${MNML_GIT_SYMBOL_DIRTY:="⬡"}
   : ${MNML_GIT_SYMBOL_CLEAN:="⬢"}
   command git rev-parse --git-dir > /dev/null 2>&1 || return
-  _status=$([[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard $(git rev-parse --show-toplevel))" ]] && echo CLEAN || echo DIRTY)
+  local _status=$([[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard $(git rev-parse --show-toplevel))" ]] && echo CLEAN || echo DIRTY)
   ansi ${(e):-\$MNML_GIT_COLOR_${_status}} ${(e):-\$MNML_GIT_SYMBOL_${_status}}
 }
 
 mnml_git_rebase() {
   : ${MNML_GIT_SYMBOL_REBASE:="®"}
-  git_dir=$(git rev-parse --git-dir)
+  local git_dir=$(git rev-parse --git-dir)
   [[ -d "$git_dir/rebase-merge" ]] || [[ -d "$git_dir/rebase-apply" ]] || return
   echo "$MNML_GIT_SYMBOL_REBASE"
 }
@@ -44,12 +44,12 @@ mnml_git_remote() {
   : ${MNML_GIT_SYMBOL_CONFLICTS_SOLVED:="◆"}
   : ${MNML_GIT_SYMBOL_CONFLICTS_UNSOLVED:="◈"}
 
-  local_commit=$(git rev-parse "@" 2>/dev/null)
-  remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
+  local local_commit=$(git rev-parse "@" 2>/dev/null)
+  local remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
 
   [[ $local_commit == "@" || $local_commit == $remote_commit ]] && return
 
-  common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
+  local common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
   [[ $common_base == $remote_commit ]] && echo $MNML_GIT_SYMBOL_UNPUSHED && return
   [[ $common_base == $local_commit ]]  && echo $MNML_GIT_SYMBOL_UNPULLED && return
 
@@ -61,7 +61,7 @@ mnml_git_symbol() { echo ${(j: :):-$(mnml_git_rebase) $(mnml_git_remote)}; }
 mnml_git_conflicts() {
   : ${MNML_GIT_COLOR_CONFLICTS_UNSOLVED:=red}
   : ${MNML_GIT_COLOR_CONFLICTS_SOLVED:=green}
-  conflicts=$(git diff --name-only --diff-filter=U)
+  local conflicts=$(git diff --name-only --diff-filter=U)
 
   [[ -z "$conflicts" ]] && return
 
@@ -71,14 +71,14 @@ mnml_git_conflicts() {
   (($+commands[ag])) && _grep="ag"
   (($+commands[rg])) && _grep="rg"
 
-  conflict_list=$(${MNML_GIT_GREP:-$_grep} -cH '^=======$' $conflicts)
+  local conflict_list=$(${MNML_GIT_GREP:-$_grep} -cH '^=======$' $conflicts)
   popd -q
 
-  raw_file_count="${#${(@f)conflict_list}}"
-  file_count=${raw_file_count##*( )}
+  local raw_file_count="${#${(@f)conflict_list}}"
+  local file_count=${raw_file_count##*( )}
 
-  raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
-  total=${raw_total##*(  )}
+  local raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
+  local total=${raw_total##*(  )}
 
   [[ -z "$total" ]] && ansi $MNML_GIT_COLOR_CONFLICTS_SOLVED $MNML_GIT_SYMBOL_CONFLICTS_SOLVED && return
 

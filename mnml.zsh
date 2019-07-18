@@ -55,9 +55,10 @@ mnml::wrap() {
     MNML_LAST_STATUS="$status"
     local -a outputs
     local pwd=$1
+    local cmd
     setopt localoptions noautopushd; builtin cd -q $pwd
     shift
-    for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
+    for cmd in $@; do local output=$($cmd); (( $? )) || outputs+=$output; done
     echo "${(ps.${MNML_SEPARATOR}.)outputs}"
 }
 
@@ -85,7 +86,7 @@ add-zsh-hook precmd mnml::prompt
 
 mnml::info() { # draw info if no command is given
     [[ -n "$BUFFER" ]] && { zle accept-line && return; }
-    info="$(mnml::wrap $PWD $MNML_INFO)"
+    local info="$(mnml::wrap $PWD $MNML_INFO)"
     echo "${(%)info}" && mnml::prompt
 }
 zle -N buffer-empty mnml::info

@@ -14,6 +14,7 @@ mnml_exec_time() {
   [[ -z "$MNML_EXEC_TIME_FILE" ]] && return
   [[ -f "$MNML_EXEC_TIME_FILE" ]] || return
   local atime=$(zstat +atime $MNML_EXEC_TIME_FILE)
+  local elapsed
   command rm -f $MNML_EXEC_TIME_FILE
   (( elapsed = $EPOCHSECONDS - $atime ))
   (( elapsed > $MNML_EXEC_TIME_PATIENCE )) && mnml::time $elapsed
