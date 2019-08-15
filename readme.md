@@ -56,7 +56,7 @@ GEOMETRY_PROMPT=(mnml_status mnml_path) # redefine left prompt
 GEOMETRY_RPROMPT+=(mnml_exec_time pwd)      # append exec_time and pwd right prompt
 ```
 
-Please check out and share third-party functions on our [Functions wiki page](https://github.com/mnml-zsh/mnml/wiki/functions).
+Please check out and share third-party functions on our [functions wiki page][]
 
 For more details on how to create a function, check out [our contribution guide][]
 
@@ -115,6 +115,7 @@ A big thank you to the dozens of [contributors][].
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen
 [our contribution guide]: contributing.md
+[functions wiki page]: https://github.com/jedahan/mnml/wiki/functions
 [fribmendes]: https://github.com/fribmendes
 [desyncr]: https://github.com/desyncr
 [jedahan]: https://github.com/jedahan
