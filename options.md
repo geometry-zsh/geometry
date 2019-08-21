@@ -230,15 +230,16 @@ Display a symbol colored with the currently selected rustup toolchain.
 
 Show a symbol with error/success and root/non-root information.
 
-| Variable                            | Description                                            | Defaults |
-| ----------------------------------- | ------------------------------------------------------ | -------- |
-| `GEOMETRY_STATUS_SYMBOL`            | Non-root indicator.                                    | `▲`      |
-| `GEOMETRY_STATUS_SYMBOL_ERROR`      | Non-root indicator on error.                           | `△`      |
-| `GEOMETRY_STATUS_SYMBOL_ROOT`       | Root indicator.                                        | `▼`      |
-| `GEOMETRY_STATUS_SYMBOL_ROOT_ERROR` | root indicator on error.                               | `▽`      |
-| `GEOMETRY_STATUS_COLOR`             | Indicator color.                                       | `white`  |
-| `GEOMETRY_STATUS_COLOR_ERROR`       | Indicator color on error.                              | `red`    |
-| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH` | Automatically pick a color based on the hostname hash. | `false`  |
+| Variable                                   | Description                                      | Default |
+| ------------------------------------------ | ------------------------------------------------ | ------- |
+| `GEOMETRY_STATUS_SYMBOL`                   | Non-root indicator                               | `▲`     |
+| `GEOMETRY_STATUS_SYMBOL_ERROR`             | Non-root indicator on error                      | `△`     |
+| `GEOMETRY_STATUS_SYMBOL_ROOT`              | Root indicator                                   | `▼`     |
+| `GEOMETRY_STATUS_SYMBOL_ROOT_ERROR`        | root indicator on error                          | `▽`     |
+| `GEOMETRY_STATUS_COLOR`                    | Indicator color                                  | `white` |
+| `GEOMETRY_STATUS_COLOR_ERROR`              | Indicator color on error                         | `red`   |
+| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH`        | Automatically pick a color based on the hostname | `false` |
+| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH_COLORS` | Array of colors to choose from                   | `1..16` |
 
 ## `geometry_virtualenv.zsh`
 

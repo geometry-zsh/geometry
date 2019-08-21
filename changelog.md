@@ -6,6 +6,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ## 2.0.0 - [Unreleased]
 
 ### Added
+- GEOMETRY_STATUS_SYMBOL_COLOR_HASH_COLORS for changing the hash colors (thanks @MarioRicalde!)
 - GEOMETRY_INFO array for running functions on enter
 - `geometry_jobs`: function showing number of jobs
 - `geometry_npm_package_version`: function showing npm/yarn package version (thanks @drager!)
