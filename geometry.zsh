@@ -55,9 +55,10 @@ geometry::wrap() {
     local -a outputs
     local pwd=$1
     local cmd
+    local output
     setopt localoptions noautopushd; builtin cd -q $pwd
     shift
-    for cmd in $@; do local output=$($cmd); (( $? )) || outputs+=$output; done
+    for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
     echo "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
 }
 
@@ -84,8 +85,9 @@ geometry::prompt() {
 add-zsh-hook precmd geometry::prompt
 
 geometry::info() { # draw info if no command is given
+    local info
     [[ -n "$BUFFER" ]] && { zle accept-line && return; }
-    local info="$(geometry::wrap $PWD $GEOMETRY_INFO)"
+    info="$(geometry::wrap $PWD $GEOMETRY_INFO)"
     echo "${(%)info}" && geometry::prompt
 }
 zle -N buffer-empty geometry::info
