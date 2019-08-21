@@ -54,3 +54,5 @@ prompt_geometry_setup() {
 
 # Setup and initialize geometry
 prompt_geometry_setup
+
+echo >&2 'WARNING: geometry v2 has been released. Please see [the migration guide](migration-guide.md) to upgrade'
