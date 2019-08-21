@@ -1,6 +1,6 @@
 # You must build from the root repository directory, not the tests directory
 #    export VERSION=5.7.1
-#    docker build -t geometry-zsh:$VERSION -e VERSION=$VERSION -f tests/Dockerfile .
+#    docker build -t geometry-zsh:$VERSION --build-arg=VERSION=$VERSION -f tests/Dockerfile .
 #    docker run -e COLUMNS=$COLUMNS -e LINES=$LINES -e TERM=$TERM -it geometry-zsh:$VERSION zsh
 
 ARG VERSION=latest
