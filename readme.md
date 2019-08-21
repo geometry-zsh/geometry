@@ -56,7 +56,7 @@ GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
 GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time and pwd right prompt
 ```
 
-Please check out and share third-party functions on our [Functions wiki page](https://github.com/geometry-zsh/geometry/wiki/Functions).
+Please check out and share third-party functions on our [functions wiki page][]
 
 For more details on how to create a function, check out [our contribution guide][]
 
@@ -110,6 +110,7 @@ geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr]
 
 A big thank you to the dozens of [additional contributors](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
+[functions wiki page]: https://github.com/geometry-zsh/geometry/wiki/functions
 [open an issue]: https://github.com/geometry-zsh/geometry/issues/new
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
