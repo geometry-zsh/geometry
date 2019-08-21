@@ -40,7 +40,6 @@ tool          | add to `.zshrc`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
 **manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
-[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
 
 ## Functions
 
@@ -115,5 +114,4 @@ A big thank you to the dozens of [additional contributors](https://github.com/ge
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen
-[oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
 [our contribution guide]: contributing.md
