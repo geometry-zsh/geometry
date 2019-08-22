@@ -7,9 +7,6 @@ geometry_status() {
   : ${GEOMETRY_STATUS_SYMBOL_ERROR:=△}
   : ${GEOMETRY_STATUS_SYMBOL_ROOT:=▼}
   : ${GEOMETRY_STATUS_SYMBOL_ROOT_ERROR:=▽}
-  : ${GEOMETRY_STATUS_SHOW_CODE:=false}
-  : ${GEOMETRY_STATUS_CODE_PREFIX:=' '}
-  : ${GEOMETRY_STATUS_CODE_SUFFIX:=' '}
 
   ( ${GEOMETRY_STATUS_SYMBOL_COLOR_HASH:=false} ) && {
     local colors=({1..9})
@@ -33,6 +30,5 @@ geometry_status() {
   [[ $UID = 0 || $EUID = 0 ]] && symbol+=_ROOT
   (( $GEOMETRY_LAST_STATUS )) && symbol+=_ERROR && color+=_ERROR
 
-  [[ $GEOMETRY_LAST_STATUS != 0 && $GEOMETRY_STATUS_SHOW_CODE = true ]] && error_code="$GEOMETRY_STATUS_CODE_PREFIX$GEOMETRY_LAST_STATUS$GEOMETRY_STATUS_CODE_SUFFIX"
-  ansi ${(P)color} "$error_code${(P)symbol}"
+  ansi ${(P)color} ${(P)symbol}
 }

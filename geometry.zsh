@@ -51,7 +51,7 @@ add-zsh-hook precmd geometry::clear_title
 
 # join outputs of functions - pwd first
 geometry::wrap() {
-    GEOMETRY_LAST_STATUS="$status"
+    # GEOMETRY_LAST_STATUS="$status"
     local -a outputs
     local pwd=$1
     local cmd
@@ -78,6 +78,7 @@ geometry::rprompt() {
 }
 
 geometry::prompt() {
+  GEOMETRY_LAST_STATUS="$status"
   PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT)$GEOMETRY_SEPARATOR"
   geometry::rprompt
 }
