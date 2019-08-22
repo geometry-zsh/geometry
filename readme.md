@@ -83,12 +83,16 @@ GEOMETRY_STATUS_COLOR_ERROR="magenta"  # prompt symbol color when exit value is 
 GEOMETRY_STATUS_COLOR="white"          # prompt symbol color
 GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
 GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
-GEOMETRY_STATUS_SHOW_CODE=false        # show the exit code of failed commands
-GEOMETRY_STATUS_CODE_PREFIX=' '        # prefix for the exit code
-GEOMETRY_STATUS_CODE_SUFFIX=' '        # suffix for the exit code
 ```
 
 ![colorize](/images/screenshots/colorize.png)
+
+### geometry_exitcode
+This renders the exit code of the previous function if it is not success.
+
+```shell
+GEOMETRY_EXITCODE_COLOR="red" # exit code color
+```
 
 ### geometry_git
 
