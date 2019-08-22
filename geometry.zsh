@@ -24,21 +24,22 @@ for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
 # Takes number of seconds and formats it for humans
 # from https://github.com/sindresorhus/pretty-time-zsh
 geometry::time() {
-  local total_seconds=$1
-  local detailed=${2:-false}
-  local days=$(( total_seconds / 60 / 60 / 24 ))
-  local hours=$(( total_seconds / 60 / 60 % 24 ))
-  local minutes=$(( total_seconds / 60 % 60 ))
-  local seconds=$(( total_seconds % 60 ))
+  local seconds detailed color
+  local d h m s
   local -a human=()
-  local color
+  seconds=$1
+  detailed=$2
+  d=$(( seconds / 60 / 60 / 24 ))
+  h=$(( seconds / 60 / 60 % 24 ))
+  m=$(( seconds / 60 % 60 ))
+  s=$(( seconds % 60 ))
 
-  (( days > 0 )) && human+="${days}d" && color=$GEOMETRY_TIME_COLOR_LONG
-  (( hours > 0 )) && human+="${hours}h" && : ${color:=$GEOMETRY_TIME_COLOR_NEUTRAL}
-  (( minutes > 0 )) && human+="${minutes}m"
-  (( seconds > 0 )) && human+="${seconds}s" && : ${color:=$GEOMETRY_TIME_COLOR_SHORT}
+  (( d > 0 )) && human+="${d}d" && color=$GEOMETRY_TIME_COLOR_LONG
+  (( h > 0 )) && human+="${h}h" && : ${color:=$GEOMETRY_TIME_COLOR_NEUTRAL}
+  (( m > 0 )) && human+="${m}m"
+  (( s > 0 )) && human+="${s}s" && : ${color:=$GEOMETRY_TIME_COLOR_SHORT}
 
-  $detailed && ansi $color ${(j: :)human} || ansi $color $human[0,1]
+  ${2:-false} && ansi $color ${(j: :)human} || ansi $color $human[1]
 }
 
 # set title to COMMAND @ CURRENT_DIRECTORY
@@ -53,10 +54,9 @@ add-zsh-hook precmd geometry::clear_title
 geometry::wrap() {
     GEOMETRY_LAST_STATUS="$status"
     local -a outputs
-    local pwd=$1
     local cmd
     local output
-    setopt localoptions noautopushd; builtin cd -q $pwd
+    setopt localoptions noautopushd; builtin cd -q $1
     shift
     for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
     echo "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
