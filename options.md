@@ -6,34 +6,22 @@ and functionality.
 
 ## Table of Contents
 
-- [Customization Options](#customization-options)
-  - [Table of Contents](#table-of-contents)
-  - [`geometry_docker_machine.zsh`](#geometrydockermachinezsh)
-  - [`geometry_exec_time.zsh`](#geometryexectimezsh)
-  - [`geometry_git.zsh`](#geometrygitzsh)
-        - [`geometry_git_stashes()`](#geometrygitstashes)
-        - [`geometry_git_time()`](#geometrygittime)
-        - [`geometry_git_branch()`](#geometrygitbranch)
-        - [`geometry_git_status()`](#geometrygitstatus)
-        - [`geometry_git_rebase()`](#geometrygitrebase)
-        - [`geometry_git_remote() `](#geometrygitremote)
-        - [`geometry_git_conflicts()`](#geometrygitconflicts)
-        - [`geometry_git()`](#geometrygit)
-        - [`geometry::git_wrapper`](#geometrygitwrapper)
-  - [`geometry_hg.zsh`](#geometryhgzsh)
-  - [`geometry_hostname.zsh`](#geometryhostnamezsh)
-  - [`geometry_jobs.zsh`](#geometryjobszsh)
-  - [`geometry_kube.zsh`](#geometrykubezsh)
-  - [`geometry_node.zsh`](#geometrynodezsh)
-  - [`geometry_npm_package_version.zsh`](#geometrynpmpackageversionzsh)
-  - [`geometry_path.zsh`](#geometrypathzsh)
-  - [`geometry_ruby.zsh`](#geometryrubyzsh)
-  - [`geometry_rust_version.zsh`](#geometryrustversionzsh)
-  - [`geometry_rustup.zsh`](#geometryrustupzsh)
-  - [`geometry_status.zsh`](#geometrystatuszsh)
-  - [`geometry_virtualenv.zsh`](#geometryvirtualenvzsh)
-
-
+- [Table of Contents](#table-of-contents)
+- [`geometry_docker_machine.zsh`](#geometry_docker_machinezsh)
+- [`geometry_exec_time.zsh`](#geometry_exec_timezsh)
+- [`geometry_git.zsh`](#geometry_gitzsh)
+- [`geometry_hg.zsh`](#geometry_hgzsh)
+- [`geometry_hostname.zsh`](#geometry_hostnamezsh)
+- [`geometry_jobs.zsh`](#geometry_jobszsh)
+- [`geometry_kube.zsh`](#geometry_kubezsh)
+- [`geometry_node.zsh`](#geometry_nodezsh)
+- [`geometry_npm_package_version.zsh`](#geometry_npm_package_versionzsh)
+- [`geometry_path.zsh`](#geometry_pathzsh)
+- [`geometry_ruby.zsh`](#geometry_rubyzsh)
+- [`geometry_rust_version.zsh`](#geometry_rust_versionzsh)
+- [`geometry_rustup.zsh`](#geometry_rustupzsh)
+- [`geometry_status.zsh`](#geometry_statuszsh)
+- [`geometry_virtualenv.zsh`](#geometry_virtualenvzsh)
 
 ## `geometry_docker_machine.zsh`
 
@@ -160,11 +148,14 @@ Shows background jobs, by default in the `enter` prompt.
 
 Show kubectl (Kubernetes) client version and current context/namespace.
 
-| Variable               | Description                                | Defaults |
-| ---------------------- | ------------------------------------------ | -------- |
-| `GEOMETRY_KUBE_COLOR`  | Color for the indicator.                   | `blue`   |
-| `GEOMETRY_KUBE_SYMBOL` | Indicator.                                 | `⎈`      |
-| `GEOMETRY_KUBE_PIN`    | Can be set to always show `geometry_kube`. |          |
+| Variable                        | Description                                | Defaults |
+| ------------------------------- | ------------------------------------------ | -------- |
+| `GEOMETRY_KUBE_COLOR`           | Color for the indicator.                   | `blue`   |
+| `GEOMETRY_KUBE_SYMBOL`          | Indicator.                                 | `⎈`      |
+| `GEOMETRY_KUBE_PIN`             | Can be set to always show `geometry_kube`. |          |
+| `GEOMETRY_KUBE_VERSION`         | Display k8s Cluster version.               | `true`   |
+| `GEOMETRY_KUBE_CONTEXT_COLOR`   | Color for the k8s context                  |          |
+| `GEOMETRY_KUBE_NAMESPACE_COLOR` | COloe for the k8s namespace                |          |
 
 ## `geometry_node.zsh`
 
