@@ -6,34 +6,30 @@ and functionality.
 
 ## Table of Contents
 
-- [Customization Options](#customization-options)
-  - [Table of Contents](#table-of-contents)
-  - [`geometry_docker_machine`](#geometrydockermachine)
-  - [`geometry_exec_time`](#geometryexectime)
-  - [`geometry_git`](#geometrygit)
-        - [`geometry_git_stashes()`](#geometrygitstashes)
-        - [`geometry_git_time()`](#geometrygittime)
-        - [`geometry_git_branch()`](#geometrygitbranch)
-        - [`geometry_git_status()`](#geometrygitstatus)
-        - [`geometry_git_rebase()`](#geometrygitrebase)
-        - [`geometry_git_remote() `](#geometrygitremote)
-        - [`geometry_git_conflicts()`](#geometrygitconflicts)
-        - [`geometry_git()`](#geometrygit)
-        - [`geometry::git_wrapper`](#geometrygitwrapper)
-  - [`geometry_hg`](#geometryhg)
-  - [`geometry_hostname`](#geometryhostname)
-  - [`geometry_jobs`](#geometryjobs)
-  - [`geometry_kube`](#geometrykube)
-  - [`geometry_node`](#geometrynode)
-  - [`geometry_npm_package_version`](#geometrynpmpackageversion)
-  - [`geometry_path`](#geometrypath)
-  - [`geometry_ruby`](#geometryruby)
-  - [`geometry_rust_version`](#geometryrustversion)
-  - [`geometry_rustup`](#geometryrustup)
-  - [`geometry_status`](#geometrystatus)
-  - [`geometry_virtualenv`](#geometryvirtualenv)
-
-
+- [`geometry_docker_machine`](#geometrydockermachine)
+- [`geometry_exec_time`](#geometryexectime)
+- [`geometry_git`](#geometrygit)
+    - [`geometry_git_stashes()`](#geometrygitstashes)
+    - [`geometry_git_time()`](#geometrygittime)
+    - [`geometry_git_branch()`](#geometrygitbranch)
+    - [`geometry_git_status()`](#geometrygitstatus)
+    - [`geometry_git_rebase()`](#geometrygitrebase)
+    - [`geometry_git_remote() `](#geometrygitremote)
+    - [`geometry_git_conflicts()`](#geometrygitconflicts)
+    - [`geometry_git()`](#geometrygit)
+    - [`geometry::git_wrapper`](#geometrygitwrapper)
+- [`geometry_hg`](#geometryhg)
+- [`geometry_hostname`](#geometryhostname)
+- [`geometry_jobs`](#geometryjobs)
+- [`geometry_kube`](#geometrykube)
+- [`geometry_node`](#geometrynode)
+- [`geometry_npm_package_version`](#geometrynpmpackageversion)
+- [`geometry_path`](#geometrypath)
+- [`geometry_ruby`](#geometryruby)
+- [`geometry_rust_version`](#geometryrustversion)
+- [`geometry_rustup`](#geometryrustup)
+- [`geometry_status`](#geometrystatus)
+- [`geometry_virtualenv`](#geometryvirtualenv)
 
 ## `geometry_docker_machine`
 
@@ -159,11 +155,15 @@ Shows background jobs, by default in the `enter` prompt.
 
 Show kubectl (Kubernetes) client version and current context/namespace.
 
-| Variable               | Description                 | Default |
-| ---------------------- | --------------------------- | ------- |
-| `GEOMETRY_KUBE_COLOR`  | Color for the indicator     | `blue`  |
-| `GEOMETRY_KUBE_SYMBOL` | Indicator                   | `⎈`     |
-| `GEOMETRY_KUBE_PIN`    | Always show `geometry_kube` | `false` |
+| Variable                        | Description                                | Defaults |
+| ------------------------------- | ------------------------------------------ | -------- |
+| `GEOMETRY_KUBE_COLOR`           | Color for the indicator.                   | `blue`   |
+| `GEOMETRY_KUBE_SYMBOL`          | Indicator.                                 | `⎈`      |
+| `GEOMETRY_KUBE_PIN`             | Can be set to always show `geometry_kube`. |          |
+| `GEOMETRY_KUBE_VERSION`         | Display k8s Cluster version.               | `true`   |
+| `GEOMETRY_KUBE_CONTEXT_COLOR`   | Color for the k8s context                  |          |
+| `GEOMETRY_KUBE_NAMESPACE_COLOR` | Color for the k8s namespace                |          |
+| `GEOMETRY_KUBE_SEPARATOR`       | Wrap plugin with a separator               | `|`      |
 
 ## `geometry_node`
 
