@@ -155,7 +155,8 @@ Show kubectl (Kubernetes) client version and current context/namespace.
 | `GEOMETRY_KUBE_PIN`             | Can be set to always show `geometry_kube`. |          |
 | `GEOMETRY_KUBE_VERSION`         | Display k8s Cluster version.               | `true`   |
 | `GEOMETRY_KUBE_CONTEXT_COLOR`   | Color for the k8s context                  |          |
-| `GEOMETRY_KUBE_NAMESPACE_COLOR` | COloe for the k8s namespace                |          |
+| `GEOMETRY_KUBE_NAMESPACE_COLOR` | Color for the k8s namespace                |          |
+| `GEOMETRY_KUBE_SEPARATOR`       | Wrap plugin with a separator               | `|`      |
 
 ## `geometry_node.zsh`
 
