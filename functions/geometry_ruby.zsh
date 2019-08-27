@@ -3,7 +3,7 @@
 (( $+commands[ruby] )) || return
 
 geometry_ruby() {
-  GEOMETRY_RUBY=$(ansi ${GEOMETRY_RUBY_COLOR:=white} ${GEOMETRY_RUBY_SYMBOL:="◆"})
+  GEOMETRY_RUBY=$(ansi ${GEOMETRY_RUBY_COLOR:=default} ${GEOMETRY_RUBY_SYMBOL:="◆"})
 
   [[ $(ruby -v) =~ 'ruby ([0-9a-zA-Z.]+)' ]]
   local ruby_version=$match[1]

@@ -80,7 +80,7 @@ GEOMETRY_SEPARATOR=" "    # use ' ' to separate function output
 GEOMETRY_STATUS_SYMBOL="▲"             # default prompt symbol
 GEOMETRY_STATUS_SYMBOL_ERROR="△"       # displayed when exit value is != 0
 GEOMETRY_STATUS_COLOR_ERROR="magenta"  # prompt symbol color when exit value is != 0
-GEOMETRY_STATUS_COLOR="white"          # prompt symbol color
+GEOMETRY_STATUS_COLOR="default"        # prompt symbol color
 GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
 GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 ```
