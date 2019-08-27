@@ -13,7 +13,7 @@ geometry_git_time() {
   local seconds_since_last_commit
   last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
 
-  [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:="white"} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:="no-commits"} && return
+  [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:=default} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:=no-commits} && return
 
   now=$(date +%s)
   seconds_since_last_commit=$((now - last_commit))

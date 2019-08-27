@@ -18,7 +18,7 @@ for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 
 : ${GEOMETRY_TIME_COLOR_SHORT:=green}
-: ${GEOMETRY_TIME_COLOR_NEUTRAL:=white}
+: ${GEOMETRY_TIME_COLOR_NEUTRAL:=default}
 : ${GEOMETRY_TIME_COLOR_LONG:=red}
 
 # Takes number of seconds and formats it for humans

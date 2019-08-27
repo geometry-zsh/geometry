@@ -70,7 +70,7 @@ Show git related information, such as branch name, status and time since last co
 ##### `geometry_git_time()`
 | Variable                          | Description                                | Default     |
 | --------------------------------- | ------------------------------------------ | ------------ |
-| `GEOMETRY_COLOR_NO_TIME`          | Text color                                 | `white`      |
+| `GEOMETRY_COLOR_NO_TIME`          | Text color                                 | `default`      |
 | `GEOMETRY_GIT_NO_COMMITS_MESSAGE` | Text message shown when there's no commits | `no-commits` |
 | `GEOMETRY_GIT_TIME_DETAILED`      | Detailed timestamp instead of simple       | `false`      |
 
@@ -199,11 +199,11 @@ Show the current path.
 
 Display the current ruby version, rvm version, and gemset.
 
-| Variable                        | Description     | Default |
-| ------------------------------- | --------------- | ------- |
-| `GEOMETRY_RUBY_SYMBOL`          | Indicator       | `◆`     |
-| `GEOMETRY_RUBY_COLOR`           | Indicator color | `white` |
-| `GEOMETRY_RUBY_RVM_SHOW_GEMSET` | Show RVM gemset | `true`  |
+| Variable                        | Description     | Default   |
+| ------------------------------- | --------------- | --------- |
+| `GEOMETRY_RUBY_SYMBOL`          | Indicator       | `◆`       |
+| `GEOMETRY_RUBY_COLOR`           | Indicator color | `default` |
+| `GEOMETRY_RUBY_RVM_SHOW_GEMSET` | Show RVM gemset | `true`    |
 
 ## `geometry_rust_version`
 
@@ -230,15 +230,15 @@ Display a symbol colored with the currently selected rustup toolchain.
 Show a symbol with error/success and root/non-root information.
 
 | Variable                                   | Description                                      | Default |
-| ------------------------------------------ | ------------------------------------------------ | ------- |
-| `GEOMETRY_STATUS_SYMBOL`                   | Non-root indicator                               | `▲`     |
-| `GEOMETRY_STATUS_SYMBOL_ERROR`             | Non-root indicator on error                      | `△`     |
-| `GEOMETRY_STATUS_SYMBOL_ROOT`              | Root indicator                                   | `▼`     |
-| `GEOMETRY_STATUS_SYMBOL_ROOT_ERROR`        | root indicator on error                          | `▽`     |
-| `GEOMETRY_STATUS_COLOR`                    | Indicator color                                  | `white` |
-| `GEOMETRY_STATUS_COLOR_ERROR`              | Indicator color on error                         | `red`   |
-| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH`        | Automatically pick a color based on the hostname | `false` |
-| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH_COLORS` | Array of colors to choose from                   | `1..16` |
+| ------------------------------------------ | ------------------------------------------------ | --------- |
+| `GEOMETRY_STATUS_SYMBOL`                   | Non-root indicator                               | `▲`       |
+| `GEOMETRY_STATUS_SYMBOL_ERROR`             | Non-root indicator on error                      | `△`       |
+| `GEOMETRY_STATUS_SYMBOL_ROOT`              | Root indicator                                   | `▼`       |
+| `GEOMETRY_STATUS_SYMBOL_ROOT_ERROR`        | root indicator on error                          | `▽`       |
+| `GEOMETRY_STATUS_COLOR`                    | Indicator color                                  | `default` |
+| `GEOMETRY_STATUS_COLOR_ERROR`              | Indicator color on error                         | `red`     |
+| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH`        | Automatically pick a color based on the hostname | `false`   |
+| `GEOMETRY_STATUS_SYMBOL_COLOR_HASH_COLORS` | Array of colors to choose from                   | `1..16`   |
 
 ## `geometry_virtualenv`
 

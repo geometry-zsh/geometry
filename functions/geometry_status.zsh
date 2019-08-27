@@ -1,7 +1,7 @@
 # geometry_status - show a symbol with error/success and root/non-root information
 
 geometry_status() {
-  : ${GEOMETRY_STATUS_COLOR:=white}
+  : ${GEOMETRY_STATUS_COLOR:=default}
   : ${GEOMETRY_STATUS_COLOR_ERROR:=red}
   : ${GEOMETRY_STATUS_SYMBOL:=▲}
   : ${GEOMETRY_STATUS_SYMBOL_ERROR:=△}
