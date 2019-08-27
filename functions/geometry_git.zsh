@@ -8,7 +8,10 @@ geometry_git_stashes() {
 }
 
 geometry_git_time() {
-  local last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
+  local last_commit
+  local now
+  local seconds_since_last_commit
+  last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
 
   [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:="white"} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:="no-commits"} && return
 
@@ -26,6 +29,7 @@ geometry_git_status() {
   : ${GEOMETRY_GIT_COLOR_CLEAN:=green}
   : ${GEOMETRY_GIT_SYMBOL_DIRTY:="⬡"}
   : ${GEOMETRY_GIT_SYMBOL_CLEAN:="⬢"}
+  local _status
   command git rev-parse --git-dir > /dev/null 2>&1 || return
   _status=$([[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] && [[ -z "$(git ls-files --others --modified --exclude-standard $(git rev-parse --show-toplevel))" ]] && echo CLEAN || echo DIRTY)
   ansi ${(e):-\$GEOMETRY_GIT_COLOR_${_status}} ${(e):-\$GEOMETRY_GIT_SYMBOL_${_status}}
@@ -33,6 +37,7 @@ geometry_git_status() {
 
 geometry_git_rebase() {
   : ${GEOMETRY_GIT_SYMBOL_REBASE:="®"}
+  local git_dir
   git_dir=$(git rev-parse --git-dir)
   [[ -d "$git_dir/rebase-merge" ]] || [[ -d "$git_dir/rebase-apply" ]] || return
   echo "$GEOMETRY_GIT_SYMBOL_REBASE"
@@ -44,6 +49,9 @@ geometry_git_remote() {
   : ${GEOMETRY_GIT_SYMBOL_CONFLICTS_SOLVED:="◆"}
   : ${GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED:="◈"}
 
+  local common_base
+  local local_commit
+  local remote_commit
   local_commit=$(git rev-parse "@" 2>/dev/null)
   remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
 
@@ -61,13 +69,20 @@ geometry_git_symbol() { echo ${(j: :):-$(geometry_git_rebase) $(geometry_git_rem
 geometry_git_conflicts() {
   : ${GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED:=red}
   : ${GEOMETRY_GIT_COLOR_CONFLICTS_SOLVED:=green}
+  local conflicts
+  local _grep
+  local conflict_list
+  local raw_file_count
+  local file_count
+  local raw_total
+  local total
   conflicts=$(git diff --name-only --diff-filter=U)
 
   [[ -z "$conflicts" ]] && return
 
   pushd -q $(git rev-parse --show-toplevel)
 
-  local _grep="grep"
+  _grep="grep"
   (($+commands[ag])) && _grep="ag"
   (($+commands[rg])) && _grep="rg"
 
