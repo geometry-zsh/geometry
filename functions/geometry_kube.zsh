@@ -18,7 +18,7 @@ geometry_kube() {
   kube_context="$(kubectl config current-context 2> /dev/null)"
   kube_namespace=$(kubectl config view -o "jsonpath={.contexts[?(@.name==\"${kube_context}\")].context.namespace}" 2> /dev/null)
 
-	kube_context=$(ansi ${GEOMETRY_KUBE_CONTEXT_COLOR:=default} ${kube_context})
+  kube_context=$(ansi ${GEOMETRY_KUBE_CONTEXT_COLOR:=default} ${kube_context})
   kube_namespace=$(ansi ${GEOMETRY_KUBE_NAMESPACE_COLOR:=default} ${kube_namespace:=default})
 
   if ( ${GEOMETRY_KUBE_VERSION:=true} ); then
