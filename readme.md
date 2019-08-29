@@ -40,7 +40,6 @@ tool          | add to `.zshrc`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
 **manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
-[oh-my-zsh][] | `ZSH_THEME="geometry/geometry"` (after `git clone https://github.com/geometry-zsh/geometry $ZSH_CUSTOM/themes/`)
 
 ## Functions
 
@@ -57,7 +56,7 @@ GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
 GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time and pwd right prompt
 ```
 
-Please check out and share third-party functions on our [Functions wiki page](https://github.com/geometry-zsh/geometry/wiki/Functions).
+Please check out and share third-party functions on our [functions wiki page][]
 
 For more details on how to create a function, check out [our contribution guide][]
 
@@ -81,7 +80,7 @@ GEOMETRY_SEPARATOR=" "    # use ' ' to separate function output
 GEOMETRY_STATUS_SYMBOL="▲"             # default prompt symbol
 GEOMETRY_STATUS_SYMBOL_ERROR="△"       # displayed when exit value is != 0
 GEOMETRY_STATUS_COLOR_ERROR="magenta"  # prompt symbol color when exit value is != 0
-GEOMETRY_STATUS_COLOR="white"          # prompt symbol color
+GEOMETRY_STATUS_COLOR="default"        # prompt symbol color
 GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
 GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 ```
@@ -111,9 +110,9 @@ geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr]
 
 A big thank you to the dozens of [additional contributors](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
+[functions wiki page]: https://github.com/geometry-zsh/geometry/wiki/functions
 [open an issue]: https://github.com/geometry-zsh/geometry/issues/new
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen
-[oh-my-zsh]: https://github.com/robbyrussell/oh-my-zsh
 [our contribution guide]: contributing.md

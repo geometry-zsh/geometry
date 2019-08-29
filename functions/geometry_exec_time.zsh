@@ -13,9 +13,11 @@ geometry::time_command_begin() { touch $GEOMETRY_EXEC_TIME_FILE; }
 add-zsh-hook preexec geometry::time_command_begin
 
 geometry_exec_time() {
+  local atime
+  local elapsed
   [[ -z "$GEOMETRY_EXEC_TIME_FILE" ]] && return
   [[ -f "$GEOMETRY_EXEC_TIME_FILE" ]] || return
-  local atime=$(zstat +atime $GEOMETRY_EXEC_TIME_FILE)
+  atime=$(zstat +atime $GEOMETRY_EXEC_TIME_FILE)
   command rm -f $GEOMETRY_EXEC_TIME_FILE
   (( elapsed = $EPOCHSECONDS - $atime ))
   (( elapsed > $GEOMETRY_EXEC_TIME_PATIENCE )) && geometry::time $elapsed
