@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.2 - unreleased
+### Fixed
+- Use default terminal color instead of white
+- Improve geometry_kube logic (thanks @olegTarassov!)
+
+### Added
+- GEOMETRY_KUBE_SEPARATOR (thanks @olegTarassov!)
+
 ## 2.0.1 - 2019-08-21
 
 ### Fixed
