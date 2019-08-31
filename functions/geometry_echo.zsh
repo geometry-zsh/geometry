@@ -1,3 +1,3 @@
 # geometry_echo - simple echo for a balanced terminal
 
-geometry_echo() { echo -n ${GEOMETRY_ECHO:=''}; }
+geometry_echo() { echo -n ${GEOMETRY_ECHO:-''}; }
