@@ -82,11 +82,9 @@ geometry_git_conflicts() {
 
   pushd -q $(git rev-parse --show-toplevel)
 
-  _grep="grep"
-  (($+commands[ag])) && _grep="ag"
-  (($+commands[rg])) && _grep="rg"
+  _grep=${GEOMETRY_GIT_GREP:=${commands[rg]:=${commands[ag]:=${commands[grep]}}}}
 
-  conflict_list=$(${GEOMETRY_GIT_GREP:-$_grep} -cH '^=======$' $conflicts)
+  conflict_list=$($_grep -cH '^=======$' $conflicts)
   popd -q
 
   raw_file_count="${#${(@f)conflict_list}}"
