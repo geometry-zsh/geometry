@@ -55,4 +55,9 @@ prompt_geometry_setup() {
 # Setup and initialize geometry
 prompt_geometry_setup
 
-echo >&2 'WARNING: geometry v2 has been released. Please see [the migration guide](migration-guide.md) to upgrade'
+if [[ $(print $HOME/.geometry_upgrade(.Nmd0)) ]]; then
+  echo >&2 'WARNING: geometry v2 has been released. Please see [the migration guide](migration-guide.md) to upgrade'
+  touch $HOME/.geometry_upgrade
+elif [[ ! -f $HOME/.geometry_upgrade ]]; then
+  touch $HOME/.geometry_upgrade
+fi
