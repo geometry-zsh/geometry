@@ -21,7 +21,7 @@ geometry_git_time() {
 }
 
 geometry_git_branch() {
-  ansi ${GEOMETRY_GIT_COLOR_BRANCH:-242} $(git symbolic-ref --short HEAD || git rev-parse --short HEAD)
+  ansi ${GEOMETRY_GIT_COLOR_BRANCH:-242} $(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 }
 
 geometry_git_status() {
