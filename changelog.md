@@ -3,10 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.2 - unreleased
+## 2.0.2 - 2019-09-04
+
 ### Fixed
 - Use default terminal color instead of white
 - Improve geometry_kube logic (thanks @olegTarassov!)
+- Showing git checkout when HEAD is not a symbolic ref
 
 ### Added
 - GEOMETRY_KUBE_SEPARATOR (thanks @olegTarassov!)
