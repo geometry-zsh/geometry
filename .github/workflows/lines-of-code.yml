@@ -1,0 +1,13 @@
+name: lines-of-code
+
+on: pull_request
+
+jobs:
+  count:
+    steps:
+    - uses: actions/checkout@v1
+    - name: count with tokei
+      uses: docker://mbologna/docker-tokei
+      with:
+        entrypoint: tokei
+        args: -t=Zsh
