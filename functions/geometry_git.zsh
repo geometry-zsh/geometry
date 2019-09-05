@@ -29,8 +29,8 @@ geometry_git_status() {
 
   [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] \
   && [[ -z "$(git ls-files --others --modified --exclude-standard $(git rev-parse --show-toplevel))" ]] \
-  && ansi ${GEOMETRY_GIT_COLOR_DIRTY:-red} ${GEOMETRY_GIT_SYMBOL_DIRTY:-"⬡"} \
-  || ansi ${GEOMETRY_GIT_COLOR_CLEAN:-green} ${GEOMETRY_GIT_SYMBOL_CLEAN:-"⬢"}
+  && ansi ${GEOMETRY_GIT_COLOR_CLEAN:-green} ${GEOMETRY_GIT_SYMBOL_CLEAN:-"⬢"} \
+  || ansi ${GEOMETRY_GIT_COLOR_DIRTY:-red} ${GEOMETRY_GIT_SYMBOL_DIRTY:-"⬡"}
 }
 
 geometry_git_rebase() {
