@@ -1,8 +1,8 @@
 # geometry_node - show node and npm/yarm version when in a node project context
 
-(( $+commands[node] )) || return
-
 geometry_node() {
+    (( $+commands[node] )) || return
+
     test -n "$GEOMETRY_NODE_PIN" || test -f package.json || test -f yarn.lock || return 1
 
     GEOMETRY_NODE=$(ansi ${GEOMETRY_NODE_COLOR:=green} ${GEOMETRY_NODE_SYMBOL="⬡"})

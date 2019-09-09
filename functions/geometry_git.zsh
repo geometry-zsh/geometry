@@ -1,7 +1,5 @@
 # geometry_git - please see the readme for documentation on all features
 
-(( $+commands[git] )) || return
-
 geometry_git_stashes() {
   git rev-parse --quiet --verify refs/stash >/dev/null \
     && ansi ${GEOMETRY_GIT_COLOR_STASHES:="144"} ${GEOMETRY_GIT_SYMBOL_STASHES:="●"}
@@ -87,6 +85,8 @@ geometry_git_conflicts() {
 }
 
 geometry_git() {
+  (( $+commands[git] )) || return
+
   command git rev-parse --git-dir > /dev/null 2>&1 || return
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) \

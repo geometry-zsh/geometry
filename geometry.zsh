@@ -13,7 +13,7 @@ GEOMETRY_ROOT=${0:A:h}
 
 autoload -U add-zsh-hook
 
-for fun in "${GEOMETRY_ROOT}"/functions/geometry_*.zsh; do . $fun; done
+function { local fun; for fun ("${GEOMETRY_ROOT}"/functions/geometry_*.zsh(N.)) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 

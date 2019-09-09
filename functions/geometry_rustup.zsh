@@ -1,8 +1,8 @@
 # geometry_rustup - display a symbol colored with the currently selected rustup toolchain
 
-(( $+commands[rustup] )) || return
-
 geometry_rustup() {
+    (( $+commands[rustup] )) || return
+
     ( ${GEOMETRY_RUSTUP_PIN:=false} ) || { cargo locate-project 2>/dev/null || { echo -n '' && return; } }
 
     : ${GEOMETRY_RUSTUP_STABLE_COLOR:=green}

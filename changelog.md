@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.3 - unreleased
+
+### Fixed
+- Accidental export of local fun variable
+
 ## 2.0.2 - 2019-09-04
 
 ### Fixed

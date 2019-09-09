@@ -1,8 +1,8 @@
 # geometry_ruby - display the current ruby version, rvm version, and gemset
 
-(( $+commands[ruby] )) || return
-
 geometry_ruby() {
+  (( $+commands[ruby] )) || return
+
   GEOMETRY_RUBY=$(ansi ${GEOMETRY_RUBY_COLOR:=default} ${GEOMETRY_RUBY_SYMBOL:="◆"})
 
   [[ $(ruby -v) =~ 'ruby ([0-9a-zA-Z.]+)' ]]

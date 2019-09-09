@@ -1,8 +1,7 @@
 # geometry_kube - show kubectl client version and current context/namespace.
 
-(( $+commands[kubectl] )) || return
-
 geometry_kube() {
+  (( $+commands[kubectl] )) || return
   ( ${GEOMETRY_KUBE_PIN:=false} ) || [[ -n "$KUBECONFIG" ]] || return
   : ${GEOMETRY_KUBE_SEPARATOR:="|"}
 
