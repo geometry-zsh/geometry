@@ -52,12 +52,15 @@ add-zsh-hook precmd geometry::clear_title
 
 # join outputs of functions - pwd first
 geometry::wrap() {
-  setopt localoptions noautopushd; builtin cd -q $1
-  local -a outputs
-  local cmd output
-  shift
-  for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
-  echo "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
+    # GEOMETRY_LAST_STATUS="$status"
+    local -a outputs
+    local pwd=$1
+    local cmd
+    local output
+    setopt localoptions noautopushd; builtin cd -q $pwd
+    shift
+    for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
+    echo "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
 }
 
 geometry::rprompt::set() {
