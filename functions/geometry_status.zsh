@@ -16,9 +16,9 @@ geometry_status() {
         colors=(${GEOMETRY_STATUS_SYMBOL_COLOR_HASH_COLORS})
       fi
 
-      local sum=0; for c in ${(s::)^HOST}; do ((sum += $(print -f '%d' "'$c"))); done
+      local sum=0; for c in ${(s::)^HOST}; do ((sum += "$(print -f '%d' "'$c")")); done
 
-      local index=$(($sum % ${#colors}))
+      local index="$(($sum % ${#colors}))"
 
       [[ "$index" -eq 0 ]] && index=1
 

@@ -4,7 +4,7 @@ geometry_kube_symbol() {
 }
 
 geometry_kube_namespace() {
-  local kube_namespace=$(kubectl config view --minify --output "jsonpath={..namespace}" 2> /dev/null)
+  local kube_namespace="$(kubectl config view --minify --output "jsonpath={..namespace}" 2> /dev/null)"
   ansi ${GEOMETRY_KUBE_NAMESPACE_COLOR:=default} ${kube_namespace:=default}
 }
 

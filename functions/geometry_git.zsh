@@ -41,12 +41,12 @@ geometry_git_rebase() {
 geometry_git_remote() {
   local unpushed=${GEOMETRY_GIT_SYMBOL_UNPUSHED:-"⇡"}
   local unpulled=${GEOMETRY_GIT_SYMBOL_UNPULLED:-"⇣"}
-  local local_commit && local_commit=$(git rev-parse "@" 2>/dev/null)
-  local remote_commit && remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
+  local local_commit && local_commit="$(git rev-parse "@" 2>/dev/null)"
+  local remote_commit && remote_commit="$(git rev-parse "@{u}" 2>/dev/null)"
 
   [[ $local_commit == "@" || $local_commit == $remote_commit ]] && return
 
-  local common_base && common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
+  local common_base && common_base="$(git merge-base "@" "@{u}" 2>/dev/null)" # last common commit
   [[ $common_base == $remote_commit ]] && echo $unpushed && return
   [[ $common_base == $local_commit ]]  && echo $unpulled && return
 
