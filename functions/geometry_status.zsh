@@ -2,7 +2,7 @@
 
 geometry_status() {
   local root; [[ $UID = 0 || $EUID = 0 ]] && root=true || root=false
-  local error; (( $GEOMETRY_LAST_STATUS )) && error=true || error=false
+  local error; (( $GEOMETRY[LAST_STATUS] )) && error=true || error=false
 
   local color=${GEOMETRY_STATUS_COLOR:-default}
 

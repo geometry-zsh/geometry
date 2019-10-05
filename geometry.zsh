@@ -4,8 +4,9 @@
 # pure: https://github.com/sindresorhus/pure
 # mnml: https://github.com/subnixr/minimal
 
-GEOMETRY_ROOT=${0:A:h}
-: ${GEOMETRY_SEPARATOR:=" "}
+typeset -A GEOMETRY
+GEOMETRY[ROOT]=${0:A:h}
+: ${GEOMETRY[SEPARATOR]:=" "}
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
@@ -13,13 +14,13 @@ GEOMETRY_ROOT=${0:A:h}
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY_ROOT}"/functions/geometry_*.zsh(N.)) . $fun }
+function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/geometry_*.zsh(N.)) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 
-: ${GEOMETRY_TIME_COLOR_SHORT:=green}
-: ${GEOMETRY_TIME_COLOR_NEUTRAL:=default}
-: ${GEOMETRY_TIME_COLOR_LONG:=red}
+: ${GEOMETRY[TIME_COLOR_SHORT]:=green}
+: ${GEOMETRY[TIME_COLOR_NEUTRAL]:=default}
+: ${GEOMETRY[TIME_COLOR_LONG]:=red}
 
 # Takes number of seconds and formats it for humans
 # from https://github.com/sindresorhus/pretty-time-zsh
@@ -34,10 +35,10 @@ geometry::time() {
   m=$(( seconds / 60 % 60 ))
   s=$(( seconds % 60 ))
 
-  (( d > 0 )) && human+="${d}d" && color=$GEOMETRY_TIME_COLOR_LONG
-  (( h > 0 )) && human+="${h}h" && : ${color:=$GEOMETRY_TIME_COLOR_NEUTRAL}
+  (( d > 0 )) && human+="${d}d" && color=$GEOMETRY[TIME_COLOR_LONG]
+  (( h > 0 )) && human+="${h}h" && : ${color:=$GEOMETRY[TIME_COLOR_NEUTRAL]}
   (( m > 0 )) && human+="${m}m"
-  (( s > 0 )) && human+="${s}s" && : ${color:=$GEOMETRY_TIME_COLOR_SHORT}
+  (( s > 0 )) && human+="${s}s" && : ${color:=$GEOMETRY[TIME_COLOR_SHORT]}
 
   ${2:-false} && ansi $color ${(j: :)human} || ansi $color $human[1]
 }
@@ -62,7 +63,7 @@ geometry::wrap() {
 
 geometry::rprompt::set() {
   if [[ -z "$2" || "$2" == "hup" ]]; then
-    read -r -u "$PCFD" RPROMPT
+    read -r -u "$GEOMETRY_ASYNC_FD" RPROMPT
     zle reset-prompt
     exec {1}<&-
   fi
@@ -70,13 +71,13 @@ geometry::rprompt::set() {
 }
 
 geometry::rprompt() {
-  typeset -g PCFD
-  exec {PCFD}< <(geometry::wrap $PWD $GEOMETRY_RPROMPT)
-  zle -F "$PCFD" geometry::rprompt::set
+  typeset -g GEOMETRY_ASYNC_FD
+  exec {GEOMETRY_ASYNC_FD}< <(geometry::wrap $PWD $GEOMETRY_RPROMPT)
+  zle -F "$GEOMETRY_ASYNC_FD" geometry::rprompt::set
 }
 
 geometry::prompt() {
-  GEOMETRY_LAST_STATUS="$status"
+  GEOMETRY[LAST_STATUS]="$status"
   PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT)$GEOMETRY_SEPARATOR"
   geometry::rprompt
 }

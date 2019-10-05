@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Accidental export of local `fun` variable
 - extra "'" in separator for geometry_hg
 - Quoting for zsh 5.0.0 - thanks @psprint
+- Hid GEOMETRY_TIME_COLOR_SHORT, NEUTRAL, LONG, ROOT, EXEC_TIME_FILE, and LAST_STATUS under GEOMETRY array
+- Renamed PCFD to GEOMETRY_ASYNC_FD
 
 ## 2.0.2 - 2019-09-04
 
