@@ -5,8 +5,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## 2.0.3 - unreleased
 
+### Added
+- geometry_exitcode - from @alxbl, a way to see the exact exit code in the prompt
+
 ### Fixed
-- Accidental export of local fun variable
+- Accidental export of local `fun` variable
 
 ## 2.0.2 - 2019-09-04
 
