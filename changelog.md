@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.3 - unreleased
+## 2.0.3 - 2019-10-11
 
 ### Added
 - geometry_exitcode - from @alxbl, a way to see the exact exit code in the prompt
