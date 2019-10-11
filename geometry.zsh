@@ -4,7 +4,7 @@
 # pure: https://github.com/sindresorhus/pure
 # mnml: https://github.com/subnixr/minimal
 
-typeset -A GEOMETRY
+typeset -gA GEOMETRY
 GEOMETRY[ROOT]=${0:A:h}
 : ${GEOMETRY[SEPARATOR]:=" "}
 
