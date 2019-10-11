@@ -12,9 +12,13 @@ GEOMETRY[ROOT]=${0:A:h}
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=(geometry_hostname geometry_jobs)
 
+load=($GEOMETRY_PROMPT)
+load+=(${GEOMETRY_RPROMPT:|load})
+load+=(${GEOMETRY_INFO:|load})
+
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/geometry_*.zsh(N.)) . $fun }
+function { local fun; for fun in $load; . "${GEOMETRY_ROOT}/functions/${fun}.zsh" }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 
