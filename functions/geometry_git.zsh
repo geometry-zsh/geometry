@@ -61,12 +61,8 @@ geometry_git_conflicts() {
 
   [[ -z "$conflicts" ]] && return
 
-  pushd -q $(git rev-parse --show-toplevel)
-
   _grep=${GEOMETRY_GIT_GREP:=${commands[rg]:=${commands[ag]:=${commands[grep]}}}}
   conflict_list=$($_grep -cH '^=======$' $conflicts)
-
-  popd -q
 
   raw_file_count="${#${(@f)conflict_list}}"
   file_count=${raw_file_count##*( )}
@@ -85,7 +81,7 @@ geometry_git() {
   (( $+commands[git] )) || return
 
   local git_dir; git_dir=$(git rev-parse --git-dir 2>&1) || return
-  pushd -q "${git_dir}/.."
+  pushd -q "$git_dir"/..
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) \
     && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
@@ -99,5 +95,5 @@ geometry_git() {
   )
 
   echo -n $(geometry_git_symbol) $(geometry_git_branch) ${(ej.${GEOMETRY_GIT_SEPARATOR:-" :: "}.)geometry_git_details}
-  popd -q
+  popd -q 2>/dev/null
 }
