@@ -6,15 +6,12 @@ geometry_git_stashes() {
 }
 
 geometry_git_time() {
-  local last_commit
-  local now
-  local seconds_since_last_commit
-  last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
+  local last_commit; last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
 
-  [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:-default} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-no-commits} && return
+  [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:-default} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-welcome} && return
 
-  now=$(date +%s)
-  seconds_since_last_commit=$((now - last_commit))
+  local now; now=$(date +%s)
+  local seconds_since_last_commit; seconds_since_last_commit=$((now - last_commit))
   geometry::time $seconds_since_last_commit ${GEOMETRY_GIT_TIME_DETAILED:-false}
 }
 
