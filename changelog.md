@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## Unreleased
+
+### Fixed
+- geometry_git complaining when not in a work-tree
+
 ## 2.0.5 - 2019-10-14
 
 ### Fixed
