@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.5 - 2019-10-14
+
+### Fixed
+- Problem sourcing functions
+
 ## 2.0.4 - 2019-10-14
 
 ### Fixed

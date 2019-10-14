@@ -4,7 +4,7 @@
 # pure: https://github.com/sindresorhus/pure
 # mnml: https://github.com/subnixr/minimal
 
-typeset -gA GEOMETRY
+typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
@@ -12,7 +12,7 @@ typeset -gA GEOMETRY
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${0:A:h}"/functions/geometry_*.zsh(N.)) . $fun }
+function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 
