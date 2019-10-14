@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Breaking GEOMETRY_SEPARATOR, especially on left prompt (thanks @diogoazevedos!)
+
+### Improved
 - Respond to changes in GEOMETRY_SEPARATOR dynamically
+- Reduced core to 62 lines
 
 ## 2.0.3 - 2019-10-11
 
