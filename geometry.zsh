@@ -5,7 +5,6 @@
 # mnml: https://github.com/subnixr/minimal
 
 typeset -gA GEOMETRY
-GEOMETRY[ROOT]=${0:A:h}
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
@@ -13,13 +12,9 @@ GEOMETRY[ROOT]=${0:A:h}
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/geometry_*.zsh(N.)) . $fun }
+function { local fun; for fun ("${0:A:h}"/functions/geometry_*.zsh(N.)) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
-
-: ${GEOMETRY[TIME_COLOR_SHORT]:=green}
-: ${GEOMETRY[TIME_COLOR_NEUTRAL]:=default}
-: ${GEOMETRY[TIME_COLOR_LONG]:=red}
 
 # Takes number of seconds and formats it for humans
 # from https://github.com/sindresorhus/pretty-time-zsh
@@ -34,10 +29,10 @@ geometry::time() {
   m=$(( seconds / 60 % 60 ))
   s=$(( seconds % 60 ))
 
-  (( d > 0 )) && human+="${d}d" && color=$GEOMETRY[TIME_COLOR_LONG]
-  (( h > 0 )) && human+="${h}h" && : ${color:=$GEOMETRY[TIME_COLOR_NEUTRAL]}
+  (( d > 0 )) && human+="${d}d" && : ${color:=${GEOMETRY_TIME_COLOR_LONG:-red}}
+  (( h > 0 )) && human+="${h}h" && : ${color:=${GEOMETRY_TIME_COLOR_NEUTRAL:-default}}
   (( m > 0 )) && human+="${m}m"
-  (( s > 0 )) && human+="${s}s" && : ${color:=$GEOMETRY[TIME_COLOR_SHORT]}
+  (( s > 0 )) && human+="${s}s" && : ${color:=${GEOMETRY_TIME_COLOR_SHORT:-green}}
 
   ${2:-false} && ansi $color ${(j: :)human} || ansi $color $human[1]
 }
