@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.0.4 - 2019-10-14
+
+### Fixed
+- Breaking GEOMETRY_SEPARATOR, especially on left prompt (thanks @diogoazevedos!)
+- Respond to changes in GEOMETRY_SEPARATOR dynamically
+
 ## 2.0.3 - 2019-10-11
 
 ### Added

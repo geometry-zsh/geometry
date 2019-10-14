@@ -6,7 +6,6 @@
 
 typeset -gA GEOMETRY
 GEOMETRY[ROOT]=${0:A:h}
-: ${GEOMETRY_SEPARATOR:=" "}
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
@@ -58,7 +57,8 @@ geometry::wrap() {
   local cmd output
   shift
   for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
-  echo "${(ps.${GEOMETRY_SEPARATOR}.)outputs}"
+
+  echo "${(ej.${GEOMETRY_SEPARATOR:- }.)outputs}"
 }
 
 geometry::rprompt::set() {
@@ -78,7 +78,7 @@ geometry::rprompt() {
 
 geometry::prompt() {
   GEOMETRY[LAST_STATUS]="$status"
-  PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT)$GEOMETRY_SEPARATOR"
+  PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT) "
   geometry::rprompt
 }
 
