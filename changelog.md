@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
 
+### Improved
+- lazy load functions with autoload instead of sourcing (thanks @alxbl!)
+
 ### Fixed
 - geometry_git complaining when not in a work-tree
 
