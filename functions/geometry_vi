@@ -10,11 +10,11 @@ function geometry::vi-update-prompt() {
     imode=$(geometry::vi-insert-mode)
     nmode=$(geometry::vi-normal-mode)
     if [[ $KEYMAP == vicmd ]]; then
-	PROMPT=${PROMPT//$imode/$nmode}
-	RPROMPT=${RPROMPT//$imode/$nmode}
+        PROMPT=${PROMPT//$imode/$nmode}
+        RPROMPT=${RPROMPT//$imode/$nmode}
     else
-	PROMPT=${PROMPT//$nmode/$imode}
-	RPROMPT=${RPROMPT//$nmode/$imode}
+        PROMPT=${PROMPT//$nmode/$imode}
+        RPROMPT=${RPROMPT//$nmode/$imode}
     fi
 }
 
@@ -48,30 +48,30 @@ function geometry::vi-draw-mode {
 local prefix="geometry_vi"
 for w (zle-keymap-select zle-line-pre-redraw zle-line-init zle-line-finish); do
     case ${widgets[$w]:-""} in
-	# Already Bound to geometry: Do nothing.
-	user:geometry-vi-draw) ;;
+    # Already Bound to geometry: Do nothing.
+    user:geometry-vi-draw) ;;
 
-	# Existing user widget: Chain a call to it.
-	user:*) zle -N $prefix-$w ${widgets[$w]#*:}
-		# Dynamically create a function to call the previous widget.
-		eval "geometry::${(q)prefix}-${(q)w}() { geometry::vi-draw-mode; builtin zle ${(q)prefix}-${(q)w} -- \"\$@\" }"
-		zle -N $w geometry::$prefix-$w;;
+    # Existing user widget: Chain a call to it.
+    user:*) zle -N $prefix-$w ${widgets[$w]#*:}
+        # Dynamically create a function to call the previous widget.
+        eval "geometry::${(q)prefix}-${(q)w}() { geometry::vi-draw-mode; builtin zle ${(q)prefix}-${(q)w} -- \"\$@\" }"
+        zle -N $w geometry::$prefix-$w;;
 
-	# Completion widgets: Ignore.
-	completion:*) ;;
+    # Completion widgets: Ignore.
+    completion:*) ;;
 
-	# Builtin widget: Chain a call to ".widget".
-	# Eval is required to get a closure (
-	builtin) eval "geometry::${(q)prefix}-${(q)w}() { geometry::vi-draw-mode; builtin zle .${(q)w} -- \"\$@\" }"
-		 zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
+    # Builtin widget: Chain a call to ".widget".
+    # Eval is required to get a closure (
+    builtin) eval "geometry::${(q)prefix}-${(q)w}() { geometry::vi-draw-mode; builtin zle .${(q)w} -- \"\$@\" }"
+         zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
 
-	# Unbound widget: Bind directly.
-	*) 
-	    if [[ $w == zle-* ]] && (( ! ${+widgets[$w]} )); then
-		zle -N $w geometry::vi-draw-mode
-	    else
-		# Default: unhandled case.
-		print -r -- >&2 "geometry::geometry_vi: unhandled ZLE widget ${(qq)w}"
-	    fi
+    # Unbound widget: Bind directly.
+    *) 
+        if [[ $w == zle-* ]] && (( ! ${+widgets[$w]} )); then
+        zle -N $w geometry::vi-draw-mode
+        else
+        # Default: unhandled case.
+        print -r -- >&2 "geometry::geometry_vi: unhandled ZLE widget ${(qq)w}"
+        fi
     esac
 done
