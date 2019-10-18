@@ -6,15 +6,12 @@ geometry_git_stashes() {
 }
 
 geometry_git_time() {
-  local last_commit
-  local now
-  local seconds_since_last_commit
-  last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
+  local last_commit; last_commit=$(git log -1 --pretty=format:'%at' 2> /dev/null)
 
-  [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:-default} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-no-commits} && return
+  [[ -z "$last_commit" ]] && ansi ${GEOMETRY_COLOR_NO_TIME:-default} ${GEOMETRY_GIT_NO_COMMITS_MESSAGE:-welcome} && return
 
-  now=$(date +%s)
-  seconds_since_last_commit=$((now - last_commit))
+  local now; now=$(date +%s)
+  local seconds_since_last_commit; seconds_since_last_commit=$((now - last_commit))
   geometry::time $seconds_since_last_commit ${GEOMETRY_GIT_TIME_DETAILED:-false}
 }
 
@@ -41,12 +38,12 @@ geometry_git_rebase() {
 geometry_git_remote() {
   local unpushed=${GEOMETRY_GIT_SYMBOL_UNPUSHED:-"⇡"}
   local unpulled=${GEOMETRY_GIT_SYMBOL_UNPULLED:-"⇣"}
-  local local_commit && local_commit=$(git rev-parse "@" 2>/dev/null)
-  local remote_commit && remote_commit=$(git rev-parse "@{u}" 2>/dev/null)
+  local local_commit && local_commit="$(git rev-parse "@" 2>/dev/null)"
+  local remote_commit && remote_commit="$(git rev-parse "@{u}" 2>/dev/null)"
 
   [[ $local_commit == "@" || $local_commit == $remote_commit ]] && return
 
-  local common_base && common_base=$(git merge-base "@" "@{u}" 2>/dev/null) # last common commit
+  local common_base && common_base="$(git merge-base "@" "@{u}" 2>/dev/null)" # last common commit
   [[ $common_base == $remote_commit ]] && echo $unpushed && return
   [[ $common_base == $local_commit ]]  && echo $unpulled && return
 
@@ -64,12 +61,8 @@ geometry_git_conflicts() {
 
   [[ -z "$conflicts" ]] && return
 
-  pushd -q $(git rev-parse --show-toplevel)
-
   _grep=${GEOMETRY_GIT_GREP:=${commands[rg]:=${commands[ag]:=${commands[grep]}}}}
   conflict_list=$($_grep -cH '^=======$' $conflicts)
-
-  popd -q
 
   raw_file_count="${#${(@f)conflict_list}}"
   file_count=${raw_file_count##*( )}
@@ -87,7 +80,8 @@ geometry_git_conflicts() {
 geometry_git() {
   (( $+commands[git] )) || return
 
-  command git rev-parse --git-dir > /dev/null 2>&1 || return
+  local git_dir; git_dir=$(git rev-parse --git-dir 2>&1) || return
+  pushd -q "$git_dir"/..
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) \
     && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
@@ -100,6 +94,6 @@ geometry_git() {
     $(geometry_git_status)
   )
 
-  local separator=${GEOMETRY_GIT_SEPARATOR:-" :: "}
-  echo -n $(geometry_git_symbol) $(geometry_git_branch) ${(pj.$separator.)geometry_git_details}
+  echo -n $(geometry_git_symbol) $(geometry_git_branch) ${(ej.${GEOMETRY_GIT_SEPARATOR:-" :: "}.)geometry_git_details}
+  popd -q 2>/dev/null
 }

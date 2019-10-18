@@ -3,10 +3,39 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## 2.0.3 - unreleased
+## Unreleased
+
+### Improved
+- lazy load functions with autoload instead of sourcing (thanks @alxbl!)
 
 ### Fixed
-- Accidental export of local fun variable
+- geometry_git complaining when not in a work-tree
+
+## 2.0.5 - 2019-10-14
+
+### Fixed
+- Problem sourcing functions
+
+## 2.0.4 - 2019-10-14
+
+### Fixed
+- Breaking GEOMETRY_SEPARATOR, especially on left prompt (thanks @diogoazevedos!)
+
+### Improved
+- Respond to changes in GEOMETRY_SEPARATOR dynamically
+- Reduced core to 62 lines
+
+## 2.0.3 - 2019-10-11
+
+### Added
+- geometry_exitcode - from @alxbl, a way to see the exact exit code in the prompt
+
+### Fixed
+- Accidental export of local `fun` variable
+- extra "'" in separator for geometry_hg
+- Quoting for zsh 5.0.0 - thanks @psprint
+- Hid GEOMETRY_TIME_COLOR_SHORT, NEUTRAL, LONG, ROOT, EXEC_TIME_FILE, and LAST_STATUS under GEOMETRY array
+- Renamed PCFD to GEOMETRY_ASYNC_FD
 
 ## 2.0.2 - 2019-09-04
 

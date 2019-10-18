@@ -87,6 +87,13 @@ GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 
 ![colorize](/images/screenshots/colorize.png)
 
+### geometry_exitcode
+This renders the exit code of the previous function if it is not success.
+
+```shell
+GEOMETRY_EXITCODE_COLOR="red" # exit code color
+```
+
 ### geometry_git
 
 The git function is one of the most developed plugins in geometry.
