@@ -12,7 +12,7 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) autoload -Uk $fun }
+function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 

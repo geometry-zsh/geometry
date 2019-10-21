@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - geometry_git complaining when not in a work-tree
 
+### Removed
+- GEOMETRY_GIT_SEPARATOR hidden feature, was the only function that didnt work like the others.
+Now uses GEOMETRY_SEPARATOR like everything else.
+
 ## 2.0.5 - 2019-10-14
 
 ### Fixed

@@ -87,13 +87,15 @@ geometry_git() {
     && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
     && return
 
-  local geometry_git_details && geometry_git_details=(
+  local git_info && git_info=(
+    $(geometry_git_symbol)
+    $(geometry_git_branch)
     $(geometry_git_conflicts)
     $(geometry_git_time)
     $(geometry_git_stashes)
     $(geometry_git_status)
   )
 
-  echo -n $(geometry_git_symbol) $(geometry_git_branch) ${(ej.${GEOMETRY_GIT_SEPARATOR:-" :: "}.)geometry_git_details}
+  echo -n ${(ej.${GEOMETRY_SEPARATOR:- }.)git_info}
   popd -q 2>/dev/null
 }
