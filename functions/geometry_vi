@@ -66,7 +66,7 @@ for w (zle-keymap-select zle-line-pre-redraw zle-line-init zle-line-finish); do
     # Builtin widget: Chain a call to ".widget".
     # Eval is required to get a closure (
     builtin) eval "geometry::${(q)prefix}-${(q)w}() { geometry::vi-draw-mode; builtin zle .${(q)w} -- \"\$@\" }"
-         zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
+         zle -N $w _zsh_highlight_widget_$prefix-$w;;
 
     # Unbound widget: Bind directly.
     *)
