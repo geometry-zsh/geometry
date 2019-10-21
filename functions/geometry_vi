@@ -43,7 +43,10 @@ function geometry::vi-draw-mode {
 }
 
 
-# Initialization: Bind the widgets required to perform proper prompt updates.
+# Skip initialization code if geometry_vi is not configured for rendering.
+[[ ${GEOMETRY_RPROMPT[(ie)geometry_vi]} -gt ${#GEOMETRY_RPROMPT} ]] && [[ ${GEOMETRY_PROMPT[(ie)geometry_vi]} -gt ${#GEOMETRY_PROMPT} ]] && return
+
+# Bind the widgets required to perform proper prompt updates.
 # Adapted from https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/zsh-syntax-highlighting.zsh#L295-L359
 local prefix="geometry_vi"
 for w (zle-keymap-select zle-line-pre-redraw zle-line-init zle-line-finish); do
@@ -66,7 +69,7 @@ for w (zle-keymap-select zle-line-pre-redraw zle-line-init zle-line-finish); do
          zle -N $cur_widget _zsh_highlight_widget_$prefix-$cur_widget;;
 
     # Unbound widget: Bind directly.
-    *) 
+    *)
         if [[ $w == zle-* ]] && (( ! ${+widgets[$w]} )); then
         zle -N $w geometry::vi-draw-mode
         else
