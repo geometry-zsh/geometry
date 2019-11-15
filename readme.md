@@ -60,6 +60,8 @@ Please check out and share third-party functions on our [functions wiki page][]
 
 For more details on how to create a function, check out [our contribution guide][]
 
+If you prefer a two-line prompt, try `GEOMETRY_PROMPT+=(geometry_newline)`
+
 ## Configuration
 
 You can configure everything in geometry by defining a variable.

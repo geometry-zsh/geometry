@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Improved
 - lazy load functions with autoload instead of sourcing (thanks @alxbl!)
 
+### Added
+- geometry_newline for two-line prompts (thanks @ducklin5)
+
 ### Fixed
 - geometry_git complaining when not in a work-tree
 
