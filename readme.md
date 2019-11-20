@@ -115,7 +115,7 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 
 ## Thanks
 
-geometry is maintained by [fribmendes](https://github.com/fribmendes), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
+geometry is maintained by [frm](https://github.com/frm), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
 
 A big thank you to the dozens of [additional contributors](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
