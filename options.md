@@ -114,12 +114,6 @@ Show git related information, such as branch name, status and time since last co
 | `GEOMETRY_GIT_COLOR_BARE`  | Color       | `blue`  |
 | `GEOMETRY_GIT_SYMBOL_BARE` | Indicator   | `⬢`     |
 
-##### `geometry::git_wrapper`
-
-| Variable                 | Description                  | Default |
-| ------------------------ | ---------------------------- | ------- |
-| `GEOMETRY_GIT_SEPARATOR` | Separator for the indicators | `::`    |
-
 ## `geometry_hg`
 
 Show Mercurial related information, such as branch name, status and time since last commit.
