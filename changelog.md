@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - geometry_git complaining when not in a work-tree
+- geometry_git works in submodules now, (thanks @JokeNeverSoke!)
 
 ### Removed
 - GEOMETRY_GIT_SEPARATOR hidden feature, was the only function that didnt work like the others.

@@ -80,22 +80,20 @@ geometry_git_conflicts() {
 geometry_git() {
   (( $+commands[git] )) || return
 
-  local git_dir; git_dir=$(git rev-parse --git-dir 2>&1) || return
-  pushd -q "$git_dir"/..
+  git rev-parse --absolute-git-dir 2>&1 >/dev/null || return
 
   $(command git rev-parse --is-bare-repository 2>/dev/null) \
     && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
     && return
 
   local git_info && git_info=(
-    $(geometry_git_symbol)
-    $(geometry_git_branch)
-    $(geometry_git_conflicts)
-    $(geometry_git_time)
-    $(geometry_git_stashes)
-    $(geometry_git_status)
+    geometry_git_symbol \
+    geometry_git_branch \
+    geometry_git_conflicts \
+    geometry_git_time \
+    geometry_git_stashes \
+    geometry_git_status
   )
 
-  echo -n ${(ej.${GEOMETRY_SEPARATOR:- }.)git_info}
-  popd -q 2>/dev/null
+  geometry::wrap $PWD $git_info
 }
