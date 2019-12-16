@@ -1,6 +1,6 @@
 # geometry
 
-![geometry](images/branding/readme-logo.png)
+![geometry logo by @MarioRicalde](images/branding/readme-logo.png)
 
 > a minimalistic, fully customizable zsh prompt theme
 
@@ -116,6 +116,8 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 ## Thanks
 
 geometry is maintained by [frm](https://github.com/frm), [desyncr](https://github.com/desyncr) and [jedahan](https://github.com/jedahan).
+
+Thank you [MarioRicalde](https://github.com/MarioRicalde) for the lovely logos and branding.
 
 A big thank you to the dozens of [additional contributors](https://github.com/geometry-zsh/geometry/graphs/contributors).
 
