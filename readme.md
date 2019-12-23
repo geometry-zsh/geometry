@@ -84,10 +84,7 @@ GEOMETRY_STATUS_SYMBOL_ERROR="△"       # displayed when exit value is != 0
 GEOMETRY_STATUS_COLOR_ERROR="magenta"  # prompt symbol color when exit value is != 0
 GEOMETRY_STATUS_COLOR="default"        # prompt symbol color
 GEOMETRY_STATUS_COLOR_ROOT="red"       # root prompt symbol color
-GEOMETRY_STATUS_COLOR_HASH=true        # color status symbol based on hostname
 ```
-
-![colorize](/images/screenshots/colorize.png)
 
 ### geometry_exitcode
 This renders the exit code of the previous function if it is not success.
@@ -112,6 +109,19 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 ```
 
 ![git_conflicts](/images/screenshots/git_conflicts.png)
+
+## Hostname based colors
+Geometry provides a generic function (`geometry::hostcolor`) for setting any color based on hostname. The color is calculated as the sum of each character converted to an integer. For example the hostname 'abc' generates a value of 294.
+
+By default the colors 1-9 and 17-230 are used as colors depending on what the environment supports. The calculated value is then modded by the size of the color list to choose a value. This value will be consistent given the same hostname.
+
+These colors can be overridden by setting variables.
+
+```shell
+GEOMETRY_HOST_COLORS=({1..7})  # Only use the colors 1-7
+GEOMETRY_HOST_COLOR=4          # Override the color for a specific host. 
+``` 
+![colorize](/images/screenshots/colorize.png)
 
 ## Thanks
 
