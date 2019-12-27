@@ -43,7 +43,7 @@ tool          | add to `.zshrc`
 
 ## Functions
 
-![animation of prompt customization](./images/screencasts/functions.svg)
+![showing prompt customization with new function](./images/screenshots/functions.png)
 
 Geometry has very little architecture. Three environment variables define what is shown on the left, right, and on enter - `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, and `GEOMETRY_INFO`.
 
@@ -119,8 +119,8 @@ These colors can be overridden by setting variables.
 
 ```shell
 GEOMETRY_HOST_COLORS=({1..7})  # Only use the colors 1-7
-GEOMETRY_HOST_COLOR=4          # Override the color for a specific host. 
-``` 
+GEOMETRY_HOST_COLOR=4          # Override the color for a specific host.
+```
 ![colorize](/images/screenshots/colorize.png)
 
 ## Thanks
