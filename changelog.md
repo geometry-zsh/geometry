@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 - geometry_newline for two-line prompts (thanks @ducklin5)
+- geometry::hostcolor to allow host-based colorization for all (thanks @crasx!)
 
 ### Fixed
 - geometry_git complaining when not in a work-tree
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Removed
 - GEOMETRY_GIT_SEPARATOR hidden feature, was the only function that didnt work like the others.
 Now uses GEOMETRY_SEPARATOR like everything else.
+- GEOMETRY_STATUS_SYMBOL_COLOR_HASH is deprecated, now just use GEOMETRY_STATUS_COLOR=$(geometry::hostcolor) (thanks @crasx!)
 
 ## 2.0.5 - 2019-10-14
 
