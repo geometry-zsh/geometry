@@ -39,25 +39,24 @@ geometry::time() {
 
 # Generate a color based on hostname.
 geometry::hostcolor() {
+  if (( ${+GEOMETRY_HOST_COLOR} )); then
+    echo ${GEOMETRY_HOST_COLOR}
+    return
+  fi
 
-      if (( ${+GEOMETRY_HOST_COLOR} )); then
-        echo ${GEOMETRY_HOST_COLOR}
-        return
-      fi
+  if (( ${+GEOMETRY_HOST_COLORS} )); then
+    local colors=(${GEOMETRY_HOST_COLORS})
+  else
+    local colors=({1..9})
+    (($(echotc Co) == 256)) && colors+=({17..230})
+  fi
 
-      if (( ${+GEOMETRY_HOST_COLORS} )); then
-        local colors=(${GEOMETRY_HOST_COLORS})
-      else
-        local colors=({1..9})
-        (($(echotc Co) == 256)) && colors+=({17..230})
-      fi
+  local sum=0; for c in ${(s::)^HOST}; do ((sum += $(print -f '%d' "'$c"))); done
+  local index="$(($sum % ${#colors}))"
 
-      local sum=0; for c in ${(s::)^HOST}; do ((sum += $(print -f '%d' "'$c"))); done
-      local index="$(($sum % ${#colors}))"
+  [[ "$index" -eq 0 ]] && index = 1
 
-      [[ "$index" -eq 0 ]] && index = 1
-
-      echo ${colors[${index}]}
+  echo ${colors[${index}]}
 }
 
 # set title to COMMAND @ CURRENT_DIRECTORY
