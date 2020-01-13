@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## 2.2.0 - 2020-01-13
+
+### Fixed
+- Prepended space for left prompt (thanks @Konsonanz!)
+- Hide extra spaces due to functions that have nothing to show (thanks @Konsonanz!)
+
 ## 2.1.0 - 2019-12-27
 
 ### Improved

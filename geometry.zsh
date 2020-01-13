@@ -73,7 +73,7 @@ geometry::wrap() {
   local -a outputs
   local cmd output
   shift
-  for cmd in $@; do output=$($cmd); (( $? )) || outputs+=$output; done
+  for cmd in $@; do output=$($cmd); ( (( $? )) || [[ -z "${output// }" ]] ) || outputs+=$output; done
 
   echo "${(ej.${GEOMETRY_SEPARATOR:- }.)outputs}"
 }
@@ -95,7 +95,7 @@ geometry::rprompt() {
 
 geometry::prompt() {
   GEOMETRY[LAST_STATUS]="$status"
-  PROMPT="$(geometry::wrap $PWD $GEOMETRY_PROMPT) "
+  PROMPT=" $(geometry::wrap $PWD $GEOMETRY_PROMPT) "
   geometry::rprompt
 }
 
