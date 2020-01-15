@@ -88,7 +88,7 @@ geometry::rprompt::set() {
 }
 
 geometry::rprompt() {
-  typeset -g GEOMETRY_ASYNC_FD
+  typeset -g GEOMETRY_ASYNC_FD=
   exec {GEOMETRY_ASYNC_FD}< <(geometry::wrap $PWD $GEOMETRY_RPROMPT)
   zle -F "$GEOMETRY_ASYNC_FD" geometry::rprompt::set
 }
