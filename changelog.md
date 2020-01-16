@@ -9,6 +9,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Prepended space for left prompt (thanks @Konsonanz!)
 - Hide extra spaces due to functions that have nothing to show (thanks @Konsonanz!)
 
+### Removed
+- Set default GEOMETRY_INFO to blank
+
 ## 2.1.0 - 2019-12-27
 
 ### Improved

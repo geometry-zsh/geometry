@@ -8,7 +8,7 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
-(($+GEOMETRY_INFO)) || GEOMETRY_INFO=(geometry_hostname geometry_jobs)
+(($+GEOMETRY_INFO)) || GEOMETRY_INFO=()
 
 autoload -U add-zsh-hook
 
