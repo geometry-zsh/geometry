@@ -50,8 +50,6 @@ geometry_git_remote() {
   echo "$unpushed $unpulled"
 }
 
-geometry_git_symbol() { echo ${(j: :):-$(geometry_git_rebase) $(geometry_git_remote)}; }
-
 geometry_git_conflicts() {
   local _grep
   local conflicts conflict_list
@@ -87,7 +85,8 @@ geometry_git() {
     && return
 
   local git_info && git_info=(
-    geometry_git_symbol
+    geometry_git_rebase
+    geometry_git_remote
     geometry_git_branch
     geometry_git_conflicts
     geometry_git_time
