@@ -1,6 +1,11 @@
 # geometry_git - please see the readme for documentation on all features
 
+_geometry_git_guard() {
+  git rev-parse 2>/dev/null
+}
+
 geometry_git_stashes() {
+  _geometry_git_guard || return
   git rev-parse --quiet --verify refs/stash >/dev/null \
     && ansi ${GEOMETRY_GIT_COLOR_STASHES:="144"} ${GEOMETRY_GIT_SYMBOL_STASHES:="●"}
 }
@@ -16,6 +21,7 @@ geometry_git_time() {
 }
 
 geometry_git_branch() {
+  _geometry_git_guard || return
   ansi ${GEOMETRY_GIT_COLOR_BRANCH:-242} $(git symbolic-ref --short HEAD 2>/dev/null || git rev-parse --short HEAD)
 }
 
@@ -29,6 +35,7 @@ geometry_git_status() {
 }
 
 geometry_git_rebase() {
+  _geometry_git_guard || return
   local git_dir
   git_dir=$(git rev-parse --git-dir)
   [[ -d "$git_dir/rebase-merge" ]] || [[ -d "$git_dir/rebase-apply" ]] || return
@@ -51,6 +58,7 @@ geometry_git_remote() {
 }
 
 geometry_git_conflicts() {
+  _geometry_git_guard || return
   local _grep
   local conflicts conflict_list
   local file_count raw_file_count
@@ -78,7 +86,7 @@ geometry_git_conflicts() {
 geometry_git() {
   (( $+commands[git] )) || return
 
-  git rev-parse 2>/dev/null || return
+  _geometry_git_guard || return
 
   $(git rev-parse --is-bare-repository) \
     && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
