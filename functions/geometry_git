@@ -57,21 +57,22 @@ geometry_git_remote() {
   echo "$unpushed $unpulled"
 }
 
+geometry_git_symbol() { echo ${(j: :):-$(geometry_git_rebase) $(geometry_git_remote)}; }
+
 geometry_git_conflicts() {
   _geometry_git_guard || return
   local _grep
   local conflicts conflict_list
-  local file_count raw_file_count
+  local file_count
   local total raw_total
-  conflicts=$(git diff --name-only --diff-filter=U)
+  conflicts=$(git diff --name-only --diff-filter=U -z)
 
   [[ -z "$conflicts" ]] && return
 
   _grep=${GEOMETRY_GIT_GREP:=${commands[rg]:=${commands[ag]:=${commands[grep]}}}}
-  conflict_list=$($_grep -cH '^=======$' $conflicts)
+  conflict_list=$($_grep -cH '^=======$' ${(0)conflicts})
 
-  raw_file_count="${#${(@f)conflict_list}}"
-  file_count=${raw_file_count##*( )}
+  file_count="${(w)#conflict_list}"
 
   raw_total=$(echo $conflict_list | cut -d ':' -f2 | paste -sd+ - | bc)
   total=${raw_total##*(  )}

@@ -4,7 +4,10 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+
+### Fixed
 - Fix git functions erroring out in non-git directories (thanks @duncanbeevers!)
+- Git conflict counting with multiple files (thanks @gluxon!)
 
 ## 2.2.0 - 2020-01-13
 
@@ -21,7 +24,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - lazy load functions with autoload instead of sourcing (thanks @alxbl!)
 
 ### Added
-- geometry_newline for two-line prompts (thanks @ducklin5)
+- geometry_newline for two-line prompts (thanks @ducklin5!)
 - geometry::hostcolor to allow host-based colorization for all (thanks @crasx!)
 
 ### Fixed
@@ -105,8 +108,9 @@ Now uses GEOMETRY_SEPARATOR like everything else.
 - Dozens of other small fixes
 
 ## 1.0.0 - 2017-04-05
+
 ### Added
 - Change Log file
 - Initial release features
 
-[Unreleased]: https://github.com/geometry-zsh/geometry/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/geometry-zsh/geometry/compare/v2.2.0...HEAD
