@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Fixed
 - Fix git functions erroring out in non-git directories (thanks @duncanbeevers!)
 - Git conflict counting with multiple files (thanks @gluxon!)
+- Fix git_status when the git directory contains spaces (thanks @tanyaionova!)
 
 ## 2.2.0 - 2020-01-13
 
