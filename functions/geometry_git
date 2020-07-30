@@ -28,8 +28,8 @@ geometry_git_branch() {
 geometry_git_status() {
   command git rev-parse --git-dir > /dev/null 2>&1 || return
 
-  [[ -z "$(git status --porcelain --ignore-submodules HEAD)" ]] \
-  && [[ -z "$(git ls-files --others --modified --exclude-standard \"$(git rev-parse --show-toplevel))\"" ]] \
+  [[ -z "$(git status --porcelain --ignore-submodules)" ]] \
+  && [[ -z "$(git ls-files --others --modified --exclude-standard \"$(git rev-parse --show-toplevel)\")" ]] \
   && ansi ${GEOMETRY_GIT_COLOR_CLEAN:-green} ${GEOMETRY_GIT_SYMBOL_CLEAN:-"⬢"} \
   || ansi ${GEOMETRY_GIT_COLOR_DIRTY:-red} ${GEOMETRY_GIT_SYMBOL_DIRTY:-"⬡"}
 }
