@@ -43,16 +43,26 @@ tool          | add to `.zshrc`
 
 ![showing prompt customization with new function](./images/screenshots/functions.png)
 
-Geometry has very little architecture. Three environment variables define what is shown on the left, right, and on enter - `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, and `GEOMETRY_INFO`.
+Geometry displays output in several places. The output displayed in each location is determined by the plugins configured for that location.
+These are the supported locations, along with the environment variable used to configure each one.
 
-Most of these functions only show up if it makes sense to (for example, `geometry_git` only shows up if in a git repository).
+Variable Name        | Text display location                                             
+---------------------|-------------------------------------------------------
+GEOMETRY_PROMPT      | Text shown to the left of the cursor
+GEOMETRY_RPROMPT     | Text shown at the right edge of the terminal
+GEOMETRY_INFO        | Text shown after pressing enter with no input
+GEOMETRY_TITLE       | Text shown in the terminal title
+GEOMETRY_CMDTITLE    | Text shown in the terminal title when a command is run
 
-To customize the prompt, just add any function to any of the `GEOMETRY_PROMPT`, `GEOMETRY_RPROMPT`, or `GEOMETRY_INFO` variables:
+To customize the prompt, add any function to the list of functions for the desired display location:
 
 ```sh
 GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
 GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time and pwd right prompt
+GEOMETRY_TITLE=(geometry_node)
 ```
+
+Most of these functions only show up if it makes sense to (for example, `geometry_git` only shows up if in a git repository).
 
 Please check out and share third-party functions on our [functions wiki page][]
 

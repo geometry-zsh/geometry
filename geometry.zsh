@@ -9,12 +9,16 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_echo)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=()
+(($+GEOMETRY_TITLE)) || GEOMETRY_TITLE=(geometry_path)
+(($+GEOMETRY_CMDTITLE)) || GEOMETRY_CMDTITLE=(geometry_cmd geometry_hostname)
 
 autoload -U add-zsh-hook
 
 function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
+(( $+functions[deansi] )) || deansi() { (($# - 1)) || echo -n "$(echo "$1" | sed s/$(echo "\033")\\\[\[0-9\]\\\{1,2\\\}m//g)"; }
+(( $+functions[geometry_cmd])) || geometry_cmd() { echo $GEOMETRY_LAST_CMD }
 
 # Takes number of seconds and formats it for humans
 # from https://github.com/sindresorhus/pretty-time-zsh
@@ -59,13 +63,25 @@ geometry::hostcolor() {
   echo ${colors[${index}]}
 }
 
-# set title to COMMAND @ CURRENT_DIRECTORY
-geometry::set_title() { print -n "\e]0;${2} @ ${PWD##*/}\a"; }
-add-zsh-hook preexec geometry::set_title
+# set cmd title (while command is running)
+geometry::set_cmdtitle() {
+  # Make command title available for optional consumption by geometry_cmd
+  GEOMETRY_LAST_CMD=$2
+  local ansiCmdTitle=$(print -P $(geometry::wrap $PWD $GEOMETRY_CMDTITLE))
+  local cmdTitle=$(deansi "$ansiCmdTitle")
 
-# clear title after command ends
-geometry::clear_title() { print -n '\e]0;%~\a'; }
-add-zsh-hook precmd geometry::clear_title
+  echo -ne "\e]1;$cmdTitle\a"
+}
+add-zsh-hook preexec geometry::set_cmdtitle
+
+# set ordinary title (after command has completed)
+geometry::set_title() {
+  local ansiTitle=$(print -P $(geometry::wrap $PWD $GEOMETRY_TITLE))
+  local title=$(deansi "$ansiTitle")
+
+  echo -ne "\e]1;$title\a"
+}
+add-zsh-hook precmd geometry::set_title
 
 # join outputs of functions - pwd first
 geometry::wrap() {

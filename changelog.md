@@ -4,6 +4,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## Unreleased
+- Add GEOMETRY_TITLE and GEOMETRY_CMDTITLE as display locations
+- Add geometry_cmd function to display currently-running command in GEOMETRY_CMDTITLE
 
 ### Fixed
 - Fix git functions erroring out in non-git directories (thanks @duncanbeevers!)
