@@ -11,6 +11,7 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=()
 (($+GEOMETRY_TITLE)) || GEOMETRY_TITLE=(geometry_path)
 (($+GEOMETRY_CMDTITLE)) || GEOMETRY_CMDTITLE=(geometry_cmd geometry_hostname)
+(($+GEOMETRY_PATH_TRUNCATE)) || GEOMETRY_PATH_TRUNCATE=3
 
 autoload -U add-zsh-hook
 
