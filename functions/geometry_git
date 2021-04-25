@@ -65,7 +65,7 @@ geometry_git_conflicts() {
   local conflicts conflict_list
   local file_count
   local total raw_total
-  conflicts=$(git diff --name-only --diff-filter=U -z)
+  conflicts=$(git diff --name-only --diff-filter=U -z 2>/dev/null)
 
   [[ -z "$conflicts" ]] && return
 
