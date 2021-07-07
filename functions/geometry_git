@@ -28,7 +28,7 @@ geometry_git_branch() {
 geometry_git_status() {
   command git rev-parse --git-dir > /dev/null 2>&1 || return
 
-  git diff-index --quiet HEAD \
+  git diff-index --quiet HEAD 2> /dev/null \
   && [[ -z "$(git status --porcelain --ignore-submodules)" ]] \
   && ansi ${GEOMETRY_GIT_COLOR_CLEAN:-green} ${GEOMETRY_GIT_SYMBOL_CLEAN:-"⬢"} \
   || ansi ${GEOMETRY_GIT_COLOR_DIRTY:-red} ${GEOMETRY_GIT_SYMBOL_DIRTY:-"⬡"}
