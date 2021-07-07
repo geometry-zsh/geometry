@@ -71,6 +71,9 @@ geometry::hostcolor() {
 # Fully supports screen, iterm, and probably most modern xterm and rxvt
 # (In screen, only short_tab_title is used)
 # Limited support for Apple Terminal (Terminal can't set window and tab separately)
+
+# This is the title() function taken directly from oh-my-zsh
+# https://github.com/ohmyzsh/ohmyzsh/blob/c44b99e901d7ef58f60247995152de1b937e2e9c/lib/termsupport.zsh
 geometry::echo_title_sequence() {
   emulate -L zsh
   setopt prompt_subst
