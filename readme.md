@@ -32,12 +32,13 @@ Geometry also has a secondary prompt that shows up when pressing enter with an e
 
 ## Installing
 
-tool          | add to `.zshrc`
---------------|--------------------------------------
-[zr][]        | `zr load geometry-zsh/geometry`
-[zplug][]     | `zplug "geometry-zsh/geometry"`
-[antigen][]   | `antigen theme geometry-zsh/geometry`
-**manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
+tool                          | add to `.zshrc`
+------------------------------|--------------------------------------
+[zr][]                        | `zr load geometry-zsh/geometry`
+[zplug][]                     | `zplug "geometry-zsh/geometry"`
+[antigen][]                   | `antigen theme geometry-zsh/geometry`
+[zi](https://wiki.zshell.dev) | `zi lucid for atload"!geometry::prompt"  atinit"GEOMETRY_COLOR_DIR=63 GEOMETRY_PATH_COLOR=63" nocd  geometry-zsh/geometry`
+**manually**                  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
 
 ## Functions
 
