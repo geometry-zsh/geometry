@@ -37,6 +37,7 @@ tool          | add to `.zshrc`
 [zr][]        | `zr load geometry-zsh/geometry`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
+[Homebrew][]  | `brew install geometry`
 **manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
 
 ## Functions
@@ -144,4 +145,5 @@ A big thank you to the dozens of [additional contributors](https://github.com/ge
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
 [antigen]: https://github.com/zsh-users/antigen
+[homebrew]: https://brew.sh
 [our contribution guide]: contributing.md
