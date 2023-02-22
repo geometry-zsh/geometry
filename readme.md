@@ -76,7 +76,7 @@ You can configure everything in geometry by defining a variable.
 
 The default configuration tries to balance the theme to be both lightweight and contain useful features.
 
-Here we highlight some of the more commonly customized variables, but to see all of them, look in the function definitions inside the [functions directory](/function).
+Here we highlight some of the more commonly customized variables, but to see all of them, look in the function definitions inside the [functions directory](/functions).
 
 ### general
 
