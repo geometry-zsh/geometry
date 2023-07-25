@@ -14,26 +14,26 @@ Type "GEOMETRY_PROMPT=(geometry_newline geometry_path geometry_newline geometry_
 Type "clear" Enter
 Show
 
-Type '# lets define a new function' Sleep 100ms Alt+Enter
-Type 'cool() { echo "(~~ cOOl ~~)" }' Sleep 200ms Enter
-Type 'cool' Sleep 100ms Enter
+Type '# lets define a new function' Sleep 200ms Alt+Enter
+Type 'cool() { echo "(~~ cOOl ~~)" }' Sleep 300ms Enter
+Type 'cool' Sleep 200ms Enter
 
-Type '# whats in our current PROMPT?' Sleep 100ms Alt+Enter
-Type 'echo $GEOMETRY_PROMPT' Sleep 200ms Enter
+Type '# whats in our current PROMPT?' Sleep 200ms Alt+Enter
+Type 'echo $GEOMETRY_PROMPT' Sleep 300ms Enter
 
-Type '# lets add our cool function to the left' Sleep 100ms Alt+Enter
-Type 'GEOMETRY_PROMPT+=(cool)' Sleep 200ms Enter
+Type '# lets add our cool function to the left' Sleep 200ms Alt+Enter
+Type 'GEOMETRY_PROMPT+=(cool)' Sleep 300ms Enter
 
-Type '# <-- look! its now in our prompt!' Sleep 100ms Alt+Enter
-Type '# but what if we have a slow function?' Sleep 100ms Alt+Enter
+Type '# <-- look! its now in our prompt!' Sleep 200ms Alt+Enter
+Type '# but what if we have a slow function?' Sleep 200ms Alt+Enter
 
-Type 'snail() { sleep 3; echo "@_. "}' Sleep 200ms Enter
-Type 'snail' Enter Sleep 100ms
+Type 'snail() { sleep 3; echo "@_. "}' Sleep 300ms Enter
+Type 'snail' Enter Sleep 3s
 
-Type '# the right prompt runs commands in the background' Sleep 100ms Alt+Enter 
-Type '# so your shell always stays responsive' Sleep 100ms Alt+Enter
-Type 'GEOMETRY_RPROMPT+=(snail)' Sleep 200ms Enter
-Type 'ls' Sleep 200ms Enter
+Type '# the right prompt runs commands in the background' Sleep 200ms Alt+Enter 
+Type '# so your shell always stays responsive' Sleep 200ms Alt+Enter
+Type 'GEOMETRY_RPROMPT+=(snail)' Sleep 300ms Enter
+Type 'ls' Sleep 300ms Enter
 
 Type@333ms '1..2..3..'
 Hide
