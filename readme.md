@@ -34,7 +34,7 @@ Geometry also has a secondary prompt that shows up when pressing enter with an e
 
 tool          | add to `.zshrc`
 --------------|--------------------------------------
-[zr][]        | `zr load geometry-zsh/geometry`
+[zr][]        | `zr geometry-zsh/geometry`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
 [Homebrew][]  | `brew install geometry`
