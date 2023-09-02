@@ -38,6 +38,7 @@ tool          | add to `.zshrc`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
 [Homebrew][]  | `brew install geometry`
+[zi][]        | `zi lucid for atload"!geometry::prompt" geometry-zsh/geometry`
 **manually**  | `source geometry/geometry.zsh` (after `git clone https://github.com/geometry-zsh/geometry`)
 
 ## Functions
