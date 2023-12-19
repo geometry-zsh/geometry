@@ -15,7 +15,7 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) . $fun }
+() { setopt localoptions extendedglob; for fun ("$GEOMETRY[ROOT]"/functions/^*.zwc) . $fun }
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 (( $+functions[deansi] )) || deansi() { (($# - 1)) || echo -n "$(echo "$1" | sed s/$(echo "\033")\\\[\[0-9\]\\\{1,2\\\}m//g)"; }
