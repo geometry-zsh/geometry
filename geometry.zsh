@@ -15,7 +15,8 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) . $fun }
+fpath+=("${GEOMETRY[ROOT]}"/functions)
+autoload "${GEOMETRY[ROOT]}"/functions/*
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 (( $+functions[deansi] )) || deansi() { (($# - 1)) || echo -n "$(echo "$1" | sed s/$(echo "\033")\\\[\[0-9\]\\\{1,2\\\}m//g)"; }
