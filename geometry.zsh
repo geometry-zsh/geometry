@@ -129,6 +129,7 @@ geometry::rprompt::set() {
 
 geometry::rprompt() {
   typeset -g GEOMETRY_ASYNC_FD=
+  RPROMPT=
   exec {GEOMETRY_ASYNC_FD}< <(geometry::wrap $PWD $GEOMETRY_RPROMPT)
   zle -F "$GEOMETRY_ASYNC_FD" geometry::rprompt::set
 }
@@ -136,10 +137,10 @@ geometry::rprompt() {
 geometry::prompt() {
   GEOMETRY[LAST_STATUS]="$status"
   PROMPT=" $(geometry::wrap $PWD $GEOMETRY_PROMPT) "
-  geometry::rprompt
 }
 
 add-zsh-hook precmd geometry::prompt
+add-zsh-hook precmd geometry::rprompt
 
 geometry::info() { # draw info if no command is given
     [[ -n "$BUFFER" ]] && { zle accept-line && return; }
