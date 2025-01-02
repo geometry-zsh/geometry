@@ -120,6 +120,13 @@ GEOMETRY_GIT_TIME_DETAILED=true     # show full time (e.g. `12h 30m 53s`) instea
 
 ![picture of git features](./images/screenshots/git.png)
 
+### geometry_jj
+You can customize the template using [jj template language](https://jj-vcs.github.io/jj/latest/templates/)
+
+```shell
+GEOMETRY_JJ_TEMPLATE='"%F{5}" ++ change_id.shortest() ++ "%F{4}" ++ commit_id.shortest() ++ "%f% "'
+```
+
 ## Hostname based colors
 Geometry provides a generic function (`geometry::hostcolor`) for setting any color based on hostname. The color is calculated as the sum of each character converted to an integer. For example the hostname 'abc' generates a value of 294.
 
