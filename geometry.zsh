@@ -119,10 +119,8 @@ geometry::prompt() {
 add-zsh-hook precmd geometry::prompt
 
 geometry::info() { # draw info if no command is given
-    [[ -n "$BUFFER" ]] && { zle accept-line && return; }
-    [[ -z "$GEOMETRY_INFO" ]] && { zle accept-line && return; }
-    echo ${(%):-$(geometry::wrap $PWD $GEOMETRY_INFO)}
-    geometry::prompt
+    ([[ -n "$BUFFER" ]] || [[ -z "$GEOMETRY_INFO" ]]) && zle accept-line && return
+    zle -M "${(%):-$(geometry::wrap $PWD $GEOMETRY_INFO)}"
 }
 zle -N buffer-empty geometry::info
 bindkey '^M' buffer-empty
