@@ -36,6 +36,7 @@ tool          | add to `.zshrc`
 --------------|--------------------------------------
 [zr][]        | `zr geometry-zsh/geometry`
 [zplug][]     | `zplug "geometry-zsh/geometry"`
+[znap][]     | `znap prompt geometry-zsh/geometry`
 [antigen][]   | `antigen theme geometry-zsh/geometry`
 [Homebrew][]  | `brew install geometry`
 [zi][]        | `zi lucid for atload"!geometry::prompt" geometry-zsh/geometry`
@@ -143,6 +144,7 @@ A big thank you to the dozens of [additional contributors](https://github.com/ge
 
 [functions wiki page]: https://github.com/geometry-zsh/geometry/wiki/functions
 [open an issue]: https://github.com/geometry-zsh/geometry/issues/new
+[znap]: https://github.com/marlonrichert/zsh-snap
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
 [zi]: https://wiki.zshell.dev/docs
