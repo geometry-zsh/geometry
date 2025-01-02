@@ -15,7 +15,30 @@ typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 autoload -U add-zsh-hook
 
-function { local fun; for fun ("${GEOMETRY[ROOT]}"/functions/*) . $fun }
+function {
+local fun
+for fun (
+  geometry_docker_machine \
+  geometry_echo \
+  geometry_exec_time \
+  geometry_exitcode \
+  geometry_git \
+  geometry_hg \
+  geometry_hostname \
+  geometry_jj \
+  geometry_jobs \
+  geometry_kube \
+  geometry_newline \
+  geometry_node \
+  geometry_npm_package_version \
+  geometry_path \
+  geometry_ruby \
+  geometry_rust_version \
+  geometry_rustup \
+  geometry_status \
+  geometry_virtualenv \
+) . "${GEOMETRY[ROOT]}"/functions/$fun
+}
 
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || echo -n "%F{$1}$2%f"; }
 (( $+functions[deansi] )) || deansi() { (($# - 1)) || echo -n "$(echo "$1" | sed s/$(echo "\033")\\\[\[0-9\]\\\{1,2\\\}m//g)"; }
