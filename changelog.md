@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Fix git functions erroring out in non-git directories (thanks @duncanbeevers!)
 - Git conflict counting with multiple files (thanks @gluxon!)
 - Fix git_status when the git directory contains spaces (thanks @tanyaionova!)
+- Do not print newline on enter if GEOMETRY_INFO is empty
 
 ## 2.2.0 - 2020-01-13
 
