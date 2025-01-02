@@ -145,6 +145,7 @@ A big thank you to the dozens of [additional contributors](https://github.com/ge
 [open an issue]: https://github.com/geometry-zsh/geometry/issues/new
 [zr]: https://github.com/jedahan/zr
 [zplug]: https://github.com/zplug/zplug
+[zi]: https://wiki.zshell.dev/docs
 [antigen]: https://github.com/zsh-users/antigen
 [homebrew]: https://brew.sh
 [our contribution guide]: contributing.md
