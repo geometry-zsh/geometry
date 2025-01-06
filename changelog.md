@@ -3,15 +3,40 @@
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
-## Unreleased
+# Unreleased
+
+## 3.0.0 - 2025-01-06
+
+Years later, we are back. Many bugfixes and small annoyances and incompatibilities gone. A few breaking changes.
+
+Removed geometry_exec_time, will re-add after a future refactor.
+
+GEOMETRY_INFO now uses zsh statusline instead of being an empty command alias.
+
+### Added
+- Add geometry_jj function for jujutsu
 - Add GEOMETRY_TITLE and GEOMETRY_CMDTITLE as display locations
 - Add geometry_cmd function to display currently-running command in GEOMETRY_CMDTITLE
 
+### Removed
+- Removed geometry_exec_time
+
 ### Fixed
+- Fix initial terminal RPROMPT being blank
+- Fix showing stale information in RPROMPT
+- Fix extra newline when printing GEOMETRY_INFO
 - Fix git functions erroring out in non-git directories (thanks @duncanbeevers!)
 - Git conflict counting with multiple files (thanks @gluxon!)
 - Fix git_status when the git directory contains spaces (thanks @tanyaionova!)
-- Do not print newline on enter if GEOMETRY_INFO is empty
+- Fix compatibility with znap (thanks @cweagans)
+
+### Changed
+- Manually autoload functions we ship, to avoid loading user-created files
+- Prefix some functions with `builtin` to avoid user-defined aliases and functions
+
+---
+
+# Released
 
 ## 2.2.0 - 2020-01-13
 

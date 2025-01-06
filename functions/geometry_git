@@ -84,24 +84,21 @@ geometry_git_conflicts() {
   ansi ${GEOMETRY_GIT_COLOR_CONFLICTS_UNSOLVED:-red} "${GEOMETRY_GIT_SYMBOL_CONFLICTS_UNSOLVED:-'◈'} $count"
 }
 
-geometry_git() {
-  (( $+commands[git] )) || return
+(( $+commands[git] )) || return
+_geometry_git_guard || return
 
-  _geometry_git_guard || return
+$(git rev-parse --is-bare-repository) \
+  && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
+  && return
 
-  $(git rev-parse --is-bare-repository) \
-    && ansi ${GEOMETRY_GIT_COLOR_BARE:=blue} ${GEOMETRY_GIT_SYMBOL_BARE:="⬢"} \
-    && return
+local git_info && git_info=(
+  geometry_git_rebase
+  geometry_git_remote
+  geometry_git_branch
+  geometry_git_conflicts
+  geometry_git_time
+  geometry_git_stashes
+  geometry_git_status
+)
 
-  local git_info && git_info=(
-    geometry_git_rebase
-    geometry_git_remote
-    geometry_git_branch
-    geometry_git_conflicts
-    geometry_git_time
-    geometry_git_stashes
-    geometry_git_status
-  )
-
-  geometry::wrap $PWD $git_info
-}
+geometry::wrap $PWD $git_info

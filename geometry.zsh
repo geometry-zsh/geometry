@@ -15,29 +15,27 @@ builtin typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 builtin autoload -U add-zsh-hook
 
-function {
-  local fun
-  for fun in geometry_docker_machine \
-    geometry_echo \
-    geometry_exec_time \
-    geometry_exitcode \
-    geometry_git \
-    geometry_hg \
-    geometry_hostname \
-    geometry_jj \
-    geometry_jobs \
-    geometry_kube \
-    geometry_newline \
-    geometry_node \
-    geometry_npm_package_version \
-    geometry_path \
-    geometry_ruby \
-    geometry_rust_version \
-    geometry_rustup \
-    geometry_status \
-    geometry_virtualenv
-  ; do . "${GEOMETRY[ROOT]}"/functions/$fun; done
-}
+fpath+=("${GEOMETRY[ROOT]}"/functions)
+autoload -Uz \
+  geometry_docker_machine \
+  geometry_echo \
+  geometry_exec_time \
+  geometry_exitcode \
+  geometry_git \
+  geometry_hg \
+  geometry_hostname \
+  geometry_jj \
+  geometry_jobs \
+  geometry_kube \
+  geometry_newline \
+  geometry_node \
+  geometry_npm_package_version \
+  geometry_path \
+  geometry_ruby \
+  geometry_rust_version \
+  geometry_rustup \
+  geometry_status \
+  geometry_virtualenv
 
 (( $+functions[geometry_cmd])) || geometry_cmd() { builtin echo $GEOMETRY_LAST_CMD; }
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || builtin echo -n "%F{$1}$2%f"; }

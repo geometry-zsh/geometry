@@ -19,20 +19,18 @@ geometry_kube_version() {
   ansi ${GEOMETRY_KUBE_VERSION_COLOR:=default} ${kube_version:=default}
 }
 
-geometry_kube() {
-  (( $+commands[kubectl] )) || return
+(( $+commands[kubectl] )) || return
 
-  ( ${GEOMETRY_KUBE_PIN:=true} ) || return
+( ${GEOMETRY_KUBE_PIN:=true} ) || return
 
-  ( ${GEOMETRY_KUBE_PIN:=false} ) || [[ -n "$KUBECONFIG" ]] || [[ -n "$(kubectl config current-context 2> /dev/null)" ]] || return
+( ${GEOMETRY_KUBE_PIN:=false} ) || [[ -n "$KUBECONFIG" ]] || [[ -n "$(kubectl config current-context 2> /dev/null)" ]] || return
 
-  local geometry_kube_details && geometry_kube_details=(
-    $(geometry_kube_symbol)
-    $(geometry_kube_context)
-    $(geometry_kube_namespace)
-    $(geometry_kube_version)
-  )
+local geometry_kube_details && geometry_kube_details=(
+  $(geometry_kube_symbol)
+  $(geometry_kube_context)
+  $(geometry_kube_namespace)
+  $(geometry_kube_version)
+)
 
-  local separator=${GEOMETRY_KUBE_SEPARATOR:-"|"}
-  echo -n ${(pj.$separator.)geometry_kube_details}
-}
+local separator=${GEOMETRY_KUBE_SEPARATOR:-"|"}
+echo -n ${(pj.$separator.)geometry_kube_details}
