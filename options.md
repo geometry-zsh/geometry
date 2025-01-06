@@ -7,7 +7,6 @@ and functionality.
 ## Table of Contents
 
 - [`geometry_docker_machine`](#geometry_docker_machine)
-- [`geometry_exec_time`](#geometry_exec_time)
 - [`geometry_git`](#geometry_git)
     - [`geometry_git_stashes()`](#geometry_git_stashes)
     - [`geometry_git_time()`](#geometry_git_time)
@@ -21,6 +20,7 @@ and functionality.
 - [`geometry_hg`](#geometry_hg)
 - [`geometry_hostname`](#geometry_hostname)
 - [`geometry_jobs`](#geometry_jobs)
+- [`geometry_jj`](#geometry_jj)
 - [`geometry_kube`](#geometry_kube)
 - [`geometry_node`](#geometry_node)
 - [`geometry_npm_package_version`](#geometry_npm_package_version)
@@ -39,14 +39,6 @@ Show the docker machine name.
 | -------------------------------- | ------------------------- | ------- |
 | `GEOMETRY_DOCKER_MACHINE_SYMBOL` | Indicator                 | `⚓`    |
 | `GEOMETRY_DOCKER_MACHINE_COLOR`  | Color of the machine name | `blue`  |
-
-## `geometry_exec_time`
-
-Show the elapsed time for long running commands.
-
-| Variable                      | Description                                  | Default  |
-| ----------------------------- | -------------------------------------------- | -------- |
-| `GEOMETRY_EXEC_TIME_PATIENCE` | Seconds before the time is shown             | `5`      |
 
 ## `geometry_git`
 
@@ -135,6 +127,15 @@ Shows user and hostname information, by default in the `enter` prompt.
 | ----------------------------- | -------------------------------------------------------- | ----------- |
 | `GEOMETRY_HOSTNAME_HIDE_ON`   | Hide the username and hostname when the hostname matches | `localhost` |
 | `GEOMETRY_HOSTNAME_SEPARATOR` | Separator between user and hostname                      | `@`         |
+
+## `geometry_jj`
+
+Show jujutsu change_id + commit_id
+
+| Variable                      | Description             | Default                                                                        |
+| ----------------------------- | ------------------------| ------------------------------------------------------------------------------ |
+| `GEOMETRY_JJ_TEMPLATE`        | jj template to display  | `"%F{5}" ++ change_id.shortest() ++ "%F{4}" ++ commit_id.shortest() ++ "%f% "` |
+
 
 ## `geometry_jobs`
 

@@ -60,7 +60,7 @@ To customize the prompt, add any function to the list of functions for the desir
 
 ```sh
 GEOMETRY_PROMPT=(geometry_status geometry_path) # redefine left prompt
-GEOMETRY_RPROMPT+=(geometry_exec_time pwd)      # append exec_time and pwd right prompt
+GEOMETRY_RPROMPT+=(pwd)                         # append current working directory to right prompt
 GEOMETRY_TITLE=(geometry_node)
 ```
 

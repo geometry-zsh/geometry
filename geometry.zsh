@@ -7,7 +7,7 @@
 builtin typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
-(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_exec_time geometry_git geometry_hg geometry_jj geometry_echo)
+(($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_git geometry_hg geometry_jj geometry_echo)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=()
 (($+GEOMETRY_TITLE)) || GEOMETRY_TITLE=(geometry_path)
 (($+GEOMETRY_CMDTITLE)) || GEOMETRY_CMDTITLE=(geometry_cmd geometry_hostname)
@@ -19,7 +19,6 @@ fpath+=("${GEOMETRY[ROOT]}"/functions)
 autoload -Uz \
   geometry_docker_machine \
   geometry_echo \
-  geometry_exec_time \
   geometry_exitcode \
   geometry_git \
   geometry_hg \
