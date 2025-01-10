@@ -10,13 +10,13 @@ builtin typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_git geometry_hg geometry_jj geometry_echo)
 (($+GEOMETRY_INFO)) || GEOMETRY_INFO=()
 (($+GEOMETRY_TITLE)) || GEOMETRY_TITLE=(geometry_path)
-(($+GEOMETRY_CMDTITLE)) || GEOMETRY_CMDTITLE=(geometry_cmd geometry_hostname)
-(($+GEOMETRY_PATH_TRUNCATE)) || GEOMETRY_PATH_TRUNCATE=3
+(($+GEOMETRY_COMMAND_TITLE)) || GEOMETRY_COMMAND_TITLE=(geometry_last_command geometry_hostname)
 
 builtin autoload -U add-zsh-hook
 
 fpath+=("${GEOMETRY[ROOT]}"/functions)
 autoload -Uz \
+  geometry_last_command \
   geometry_docker_machine \
   geometry_echo \
   geometry_exitcode \
@@ -36,7 +36,6 @@ autoload -Uz \
   geometry_status \
   geometry_virtualenv
 
-(( $+functions[geometry_cmd])) || geometry_cmd() { builtin echo $GEOMETRY_LAST_CMD; }
 (( $+functions[ansi] )) || ansi() { (($# - 2)) || builtin echo -n "%F{$1}$2%f"; }
 (( $+functions[deansi] )) || deansi() { (($# - 1)) || builtin echo -n "$(echo "$1" | sed s/$(builtin echo "\033")\\\[\[0-9\]\\\{1,2\\\}m//g)"; }
 
@@ -86,8 +85,8 @@ geometry::hostcolor() {
 # set cmd title (while command is running)
 geometry::set_cmdtitle() {
   # Make command title available for optional consumption by geometry_cmd
-  GEOMETRY_LAST_CMD=$2
-  local ansiCmdTitle=$(builtin print -P $(geometry::wrap $PWD $GEOMETRY_CMDTITLE))
+  GEOMETRY_LAST_COMMAND=$2
+  local ansiCmdTitle=$(builtin print -P $(geometry::wrap $PWD $GEOMETRY_COMMAND_TITLE))
   local cmdTitle=$(deansi "$ansiCmdTitle")
 
   builtin echo -ne "\e]1;$cmdTitle\a"

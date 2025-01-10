@@ -1,5 +1,7 @@
 # geometry_path - show the current path
 
+(($+GEOMETRY_PATH_TRUNCATE)) || GEOMETRY_PATH_TRUNCATE=3
+
 # symbol representing the home directory
 dir=${GEOMETRY_PATH_SYMBOL_HOME:-"%$GEOMETRY_PATH_TRUNCATE~"}
 ( ${GEOMETRY_PATH_SHOW_BASENAME:-false} ) && dir=${PWD:t}
