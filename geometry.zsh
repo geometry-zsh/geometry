@@ -4,7 +4,7 @@
 # pure: https://github.com/sindresorhus/pure
 # mnml: https://github.com/subnixr/minimal
 
-builtin typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
+builtin typeset -gA GEOMETRY
 
 (($+GEOMETRY_PROMPT)) || GEOMETRY_PROMPT=(geometry_echo geometry_status geometry_path)
 (($+GEOMETRY_RPROMPT)) || GEOMETRY_RPROMPT=(geometry_git geometry_hg geometry_jj geometry_echo)
@@ -14,7 +14,7 @@ builtin typeset -gA GEOMETRY; GEOMETRY[ROOT]=${0:A:h}
 
 builtin autoload -U add-zsh-hook
 
-fpath+=("${GEOMETRY[ROOT]}"/functions)
+fpath+=("${0:A:h}"/functions)
 autoload -Uz \
   geometry_last_command \
   geometry_docker_machine \
@@ -130,8 +130,7 @@ geometry::rprompt() {
 }
 
 geometry::prompt() {
-  PROMPT=""
-  GEOMETRY[LAST_STATUS]="$status"
+  export GEOMETRY_STATUS=$status
   PROMPT=" $(geometry::wrap $PWD $GEOMETRY_PROMPT) "
 }
 
