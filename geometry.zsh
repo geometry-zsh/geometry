@@ -57,7 +57,7 @@ geometry::time() {
   (( m > 0 )) && human+="${m}m"
   (( s > 0 )) && human+="${s}s" && : ${color:=${GEOMETRY_TIME_COLOR_SHORT:-green}}
 
-  ${2:-false} && ansi $color ${(j: :)human} || ansi $color $human[1]
+  ${detailed:-false} && ansi $color ${(j: :)human} || ansi $color $human[1]
 }
 
 # Generate a color based on hostname.
